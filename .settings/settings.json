@@ -1,0 +1,21 @@
+{
+  "adb.path": "",
+  "android.simulator.port": "26944",
+  "auto-saver.autosave": false,
+  "editor.colorScheme": "Atom One Dark",
+  "editor.contentAssistSelectionMode": "Alt+数字模式",
+  "editor.editorConfigSupport": true,
+  "editor.insertSpaces": true,
+  "editor.mouseWheelZoom": false,
+  "editor.multiCursorModifier": "Alt",
+  "editor.onlyHighlightWord": true,
+  "editor.saveOnFocusLost": true,
+  "editor.tabSize": 2,
+  "editor.wordWrapMode": "word",
+  "explorer.iconTheme": "hx-file-icons-colorful",
+  "javascript.validate.enable": false,
+  "logInfo.auto.reportCrash": false,
+  "terminal.type": "外部终端",
+  "view.remoteDebug.openOnRunDevice": true,
+  "editor.showLastLineWhenFolded": true
+}

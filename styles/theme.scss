@@ -1,0 +1,71 @@
+.app-container {
+  --color-accent: #{$app-color-accent};
+  --color-accent_rgb: #{$app-color-accent_rgb};
+
+  --app-main__space_vertical: 20rpx;
+  --app-main__space_horizontal: 22rpx;
+  --app-main__txt_size: 28rpx;
+  --app-main__txt_weight: 400;
+  --app-main__txt_color: var(--color-txt-primary);
+
+  --app-navbar__body_border: 2rpx solid rgba(0, 0, 0, 0.05);
+  --app-navbar__title_width: 300rpx;
+  --app-navbar__txt_size: 32rpx;
+  --app-navbar__txt_color: var(--color-txt-primary);
+  --app-navbar__icon_mright: 8rpx;
+  --app-navbar__icon_size: 32rpx;
+
+  --app-tabbar__body_height: 120rpx;
+  --app-tabbar__body_radius: 0;
+  --app-tabbar__body_border: 2rpx solid rgba(0, 0, 0, 0.04);
+  --app-tabbar__body_background: var(--color-bg-primary);
+  --app-tabbar__item_width: 120rpx;
+  --app-tabbar__icon_size: 56rpx;
+  --app-tabbar__txt_mtop: 6rpx;
+  --app-tabbar__txt_size: 24rpx;
+  --app-tabbar__txt_weight: 500;
+  --app-tabbar__txt_color: #bbbdd4;
+  --app-tabbar__txt_color--selected: var(--color-accent);
+  --app-tabbar__badge_size--dot: 10rpx;
+  --app-tabbar__badge_size--text: 20rpx;
+  --app-tabbar__badge_radius--text: 20rpx;
+  --app-tabbar__badge_color: #ffffff;
+  --app-tabbar__badge_background: #ff6d2c;
+
+  --app-mask__body_background: rgba(16, 16, 16, 0.5);
+
+  --app-scroller__bktop_size: 76rpx;
+  --app-scroller__bktop_right: var(--app-main__space_horizontal);
+  --app-scroller__bktop_bottom: 40rpx;
+  --app-scroller__bktop_zindex: 10;
+}
+
+.app-container.app-theme-light {
+  --color-divider: #{$u-border-color};
+
+  --color-txt-primary: #{$u-main-color};
+  --color-txt-secondary: #{$u-content-color};
+  --color-txt-tertiary: #{$u-tips-color};
+  --color-txt-other: #{$u-light-color};
+
+  --color-bg-primary: #{$u--bg-color};
+  --color-bg-normal: #{$u-bg-color};
+
+  --app-navbar__home_color: #ffffff;
+  --app-navbar__home_background: rgba(0, 0, 0, 0.12);
+}
+
+.app-container.app-theme-dark {
+  --color-divider: #323232;
+
+  --color-txt-primary: #cfcfcf;
+  --color-txt-secondary: #a0a0a0;
+  --color-txt-tertiary: #7b7b7b;
+  --color-txt-other: #474747;
+
+  --color-bg-primary: #000000;
+  --color-bg-normal: #111111;
+
+  --app-navbar__home_color: #000000;
+  --app-navbar__home_background: rgba(255, 255, 255, 0.08);
+}

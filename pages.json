@@ -1,0 +1,12 @@
+{
+  "pages": [{
+    "path": "pages/main/index"
+  }],
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "pageOrientation": "portrait",
+    "app-plus": {
+      "bounce": "none"
+    }
+  }
+}

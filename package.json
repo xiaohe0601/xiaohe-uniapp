@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "dayjs": "^1.11.5",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
