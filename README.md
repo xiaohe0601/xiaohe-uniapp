@@ -45,23 +45,23 @@ uniapp-vue2-hbx-starter
 |   └-user.js                   // == 示例
 |
 ├─extensions                    // 【扩展】(Vue prototype 扩展 [即this.$...], 以及uni扩展)
-|   └-index.js                  // (内置 => $date: dayjs; $device: 设备相关工具方法; $string: 字符串相关工具方法; uni.simulateSwitchTab: 模拟uni.switchTab [详细请查看下方<自定义tabbar>部分])
+|   └-index.js                  // (内置 => $date: dayjs; $device: 设备相关工具方法; $string: 字符串相关工具方法; uni.simulateSwitchTab: 模拟uni.switchTab, 详细请查看下方(#自定义tabbar)部分)
 |
 ├─filters                       // 【Vue filter】 (简单用法: {{ someValue | defaults }}, 更多用法请查阅Vue 2官方文档 [https://v2.cn.vuejs.org/v2/guide/filters.html])
 |   └-index.js                  // == 全局filter (内置 => defaults: 默认值; sources: 处理相对路径)
 |
 ├─mixins                        // 【Vue mixin】
 |   ├─index.js                  // == 全局mixin (内置 => preventDefault: 只是一个空方法, 可自行扩展; destroyToastTimer: 销毁toastTimer定时器)
-|   └-lifecycle.js              // == 生命周期mixin (在pages.json中配置的页面使用, 用于向页面内组件传递当前页面所处的生命周期, 一般是app-container组件使用 [详细请查看下方<页面结构>部分])
+|   └-lifecycle.js              // == 生命周期mixin (在pages.json中配置的页面使用, 用于向页面内组件传递当前页面所处的生命周期, 一般是app-container组件使用, 详细请查看下方(#页面结构)部分)
 |
 ├─pages                         // 【页面】
-|   ├─main                      // == 主页面 (默认是tabbar容器页面 [详细请查看下方<自定义tabbar>部分])
+|   ├─main                      // == 主页面 (默认是tabbar容器页面, 详细请查看下方(#自定义tabbar)部分)
 |   |  	├─index.vue             // ==== tabbar容器页面
 |   |  	├─components            // ==== 主页面组件 (一般用于存放tab页面 [使用组件模拟页面])
 |   |  	|   ├─TheHome.vue       // ====== tab页面: 主页
 |   |  	|   └-TheMine.vue       // ====== tab页面: 我的
 |
-├─service                       // 【接口定义】 [详细请查看下方<网络请求>部分]
+├─service                       // 【接口定义】 详细请查看下方(#网络请求)部分
 |
 ├─static                        // 【静态资源】
 |   ├─icons                     // == 图标
@@ -91,7 +91,7 @@ uniapp-vue2-hbx-starter
 |   └-string.js                 // == 字符串相关工具方法
 |
 ├─.editorconfig                 // editorconfig
-├─.env                          // 通用环境变量 (注意与Vue cli中环境变量的差异) [详细请查看下方<环境变量>部分]
+├─.env                          // 通用环境变量 (注意与Vue cli中环境变量的差异, 详细请查看下方(#环境变量)部分)
 ├─.env.development              // 开发环境变量
 ├─.env.production               // 生产环境变量
 ├─.gitignore                    // git忽略文件
@@ -143,8 +143,8 @@ uniapp-vue2-hbx-starter
 
 1. 将 `lifecycleMixin` 引入 (`import`) 并混入 (`mixin`) 当前页面;
 1. `AppContainer` 组件作为页面的根元素(已全局导入, 无需 `import`), 并将 `lifecycleMixin` 中的 `thePercept` 传给 `AppContainer` 的 `percept` 参数;
-1. 若页面需要导航栏, 则添加 `AppNavbar` 组件至页面中(已全局导入, 无需 `import`), 组件 `fixed` 参数默认为 `true`, 导航栏会自动固定在页面最上方, 并且在文档流中添加一个导航栏同等高度的 `placeholder` 来填充导航栏的位置 [详细请查看下方<自定义导航栏>部分];
-1. 根据需要可以在页面中可滚动到屏幕底部的元素末尾添加 `AppSafearea` 组件(安全区域)来垫高滚动内容 [详细请查看下方<安全区域>部分]。
+1. 若页面需要导航栏, 则添加 `AppNavbar` 组件至页面中(已全局导入, 无需 `import`), 组件 `fixed` 参数默认为 `true`, 导航栏会自动固定在页面最上方, 并且在文档流中添加一个导航栏同等高度的 `placeholder` 来填充导航栏的位置, 详细请查看下方[自定义导航栏](#自定义导航栏)部分;
+1. 根据需要可以在页面中可滚动到屏幕底部的元素末尾添加 `AppSafearea` 组件(安全区域)来垫高滚动内容, 详细请查看下方[安全区域](#安全区域)部分。
 
 ### 🍕 内置组件
 
@@ -153,20 +153,23 @@ uniapp-vue2-hbx-starter
 > 本组件用于容纳页面内的所有元素, 并向子元素提供Css变量, 实现主题切换等功能。注意：本组件应为页面的根组件。
 
 ##### Props
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |percept|所在页面是否被展示 (传入 `lifecycleMixin` 中的 `thePercept`)|Boolean|-|`false`|
 |lifecycle|所在页面生命周期 (传入 `lifecycleMixin` 中的 `theLifecycle`)|String|-|`null`|
 |background-color|背景颜色|String|-|var(--color-bg-normal)|
-|status-front-color|状态栏前景色 (若为 `auto` 则会根据当前主题的 `brightness` 自动变化颜色 [详细请查看下方<主题>部分])|String|auto / #ffffff / #000000|auto|
+|status-front-color|状态栏前景色 (若为 `auto` 则会根据当前主题的 `brightness` 自动变化颜色, 详细请查看下方[主题](#主题)部分)|String|auto / #ffffff / #000000|auto|
 |status-background-color|状态栏背景色 (`auto` 同上)|String|auto / 16进制颜色值|auto|
 
 ##### Slots
+
 |名称|说明|
 |---|---|
 |default|页面内容|
 
 ##### CssVars (样式定制)
+
 |名称|说明|默认值|
 |---|---|---|
 |--app-main__space_vertical|纵向空隙大小|20rpx|
@@ -176,6 +179,7 @@ uniapp-vue2-hbx-starter
 |--app-main__txt_color|文字颜色|var(--color-txt-primary)|
 
 ##### CssVars (组件提供)
+
 |名称|说明|
 |---|---|
 |--app-navbar__status_height|状态栏高度|
@@ -187,16 +191,18 @@ uniapp-vue2-hbx-starter
 |--app-safearea__body_right|右侧安全区域大小|
 |--app-safearea__body_bottom|下方安全区域大小|
 |--app-safearea__body_left|左侧安全区域大小|
-|--app-scroller__cushion_height|`app-scroller` 垫高高度 [详细请查看下方<z-paging>部分]|
+|--app-scroller__cushion_height|`app-scroller` 垫高高度, 详细请查看下方[z-paging](#z-paging)部分|
 
 ##### 相关说明
-- 由于 `AppContainer` 的高度为 `100%`, 通过 `overflow-y: auto;` 实现页面滚动, 这将导致页面滚动相关事件(`onReachBottom`、`onPageScroll` 等)无法触发, 若需监听页面滚动事件, 可通过 `scroll-view` 等方式实现 (相关注意事项请查看下方<自定义导航栏>部分)。
+
+- 由于 `AppContainer` 的高度为 `100%`, 通过 `overflow-y: auto;` 实现页面滚动, 这将导致页面滚动相关事件(`onReachBottom`、`onPageScroll` 等)无法触发, 若需监听页面滚动事件, 可通过 `scroll-view` 等方式实现 (相关注意事项请查看下方[自定义导航栏](#自定义导航栏)部分)。
 
 #### AppNavbar
 
 > 本组件用于自定义导航栏 (即navbar)。
 
 ##### Props
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |show|是否展示导航栏|Boolean|-|`true`|
@@ -223,12 +229,14 @@ uniapp-vue2-hbx-starter
 |auto-back|点击navbar左侧是否触发navigateBack|Boolean|-|`true`|
 
 ##### Events
+
 |事件|说明|回调参数|
 |---|---|---|
 |left-tap|点击navbar左侧|-|
 |right-tap|点击navbar右侧|-|
 
 ##### Slots
+
 |名称|说明|
 |---|---|
 |custom|标题栏内容 (`use-custom-slot` 为 `true` 时有效)|
@@ -237,6 +245,7 @@ uniapp-vue2-hbx-starter
 |right|标题栏内容 (`use-right-slot` 为 `true` 且无 `custom` 时有效)|
 
 ##### CssVars (样式定制)
+
 |名称|说明|默认值|
 |---|---|---|
 |--app-navbar__body_border|下边框样式|2rpx solid rgba(0, 0, 0, 0.05)|
@@ -247,8 +256,9 @@ uniapp-vue2-hbx-starter
 |--app-navbar__icon_size|左右侧图标大小|32rpx|
 
 ##### 自定义导航栏
+
 - 项目中 `globalStyle.navigationStyle` 已设置为 `custom`, 页面中若需导航栏可以使用 `AppNavbar` 组件或其他自定义方式实现;
-- 自定义导航栏后页面级的下拉刷新时, 自定义导航栏也会被一并下拉, 若不满足需求可以使用 `z-paging` 或 `scroll-view` 等其他方式实现自定义下拉刷新 [详细请查看下方<z-paging>部分];
+- 自定义导航栏后页面级的下拉刷新时, 自定义导航栏也会被一并下拉, 若不满足需求可以使用 `z-paging` 或 `scroll-view` 等其他方式实现自定义下拉刷新, 详细请查看下方[z-paging](#z-paging)部分;
 - 注意：在有 `AppNavbar` 的页面中, 若需要某个元素占满屏幕, 需要考虑 `AppNavbar` 的`placeholder` 所占用的高度, 一般来说有如下几种做法:
 	1. 使用 `css` 中的 `calc` 计算出页面中除去 `AppNavbar` 后剩余空间的高度
 		- 使用 `VueX` 的 `getters`
@@ -256,14 +266,14 @@ uniapp-vue2-hbx-starter
 		<template>
 		  <app-container :percept="thePercept">
 		    <app-navbar title="页面标题"></app-navbar>
-
+		
 		    <view :style="{height: `calc(100% - ${navigationBarHeight}px)`}"></view>
 		  </app-container>
 		</template>
-
+		
 		<script>
 		  import mapGetters from "vuex";
-
+		
 		  export default {
 		    // ...
 		    computed: {
@@ -280,11 +290,11 @@ uniapp-vue2-hbx-starter
 		<template>
 		  <app-container :percept="thePercept">
 		    <app-navbar title="页面标题"></app-navbar>
-
+		
 		    <view class="page-container"></view>
 		  </app-container>
 		</template>
-
+		
 		<style lang="scss" scoped>
 		  .page-container {
 		    height: calc(100% - var(--app-navbar__body_height));
@@ -297,17 +307,17 @@ uniapp-vue2-hbx-starter
 		<template>
 		  <app-container :percept="thePercept">
 		    <app-navbar title="页面标题" :placeholder="false"></app-navbar>
-
+		
 		    <view class="page-container">
 		      <view :style="{height: `${navigationBarHeight}px`}"></view>
-
+		
 		    </view>
 		  </app-container>
 		</template>
-
+		
 		<script>
 		  import mapGetters from "vuex";
-
+		
 		  export default {
 		    // ...
 		    computed: {
@@ -318,7 +328,7 @@ uniapp-vue2-hbx-starter
 		    // ...
 		  }
 		</script>
-
+		
 		<style lang="scss" scoped>
 		  .page-container {
 		    height: 100%;
@@ -330,19 +340,19 @@ uniapp-vue2-hbx-starter
 		<template>
 		  <app-container :percept="thePercept">
 		    <app-navbar title="页面标题" :placeholder="false"></app-navbar>
-
+		
 		    <view class="page-container">
 		      <view class="page-container__cushion"></view>
-
+		
 		    </view>
 		  </app-container>
 		</template>
-
+		
 		<style lang="scss" scoped>
 		  .page-container {
 		    height: 100%;
 		  }
-
+		
 		  .page-container__cushion {
 		    height: var(--app-navbar__body_height);
 		  }
@@ -354,6 +364,7 @@ uniapp-vue2-hbx-starter
 > 本组件用于自定义底部导航栏 (即tabbar)。
 
 ##### Props
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |* value / v-model|当前选中组件名称 (对应 `items[].component`)|String|-|-|
@@ -364,6 +375,7 @@ uniapp-vue2-hbx-starter
 |z-index|css中的z-index|Number|-|`50`|
 
 ##### AppTabbarItem
+
 |属性|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |name|名称 (展示文字)|string|-|-|
@@ -373,11 +385,13 @@ uniapp-vue2-hbx-starter
 |badgeKey|badge取值 (需提供Vuex中的getters)|string|-|-|
 
 ##### Events
+
 |事件|说明|回调参数|
 |---|---|---|
 |input|当前选中组件名称变化|value: 当前选中组件名称|
 
 ##### CssVars (样式定制)
+
 |名称|说明|默认值|
 |---|---|---|
 |--app-tabbar__body_height|高度|120rpx|
@@ -398,6 +412,7 @@ uniapp-vue2-hbx-starter
 |--app-tabbar__badge_background|badge背景颜色|#ff6d2c|
 
 ##### 自定义tabbar
+
 ```vue
 <template>
   <app-container :percept="thePercept">
@@ -469,7 +484,9 @@ uniapp-vue2-hbx-starter
   }
 </script>
 ```
->  上方示例是一个tabbar容器页面的基本框架 `/pages/main/index.vue`
+
+> 上方示例是一个tabbar容器页面的基本框架 `/pages/main/index.vue`
+
 ```vue
 <template>
   <app-container :percept="percept">
@@ -509,11 +526,12 @@ uniapp-vue2-hbx-starter
   }
 </script>
 ```
->  上方示例是一个tab页面的基本框架 `/pages/main/components/TheHome.vue`
+
+> 上方示例是一个tab页面的基本框架 `/pages/main/components/TheHome.vue`
 
 - 为了实现tabbar的灵活控制(包括样式、层级、显示/隐藏等), 并且能够多端统一, 项目中采用了以组件模拟页面的方案, 并使用 `v-if` 和 `v-show` 模拟tab页面的功能 (即 第一次展示tab页面的时候, 页面才开始挂载, 离开页面后不销毁页面实例), 同时实现了 `uni.simulateSwitchTab` 方法用于模拟 `uni.switchTab`  便于tab页面的跳转 (由于是单页实现方案, 若tab页面功能复杂则会影响应用性能, 若对性能要求严苛可自行改造其他方案);
 - tabbar容器页面作为tab页面的入口, 也就承担了为各个tab页面分发数据的职责, 例如 `lifecycleMixin` 中的数据以及其他额外的需要传递给某个tab页面的参数, 通过父子组件传参的形式实现; tab页面若需要传参给tabbar容器页面, 可通过 `$emit` 或者 `VueX` 等方式实现;
-- 若需要启动tabbar容器页面时指定展示某个tab页面, 可通过路由跳转的 `query.component` 指定, 也可以调用 `uni.simulateSwitchTab({ url: "某个tab页面的组件名称" })` 来实现跳转; 示例如下
+- 若需要启动tabbar容器页面时指定展示某个tab页面, 可通过路由跳转的 `query.component` 指定, 也可以调用 `uni.simulateSwitchTab({ url: "某个tab页面的组件名称" })` 来实现跳转, 示例如下
 ```javascript
 // tabbar容器页面启动时指定
 uni.reLaunch({
@@ -537,6 +555,7 @@ uni.simulateSwitchTab({
 > 本组件用于安全区域占位, 且可提供额外垫高。
 
 ##### Props
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |direction|安全区域方向|String|top / right / bottom / left|bottom|
@@ -544,6 +563,7 @@ uni.simulateSwitchTab({
 |cushion-height|垫高高度 (单位: rpx)|Number|-|`60`|
 
 ##### 安全区域
+
 - 一般情况, 直接将 `AppSafearea` 添加至 `AppContainer` 末尾
 ```vue
 <template>
@@ -606,6 +626,7 @@ uni.simulateSwitchTab({
 > 本组件用于视频播放, APP-PLUS端使用iframe实现同层渲染。
 
 ##### Props
+
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
 |* vid|播放器id|String|-|-|
@@ -653,7 +674,9 @@ uni.simulateSwitchTab({
 |show-background-playback-button|是否展示后台音频播放按钮|Boolean|-|`false`|
 
 ##### Events
+
 > 注意: 由于 `APP-PLUS` 端使用 `iframe` 实现同层渲染, 故 `events` 与 `非APP-PLUS` 端有所差异, 且均无回调参数, 下表中回调参数仅 `非APP-PLUS` 端有效, `APP-PLUS` 端可通过组件 `ref` 的 `instance` 属性访问 `video` 元素实例以及其他 `video` 组件相关操作, 若与 `非APP-PLUS` 端有差异请注意条件编译 。
+
 |事件|说明|回调参数|
 |---|---|---|
 |play|开始/继续播放|-|
@@ -686,6 +709,7 @@ uni.simulateSwitchTab({
 |volumechange|音量发生变化|-|
 
 ##### 相关说明
+
 - `video` 实例的使用 (`APP-PLUS` 端为 `HTMLVideoElement`, `非APP-PLUS` 端为 `VideoContext`):
 ```vue
 <template>
@@ -712,6 +736,7 @@ uni.simulateSwitchTab({
 > 项目中对uniapp的网络请求方法做了许多实用的封装, 让网络请求不再繁琐, 仅需1行代码即可发起请求。(`/utils/network.js`)
 
 ##### 请求方式
+
 - `network.js` 中对不同的请求方式导出了相应的方法, 所有的方法都基于统一的 `_request` 方法实现, 除请求方式不同以外, 其余用法均一致。
 	- GET: `_get(url, data, config)`
 	- DELETE: `_delete(url, data, config)`
@@ -729,7 +754,7 @@ uni.simulateSwitchTab({
 		- `progress` 参数为上传进度回调函数
 	- 下载: `_download(url, progress, config)`
 		- `progress` 参数为下载进度回调函数
-- 以上方法中的 `config` 参数详细请查看下方<请求配置>部分
+- 以上方法中的 `config` 参数详细请查看下方[请求配置](#请求配置)部分
 - 接口定义推荐写在 `service` 目录下, 按不同的模块或接口类型区分不同的js文件定义, 并且在 `/service/index.js` 中统一导出, 示例如下
 ```javascript
 // service/user.js
@@ -748,18 +773,20 @@ export const apiRequestNoToast = () => _post("/test", {}, {
   toastError: false
 });
 ```
+
 ```javascript
 // service/index.js
 
 export * from "./user.js";
 ```
+
 ```javascript
 import { apiSignInByWxCode } from "@/service";
 
 const { code } = await uni.pro.login();
 
 // 在async方法中可直接使用await, 若业务无异常则直接解构出data即可
-// 若需处理异常情况, 请查看下方<异常处理>部分
+// 若需处理异常情况, 请查看下方(#异常处理)部分
 const { data } = await apiSignInByWxCode({
   "code": code
 });
@@ -773,9 +800,10 @@ apiSignInByWxCode({
 });
 ```
 - **注意:** 上方示例中解构出的 `data` 是后端服务统一响应体中的数据字段, 若需要获取原始数据, 可解构出 `raw` 字段
-- 针对不同后端服务统一响应体的字段不同的情况, 可在全局配置(`/utils/config.js`)中配置 `http.fieldCode`、`http.fieldMessage`、`http.fieldData` 字段, 详细请查看下方<请求配置>部分
+- 针对不同后端服务统一响应体的字段不同的情况, 可在全局配置(`/utils/config.js`)中配置 `http.fieldCode`、`http.fieldMessage`、`http.fieldData` 字段, 详细请查看下方[请求配置](#请求配置)部分
 
 ##### 异常处理
+
 - 我们通常认为的请求异常即为接口响应的code字段值与定义的成功值不同, 一般的业务异常直接弹出错误提示并且逻辑停止执行即可, token异常则退出登录, 这些情况项目中已自动处理, 若有其他的业务需要可手动catch请求方法, 在请求异常的情况下做自己的业务, 示例如下
 ```javascript
 import { apiSignInByWxCode } from "@/service";
@@ -792,7 +820,7 @@ try {
   // 这里可以处理异常情况
 
   // err = { ...response, state, data, raw }
-  // 其中state的取值可在/utils/config.js中配置, 详细请查看下方<请求配置>部分
+  // 其中state的取值可在/utils/config.js中配置, 详细请查看下方[请求配置](#请求配置)部分
 }
 
 apiSignInByWxCode({
@@ -803,13 +831,15 @@ apiSignInByWxCode({
   // Promise形式同理
 });
 ```
-- 此处涉及的相关配置项, 如 `code` 字段的请求成功值、token失效值等, 亦查看下方<请求配置>部分
+- 此处涉及的相关配置项, 如 `code` 字段的请求成功值、token失效值等, 亦查看下方[请求配置](#请求配置)部分
 
 ##### 加载动画
+
 - 当请求长时间未收到响应时, 会自动展示加载中的弹窗 (即 `uni.showLoading`), 加载动画的延迟时间可在全局配置中的 `http.requestLoadingDelay` 配置, 若请求在此时间内响应, 则不会显示加载动画
-- 加载动画提示文字等其他配置, 详细请查看下方<请求配置>部分
+- 加载动画提示文字等其他配置, 详细请查看下方[请求配置](#请求配置)部分
 
 ##### token处理
+
 - 当 `storage` 中存在 `token` 时, 请求会自动携带至 `header` 中, `token` 存储位置可在全局配置的 `storage.token` 中配置
 - 存储 `token` 方式如下
 ```javascript
@@ -822,6 +852,7 @@ uni.setStorageSync(Config.storage.token, data.token);
 ```
 
 ##### 中断请求
+
 - 在某些场景下, 当请求还未响应时, 可以手动中断请求, 此时可在 `config` 中传入 `signal` 属性, 请求发起时, 请求 `task` 会回传至`signal.task` 属性, 示例如下
 ```javascript
 // 接口定义, 传入signal属性至config参数中
@@ -841,9 +872,11 @@ signal.task?.abort();
 ```
 
 ##### 请求配置
+
 > 请求配置分为全局配置和自定义配置
 
 - **全局配置**
+
 > `/utils/config.js` 中的 `http` 部分
 
 |参数|说明|类型|可选值|默认值|
@@ -874,6 +907,7 @@ signal.task?.abort();
 |redirectAuthAction|😀 登录失效页重定向方式|string / null|`null` / reLaunch / switchTab / navigateTo / simulateSwitchTab|`null`|
 
 - **自定义配置**
+
 > 接口定义中的 `config` 参数
 
 |参数|说明|类型|可选值|默认值|
@@ -909,6 +943,7 @@ signal.task?.abort();
 	  }
 	}
 	```
+
 	```javascript
 	// 假设请求响应体如上方所示, 那么对应的字段配置如下
 	{
@@ -934,6 +969,7 @@ signal.task?.abort();
 	  }
 	}
 	```
+
 	```javascript
 	// 假设请求响应体如上方所示, 那么对应的字段配置如下
 	{
@@ -947,7 +983,7 @@ signal.task?.abort();
 	  // ...
 	}
 	```
-	- `requestBaseUrl` 和 `sourceBaseUrl` 的默认取值是对应的环境变量, 关于环境变量的使用详细请查看下方<环境变量>部分
+	- `requestBaseUrl` 和 `sourceBaseUrl` 的默认取值是对应的环境变量, 关于环境变量的使用详细请查看下方[环境变量](#环境变量)部分
 	-  内置 `filter` 中的 `sources` 可用于快速拼接 `sourceBaseUrl` 前缀, 用法如下
 	```vue
 	<image :src="url | sources"></image>
@@ -974,7 +1010,7 @@ signal.task?.abort();
 
 > `/utils/config.js` 为项目的全局配置文件 (注意: 请勿运行时修改配置文件数据, 以免造成意料之外的错误)
 
-除了上方<网络请求>部分提到的配置以外, 还有一些其他可配置项如下所示
+除了上方[网络请求](#网络请求)部分提到的配置以外, 还有一些其他可配置项如下所示
 
 > 默认值 `Config.defaults`
 
@@ -990,14 +1026,14 @@ signal.task?.abort();
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|appTheme|App主题 (可自行扩展, 详细请查看下方<主题>部分)|string|light / dark|-|
+|appTheme|App主题 (可自行扩展, 详细请查看下方[主题](#主题)部分)|string|light / dark|-|
 |brightness|主题亮度 (一般用于控制状态栏颜色等)|string|light / dark|-|
 
 > 路由 `Config.route`
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|simulateTabbarPage|tabbar容器页面地址 (详细请查看上方<自定义tabbar>部分)|string|-|/pages/main/index|
+|simulateTabbarPage|tabbar容器页面地址 (详细请查看上方[自定义tabbar](#自定义tabbar)部分)|string|-|/pages/main/index|
 
 > 持久化存储 `Config.storage`
 
@@ -1017,6 +1053,7 @@ const token = uni.getStorageSync(Config.storage.token);
 ```
 
 ### 🛸 环境变量
+
 - 由于项目采用的是HBuilderX创建方式, 默认不支持类似于Vue cli创建方式的env环境变量, 故项目中模仿Vue cli使用 `dotenv` 实现了env环境变量, 具体实现可查看 `vue.config.js`, 也可根据实际需要做对应修改
 	- 之所以不采用Vue cli创建项目, 是因为HBuilderX对cli项目的支持并不友好, 例如不能自动跳转文件对应页面, App在线打包时基础库更新麻烦等
 	- 同时因为HBuilderX创建的项目使用的编译器是集成在HBuilderX中的, 所以当HBuilderX有新版本时请及时更新, 以免造成一些未知的异常
@@ -1031,30 +1068,31 @@ const token = uni.getStorageSync(Config.storage.token);
 		1. 默认情况下, 会自动解析值的类型[包括`number`、`boolean`、`null`、`undefined`以及`Json`类型], 若无法解析则会以字符串处理 (例: UNI_APP_EXAMPLE=true)
 		1. 若需要强制为字符串类型, 则以(`` `)符号开头即可 (例: UNI_APP_EXAMPLE=`true)
 	- `ENVIRONMENT` 可指定当前环境 (影响配置文件读取位置)
-
 		- default: 运行时 -> .env.development, 发行时 -> .env.production
 		- 其他值: .env.[ENVIRONMENT]
 		```env
 		# .env 所有环境均会读取该文件
-
+		
 		# 指定当前环境
 		ENVIRONMENT=default
-
+		
 		# 一些其他的环境变量, 所有环境都能访问到
 		UNI_APP_TEST=test
 		```
+
 		```env
 		# .env.development 开发环境会读取该文件, 可在.env中手动指定ENVIRONMENT为development
-
+		
 		# 请求基地址
 		UNI_APP_REQUEST_BASE_URL=http://192.168.0.1:8888
 		# 资源基地址
 		UNI_APP_SOURCE_BASE_URL=http://192.168.0.1:8888
 		```
+
 		```env
 		# .env.local 可在.env中手动指定ENVIRONMENT为local, 则会读取该文件
 		# 该文件已在.gitignore中忽略, 可用于本地调试时使用 (若需使用请手动创建该文件)
-
+		
 		# 请求基地址
 		UNI_APP_REQUEST_BASE_URL=http://192.168.0.1:8888
 		# 资源基地址
@@ -1165,7 +1203,7 @@ console.log("经纬度", longitude, latitude);
 	    </view>
 	  </app-container>
 	</template>
-
+	
 	<style lang="scss" scoped>
 	  .my-button {
 	    // 若在scoped节点下, 需要使用::v-deep包裹, 反之, 若不在scoped节点下则无须使用::v-deep
@@ -1196,17 +1234,17 @@ console.log("经纬度", longitude, latitude);
 	<view class="app-image">
 	  <u-image src="图片url"></u-image>
 	</view>
-
+	
 	<!-- app-popup (app-modal, app-picker 同理) -->
 	<view class="app-popup">
 	  <u-popup :show="show"></u-popup>
 	</view>
-
+	
 	<!-- app-parse -->
 	<view class="app-parse">
 	  <u-parse content="富文本内容"></u-parse>
 	</view>
-
+	
 	<!-- 横向按钮组 -->
 	<view class="app-buttons horizontal">
 	  <view class="app-button">
@@ -1237,23 +1275,23 @@ console.log("经纬度", longitude, latitude);
 	```vue
 	<app-container :percept="thePercept">
 	  <app-navbar title="页面标题"></app-navbar>
-
+	
 	  <!-- 若需要修改css变量, 建议在外层view的class或style中配置 -->
 	  <view class="app-scroller"
 	        :style="{height: `calc(100% - ${navigationBarHeight}px)`}">
 	    <z-paging ref="scroller"
 	              v-model="records"
 	              @query="requestRecords">
-
+	
 	      <!-- 列表内容 -->
-
+	
 	    </z-paging>
 	  </view>
 	</app-container>
 	```
-
+	
 	*CssVars (样式定制)*
-
+	
 	|名称|说明|默认值|
 	|---|---|---|
 	|--app-scroller__cushion_height|底部安全区域高度|`safeAreaInsets.bottom + uni.upx2px(60)`|
