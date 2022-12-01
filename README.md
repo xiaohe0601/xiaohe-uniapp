@@ -26,6 +26,23 @@
 - 🌭 支持免费商用
 - 🥗 更多特性等你发掘...
 
+### 🧭 使用指南
+
+1. `clone` 或 `download` 项目代码至本地
+1. 使用最新版 `HBuilderX` 打开项目, 进入 `manifest.json` 文件
+	- 基础配置
+		- uni-app应用标识(AppID): 点击 `重新获取` 按钮以获取自己的AppID, 或者在源码视图中填写已有的 `appid`
+		- 应用名称、应用版本名称、应用版本号: 根据实际情况填写
+	- 小程序配置
+		- 小程序AppID: 填写自己的小程序AppID, 申请方式参考各家小程序官方文档
+1. 进入项目根目录, 执行 `yarn` (推荐) 或 `npm install` 安装依赖 (注意不要混用依赖管理工具)
+1. 代码格式化风格配置 (推荐使用, 但不是必须)
+	- 复制 `/.settings/jsbeautifyrc.js` 中的内容
+	- 打开 `jsbeautify` 配置文件 (HBuilderX -> 工具 -> 设置 -> 插件配置 -> jsbeautify -> 打开文件jsbeautifyrc.js进行配置)
+	- 将复制的内容替换 `jsbeautifyrc.js` 原本的内容即可
+1. [运行项目](https://uniapp.dcloud.net.cn/quickstart-hx.html#%E8%BF%90%E8%A1%8Cuni-app)
+1. [发行项目(即所谓的打包)](https://uniapp.dcloud.net.cn/quickstart-hx.html#%E5%8F%91%E5%B8%83uni-app)
+
 ### 📇 目录结构
 
 ```
@@ -1195,7 +1212,7 @@ console.log("经纬度", longitude, latitude);
 ### 🏍️ 其他
 
 - [uview-ui](https://www.uviewui.com)
-	- 由于 `uview-ui` 的组件都将 `virtualHost` 属性设置为 `true`, 其目的是将 `微信小程序` 中的自定义节点设置成虚拟的, 使其更加接近Vue组件的表现, 能更好的使用flex属性, 但是这同时也导致了一些问题, 比如微信小程序端不直接给 `uview-ui` 的组件添加 `class` (其他端不受影响)。所以为了能够更好的多端兼容, 若需要给 `uview-ui` 的组件添加 `class` 时, 在其外层使用 `view` 包裹, 并将 `class` 添加至外层 `view` 上, 然后样式中在外层 `class` 下选择 `uview-ui` 组件的 `class` 进而去修改样式, 示例如下
+	- 由于 `uview-ui` 的组件都将 `virtualHost` 属性设置为 `true`, 其目的是将 `微信小程序` 中的自定义节点设置成虚拟的, 使其更加接近Vue组件的表现, 能更好的使用flex属性, 但是这同时也导致了一些问题, 比如微信小程序端不直接给 `uview-ui` 的组件添加 `class`。`manifest` 中的 `mergeVirtualHostAttributes` 参数为 `true` 时, 虽然可以合并 `class` 至 `uview-ui` 组件上, 但是经测试并不能成功应用自定义 `class` 的属性, 所以为了能够更好的多端兼容, 若需要给 `uview-ui` 的组件添加 `class` 时, 在其外层使用 `view` 包裹, 并将 `class` 添加至外层 `view` 上, 然后样式中在外层 `class` 下选择 `uview-ui` 组件的 `class` 进而去修改样式, 示例如下
 	```vue
 	<template>
 	  <app-container :percept="thePercept">
