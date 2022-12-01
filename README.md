@@ -195,7 +195,8 @@ uniapp-vue2-hbx-starter
 
 ##### 相关说明
 
-- 由于 `AppContainer` 的高度为 `100%`, 通过 `overflow-y: auto;` 实现页面滚动, 这将导致页面滚动相关事件(`onReachBottom`、`onPageScroll` 等)无法触发, 若需监听页面滚动事件, 可通过 `scroll-view` 等方式实现 (相关注意事项请查看下方[自定义导航栏](#自定义导航栏)部分)。
+- 现已支持使用页面滚动相关事件
+- ~~由于 `AppContainer` 的高度为 `100%`, 通过 `overflow-y: auto;` 实现页面滚动, 这将导致页面滚动相关事件(`onReachBottom`、`onPageScroll` 等)无法触发, 若需监听页面滚动事件, 可通过 `scroll-view` 等方式实现 (相关注意事项请查看下方[自定义导航栏](#自定义导航栏)部分)~~。
 
 #### AppNavbar
 
