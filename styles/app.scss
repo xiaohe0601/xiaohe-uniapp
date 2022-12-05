@@ -197,6 +197,10 @@
     border-bottom: 1rpx solid var(--color-divider);
   }
 
+  .u-toolbar__title {
+    color: var(--color-txt-primary) !important;
+  }
+
   .u-toolbar__wrapper__confirm, .u-toolbar__wrapper__cancel {
     padding: 0 40rpx !important;
     font-size: 34rpx !important;
