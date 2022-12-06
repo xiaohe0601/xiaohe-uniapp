@@ -14,9 +14,9 @@
    *
    * @property {Boolean}  percept                                       所在页面是否被展示 (传入lifecycleMixin中的thePercept)
    * @property {String}   lifecycle                                     所在页面生命周期 (传入lifecycleMixin中的theLifecycle)
-   * @property {String}   background-color                              背景颜色
-   * @property {String}   status-front-color = [auto|#ffffff|#000000]   状态栏前景色
-   * @property {String}   status-background-color                       状态栏背景色 ["auto", 16进制颜色值]
+   * @property {String}   backgroundColor                               背景颜色
+   * @property {String}   statusFrontColor = [auto|#ffffff|#000000]     状态栏前景色
+   * @property {String}   statusBackgroundColor                         状态栏背景色 ["auto", 16进制颜色值]
    *
    * @example <app-container :percept="thePercept"></app-container>
    */
