@@ -53,6 +53,10 @@
 
   --app-navbar__home_color: #ffffff;
   --app-navbar__home_background: rgba(0, 0, 0, 0.12);
+
+  --app-picker__mask_background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)),
+  linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
+  --app-picker__loading_background: rgba(255, 255, 255, 0.86);
 }
 
 .app-container.app-theme-dark {
@@ -68,4 +72,8 @@
 
   --app-navbar__home_color: #000000;
   --app-navbar__home_background: rgba(255, 255, 255, 0.08);
+
+  --app-picker__mask_background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6)),
+  linear-gradient(0deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6));
+  --app-picker__loading_background: rgba(0, 0, 0, 0.8);
 }

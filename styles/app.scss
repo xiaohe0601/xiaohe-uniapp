@@ -231,6 +231,10 @@
   .u-picker__view__column__item {
     color: var(--color-txt-primary) !important;
   }
+
+  .u-picker--loading {
+    background-color: var(--app-picker__loading_background) !important;
+  }
 }
 
 .app-scroller {
