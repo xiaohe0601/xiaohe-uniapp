@@ -267,6 +267,12 @@
   }
 }
 
+.app-swipe-action {
+  .u-swipe-action-item__content {
+    background-color: var(--color-bg-primary) !important;
+  }
+}
+
 .app-parse {
   video {
     width: 100% !important;
