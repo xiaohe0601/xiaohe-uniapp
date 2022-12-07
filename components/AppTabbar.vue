@@ -42,7 +42,8 @@
   /**
    * AppTabbar App底部导航栏
    *
-   * @description 本组件用于自定义底部导航栏 (即tabbar)。
+   * @author        小何同学 (MyHdg0601)
+   * @description   本组件用于自定义底部导航栏 (即tabbar)。
    *
    * @property {String}   value     当前选中组件名称 (对应items[].component) <支持v-model>
    * @property {Array}    items     tabs配置 (AppTabbarItem[])

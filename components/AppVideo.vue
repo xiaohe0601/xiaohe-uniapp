@@ -93,7 +93,8 @@
   /**
    * AppVideo App视频组件
    *
-   * @description 本组件用于视频播放, APP-PLUS端使用iframe实现同层渲染。
+   * @author        小何同学 (MyHdg0601)
+   * @description   本组件用于视频播放, APP-PLUS端使用iframe实现同层渲染。
    *
    * @property {String}         vid                                     播放器id
    * @property {String}         src                                     要播放视频的资源地址

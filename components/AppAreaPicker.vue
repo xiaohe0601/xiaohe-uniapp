@@ -27,7 +27,8 @@
   /**
    * AppAreaPicker 地区选择器
    *
-   * @description 本组件地区选择, 传入地区编码即可自动定位至目标地区。
+   * @author        小何同学 (MyHdg0601)
+   * @description   本组件地区选择, 传入地区编码即可自动定位至目标地区。
    *
    * @property {String}   code                地区编码
    * @property {Boolean}  show                是否展示选择器 <支持.sync>
