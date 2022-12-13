@@ -1,5 +1,5 @@
 /**
- * @file      网络请求工具 (基于uni.request封装)
+ * @description 网络请求工具 (基于uni.request封装)
  *
  * @version   2.0.0
  * @author    小何同学 (MyHdg0601)
