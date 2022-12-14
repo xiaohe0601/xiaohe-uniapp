@@ -1,3 +1,9 @@
+/**
+ * 基于DCloud插件市场的百度图表插件封装
+ *
+ * @see {@link https://ext.dcloud.net.cn/plugin?id=4899}
+ */
+
 // 根据实际情况调整import来源
 import * as echarts from "echarts";
 
@@ -17,7 +23,7 @@ export default {
           resolve(initedInstance);
           return;
         }
-        if (echarts == null || ref == null || ref.init == null || typeof ref.init !== "function") {
+        if (ref == null || ref.init == null || typeof ref.init !== "function") {
           reject();
           return;
         }
