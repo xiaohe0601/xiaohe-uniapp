@@ -17,6 +17,17 @@
               v-show="currentComponent === 'TheMine'"
               :percept="thePercept && currentComponent === 'TheMine'"></the-mine>
 
+    <view v-if="componentsLoading" class="components-loading">
+      <u-loading-icon mode="circle"
+                      size="50rpx"
+                      color="var(--color-txt-tertiary)"
+                      inactive-color="var(--color-txt-other)"
+                      vertical
+                      text="请稍候"
+                      text-size="28rpx"
+                      text-color="var(--color-txt-tertiary)"></u-loading-icon>
+    </view>
+
     <app-tabbar v-model="currentComponent" :items="tabbarItems"></app-tabbar>
   </app-container>
 </template>
@@ -45,6 +56,7 @@
     mixins: [lifecycleMixin],
     data() {
       return {
+        componentsLoading: true,
         tabbarItems: tabbarItems,
         currentComponent: tabbarItems[0].component,
         activeComponents: {}
@@ -65,12 +77,24 @@
         this.currentComponent = component;
       }
     },
-    methods: {
+    async onReady() {
+      await this.$nextTick();
 
+      this.componentsLoading = false;
     }
   }
 </script>
 
 <style lang="scss" scoped>
-
+  .components-loading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 </style>
