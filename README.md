@@ -1497,7 +1497,7 @@ apiSignInByWxCode({
 
 	1. 网络请求
 
-- 由于网络请求是耗时操作，并且程序会将所加载的库缓存至 `Storage` 中，所以需要加载的JavaScript库不宜过大（单库大小 < `1M`，总大小 < `10M`）。加载过大的网络库对用户的网络性能及手机性能有更高的要求，所以请尽量采用更小的库来实现，例如使用 `dayjs` 替代 `moment`。
+- 由于网络请求是耗时操作，并且程序会将所加载的库缓存至 `Storage` 中，所以需要加载的JavaScript库不宜过大（单库大小 < `1M`，总大小 < `10M`）。加载过大的网络库对用户的网络性能及手机性能有更高的要求，所以请尽量采用更小的库来实现，例如使用 `dayjs` 替代 `moment`
 
 - `script.js` 中提供了多个方法，且均有各自的配置参数，具体请参看文件中的注释信息
 
@@ -1575,6 +1575,12 @@ import { dynamicRequire } from "@/utils/script.js";
 	import * as echarts from "echarts";
 
 	export default {
+	  data() {
+	    return {
+	      // 视情况在data中添加echarts
+	      echarts: null
+	    }
+	  },
 	  // 添加mounted方法以加载echarts库
 	  async mounted() {
 	    const { echarts } = await dynamicRequire(Config.cdn.echarts);
