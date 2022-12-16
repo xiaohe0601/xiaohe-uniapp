@@ -1575,10 +1575,10 @@ import { dynamicRequire } from "@/utils/script.js";
 	import * as echarts from "echarts";
 
 	export default {
+	  // 根据需要在data中添加echarts加载状态标志量
 	  data() {
 	    return {
-	      // 视情况在data中添加echarts
-	      echarts: null
+	      echartsLoaded: false
 	    }
 	  },
 	  // 添加mounted方法以加载echarts库
@@ -1586,6 +1586,7 @@ import { dynamicRequire } from "@/utils/script.js";
 	    const { echarts } = await dynamicRequire(Config.cdn.echarts);
 
 	    this.echarts = echarts;
+	    this.echartsLoaded = true;
 	  },
 	  methods: {
 	    ensureEchartsInstance(ref, instanceKey) {
