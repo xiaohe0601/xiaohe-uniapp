@@ -39,6 +39,7 @@ export const asyncMethods = [
   "compressImage",
   "chooseVideo",
   "saveVideoToPhotosAlbum",
+  "chooseMedia",
   "downloadFile",
   "request",
   "connectSocket",

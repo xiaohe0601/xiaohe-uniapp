@@ -6,6 +6,8 @@
   font-weight: var(--app-main__txt_weight);
   font-family: MiSans, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
   color: var(--app-main__txt_color);
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

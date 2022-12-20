@@ -256,38 +256,7 @@ uniapp-vue2-hbx-starter
 
 ##### 相关说明
 
-- 为了更好的滚动性能，默认情况下 `AppContainer` 采用的是页面级别的滚动，但是由于小程序端 `page` 的滚动条目前无法隐藏或者调整样式，当内容滚动时 `page` 的滚动条会覆盖到自定义导航栏上方，此时可能不满足业务要求，可以按照以下方式调整全局样式将其改造为采用 `view` 内部滚动即可隐藏滚动条，但是这将导致页面滚动相关事件(`onPageScroll`、`onReachBottom` 等)无法触发，若需监听页面滚动事件，可通过 `scroll-view` 等方式实现（相关注意事项请查看下方[自定义导航栏](#自定义导航栏)部分）
-
-	```scss
-	// styles/reset.scss
-	page {
-	  width: 100%;
-	  height: 100%;
-	  // 😀 添加下面这1行
-	  overflow: hidden;
-	}
-
-	// styles/app.scss
-	.app-container {
-	  position: relative;
-	  width: 100%;
-	  height: 100%;
-	  font-size: var(--app-main__txt_size);
-	  font-weight: var(--app-main__txt_weight);
-	  color: var(--app-main__txt_color);
-	  // 😀 添加下面这2行
-	  overflow-x: hidden;
-	  overflow-y: auto;
-
-	  // 😀 这里可以修改滚动条样式
-	  &::-webkit-scrollbar {
-	    display: none;
-	    width: 0;
-	    height: 0;
-	    color: transparent;
-	  }
-	}
-	```
+- 项目中的主题切换采用的是 `CssVar` 方案，由于小程序端目前无法给 `page` 直接添加 `class` 从而导致需要采用一个 `view`（即 `AppContainer`）做为根容器，用于接受主题相关 `class` 并承载页面内容滚动。但是这将导致页面滚动相关事件(`onPageScroll`、`onReachBottom` 等)无法触发，若需监听页面滚动事件，可通过 `scroll-view` 等方式实现（相关注意事项请查看下方[自定义导航栏](#自定义导航栏)部分）
 
 #### AppNavbar
 
