@@ -42,7 +42,7 @@
         const { direction, cushion, cushionHeight, safeAreaInsets } = this;
 
         return {
-          [(direction === "top" || direction === "bottom") ? "height" : "width"]: `${safeAreaInsets[direction] + uni.upx2px(cushion ? cushionHeight : 0)}px`
+          [(direction === "top" || direction === "bottom") ? "height" : "width"]: `${Math.max(0, safeAreaInsets[direction]) + uni.upx2px(cushion ? cushionHeight : 0)}px`
         };
       }
     }
