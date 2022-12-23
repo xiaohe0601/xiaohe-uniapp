@@ -340,7 +340,7 @@ uniapp-vue2-hbx-starter
 			</template>
 
 			<script>
-			  import mapGetters from "vuex";	
+			  import { mapGetters } from "vuex";	
 
 			  export default {
 			    // ...
@@ -391,7 +391,7 @@ uniapp-vue2-hbx-starter
 			</template>
 
 			<script>
-			  import mapGetters from "vuex";
+			  import { mapGetters } from "vuex";
 
 			  export default {
 			    // ...
