@@ -246,8 +246,16 @@
     z-index: 3;
   }
 
-  .zp-safe-area-placeholder {
-    height: var(--app-scroller__cushion_height) !important;
+  .zp-paging-container-content {
+    .zp-safe-area-placeholder {
+      height: 0 !important;
+    }
+
+    &:last-child {
+      .zp-safe-area-placeholder {
+        height: var(--app-scroller__cushion_height) !important;
+      }
+    }
   }
 
   .zp-back-to-top {
