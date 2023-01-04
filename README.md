@@ -1456,6 +1456,10 @@ apiSignInByWxCode({
 
 ### 📑 引入网络JS库
 
+> 🚨 注意：目前采用该技术的微信小程序已无法通过审核，请谨慎使用。
+
+> 你好，当前提审的小程序包中可能含有页面文件采用内置JavaScript解释器（如eval5、estime、evil-eval等）的方式，动态执行JS代码、对小程序wxml代码进行热更新。出于安全考虑，建议你立即调整技术方案，去除相关内容，消除风险。[参考文档](https://developers.weixin.qq.com/community/minihome/doc/0000ae500e4fd0541f2ea33755b801)
+
 > 小程序中若需要使用第三方JavaScript库时，本身仅支持 `npm` 或直接下载等方式将其静态存入项目中，而不支持网页端的 `script` 方式引入网络资源，且有主包大小限制。当需要使用某些本身体积较大的JavaScript库（例如 `echarts` 等）并且业务场景中只能将其存入主包的情况时，则会超出主包大小限制，此时可采用项目中 `/utils/script.js` 中所提供的 `dynamicRequire` 方法来实现动态引入网络资源。
 
 - 方法内部对所加载的JavaScript库按照 `url` 做了缓存，当需要加载一个网络JavaScript库时，加载顺序如下
