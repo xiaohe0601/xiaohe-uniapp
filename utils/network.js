@@ -107,7 +107,7 @@ const executeResponseTransform = (config, response, resolve, reject) => {
   switch (data[Config.http.fieldCode]) {
     case Config.http.codeSuccess: {
       resolve(Object.assign({}, response, {
-        raw: response.data
+        raw: data
       }, {
         state: Config.http.stateSuccess,
         data: data[Config.http.fieldData]
@@ -131,7 +131,7 @@ const executeResponseTransform = (config, response, resolve, reject) => {
         });
       }
       reject(Object.assign({}, response, {
-        raw: response.data
+        raw: data
       }, {
         state: Config.http.stateBusinessError,
         data: data[Config.http.fieldData]
@@ -146,7 +146,7 @@ const executeResponseTransform = (config, response, resolve, reject) => {
         });
       }
       reject(Object.assign({}, response, {
-        raw: response.data
+        raw: data
       }, {
         state: Config.http.stateBusinessError,
         data: data[Config.http.fieldData]
