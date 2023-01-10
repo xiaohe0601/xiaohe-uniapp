@@ -94,10 +94,10 @@
 			wxsInit(newValue, oldValue) {
 				this.queryRect()
 			},
-      status(value) {
-        this.$emit(value)
-        this.$emit('change', value)
-      }
+			status(value) {
+				this.$emit(value)
+				this.$emit('change', value)
+			}
 		},
 		computed: {
 			wxsInit() {
