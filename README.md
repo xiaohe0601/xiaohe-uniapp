@@ -1654,6 +1654,53 @@ import { dynamicRequire } from "@/utils/script.js";
 
 			- `/u-datetime-picker.vue`：`<u-picker` 新增 `:immediateChange="immediateChange"`
 
+	- `u-swipe-action-item` (`/uni_modules/uview-ui/components/u-swipe-action-item`)
+
+		- 修复 `open`、`close` 事件缺失以及添加 `change` 事件
+
+			- `/u-swipe-action-item.vue`：`watch` 组件的 `status` 属性并 `emit` 对应的事件
+
+				```javascript
+				watch: {
+				  // 在watch模块中添加如下代码
+				  status(value) {
+				    this.$emit(value)
+				    this.$emit('change', value)
+				  }
+				}
+				```
+
+		- 添加打开状态对应的 `class`
+
+			- `/u-swipe-action-item.vue`：`<view class="u-swipe-action-item"` 新增 `:class="[status]"`
+
+		- 修复 `show` 属性无法动态修改
+
+			- `/wxs.js`：添加对 `show` 属性的监听，并调用对应方法控制打开状态，可使用如下代码覆盖 `wxs.js` 文件
+
+				```javascript
+				export default {
+				  watch: {
+				    show(value) {
+				      this.setState(value ? "open" : "close");
+				    }
+				  },
+				  methods: {
+				    // 关闭时执行
+				    closeHandler() {
+				      this.status = "close";
+				    },
+				    setState(status) {
+				      this.status = status;
+				    },
+				    closeOther() {
+				      // 尝试关闭其他打开的单元格
+				      this.parent && this.parent.closeOther(this);
+				    }
+				  }
+				}
+				```
+
 - `app.scss` 中内置了一些全局样式用于 `uview-ui` 组件适配深色模式切换，可根据需要自行扩展其他组件，使用方式如下
 
 	```vue
