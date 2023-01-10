@@ -1,6 +1,13 @@
 import Vue from "vue";
 
+import Config from "@/utils/config.js";
+
 Vue.mixin({
+  computed: {
+    SystemConfig() {
+      return Config;
+    }
+  },
   methods: {
     preventDefault() {},
     destroyToastTimer() {
@@ -10,4 +17,4 @@ Vue.mixin({
       }
     }
   }
-})
+});
