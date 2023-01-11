@@ -4,7 +4,7 @@ import Config from "@/utils/config.js";
 
 Vue.mixin({
   computed: {
-    SystemConfig() {
+    AppConfig() {
       return Config;
     }
   },
