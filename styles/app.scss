@@ -144,6 +144,16 @@
     width: 640rpx !important;
   }
 
+  .u-modal__title {
+    font-size: 34rpx !important;
+    font-weight: 500 !important;
+    color: var(--color-txt-primary) !important;
+
+    & + .u-modal__content {
+      padding-top: 40rpx !important;
+    }
+  }
+
   .u-popup__content, .u-modal {
     border-radius: 16rpx !important;
   }
@@ -154,8 +164,7 @@
   }
 
   .u-modal__content__text {
-    font-size: 34rpx !important;
-    font-weight: 500;
+    font-size: 32rpx !important;
     color: var(--color-txt-primary) !important;
     text-align: center;
   }
