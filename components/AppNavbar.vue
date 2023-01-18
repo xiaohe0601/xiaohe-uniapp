@@ -17,7 +17,7 @@
                 <view v-if="shouldBackToHomeShow"
                       class="app-navbar__title-bar__left__home"
                       @tap.stop="executeBackToHome">
-                  <u-icon name="home" color="var(--app-navbar__home_color)" size="38rpx"></u-icon>
+                  <u-icon name="home" color="var(--app-navbar__home_color)" size="var(--app-navbar__home_size)"></u-icon>
                 </view>
 
                 <template v-else>
