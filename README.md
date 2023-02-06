@@ -1812,7 +1812,7 @@ import { dynamicRequire } from "@/utils/script.js";
 
 			- `_.findIndex`
 
-### 🐶讨论交流
+### 🐶 讨论交流
 
 - ❓：若有疑问或BUG反馈，可提交[issues](https://github.com/MyHdg0601/uniapp-vue2-hbx-starter/issues)
 
