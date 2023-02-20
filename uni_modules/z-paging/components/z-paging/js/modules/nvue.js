@@ -78,7 +78,7 @@ export default {
 	watch: {
 		nIsFirstPageAndNoMore: {
 			handler(newVal) {
-				const cellStyle = !this.useChatRecordMode || newVal ? {} : {transform: 'rotate(180deg)'};
+				const cellStyle = !this.useChatRecordMode || newVal ? {} : { transform: 'rotate(180deg)' };
 				this.$emit('update:cellStyle', cellStyle);
 				this.$emit('cellStyleChange', cellStyle);
 			},
@@ -135,6 +135,14 @@ export default {
 		},
 		// #endif
 	},
+	mounted(){
+		// #ifdef APP-NVUE
+		//旋转屏幕时更新宽度
+		uni.onWindowResize((res) => {
+			// this._nUpdateRefresherWidth();
+		})
+		// #endif
+	},
 	methods: {
 		// #ifdef APP-NVUE
 		//列表滚动时触发
@@ -144,10 +152,6 @@ export default {
 			this.oldScrollTop = contentOffsetY;
 			this.nListIsDragging = e.isDragging;
 			this._checkShouldShowBackToTop(contentOffsetY, contentOffsetY - 1);
-		},
-		//列表开始触摸
-		_nTouchstart() {
-			this._handleListTouchstart();
 		},
 		//下拉刷新刷新中
 		_nOnRrefresh() {
@@ -160,9 +164,8 @@ export default {
 		_nOnPullingdown(e) {
 			if (this.refresherStatus === Enum.Refresher.Loading || (this.isIos && !this.nListIsDragging)) return;
 			this._emitTouchmove(e);
-			const viewHeight = e.viewHeight;
-			const pullingDis = e.pullingDistance;
-			this.refresherStatus = pullingDis >= viewHeight ? Enum.Refresher.ReleaseToRefresh : Enum.Refresher.Default;
+			const { viewHeight, pullingDistance } = e;
+			this.refresherStatus = pullingDistance >= viewHeight ? Enum.Refresher.ReleaseToRefresh : Enum.Refresher.Default;
 		},
 		//下拉刷新结束
 		_nRefresherEnd(doEnd = true) {
@@ -200,9 +203,9 @@ export default {
 				this.refresherStatus = Enum.Refresher.Loading;
 			}
 			
-			const duration = animate ? 180 : 0;
+			const duration = animate ? 200 : 0;
 			if (this.nOldShowRefresherRevealHeight !== height) {
-				if(height > 0){
+				if (height > 0) {
 					this.nShowRefresherReveal = true;
 				}
 				weexAnimation.transition(this.$refs['zp-n-list-refresher-reveal'], {
@@ -210,7 +213,7 @@ export default {
 						height: `${height}px`,
 						transform: `translateY(${translateY}px)`,
 					},
-					duration: duration,
+					duration,
 					timingFunction: 'linear',
 					needLayout: true,
 					delay: 0
@@ -220,7 +223,7 @@ export default {
 				if (animate) {
 					this.nShowRefresherReveal = height > 0;
 				}
-			}, duration > 0 ? duration - 100 : 0);
+			}, duration > 0 ? duration - 60 : 0);
 			this.nOldShowRefresherRevealHeight = height;
 		},
 		//滚动到底部加载更多

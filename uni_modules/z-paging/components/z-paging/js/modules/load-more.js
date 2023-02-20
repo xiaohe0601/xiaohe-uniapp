@@ -237,8 +237,8 @@ export default {
 				this.pageNo ++;
 				this._startLoading(false);
 				if (this.isLocalPaging) {
-					this._localPagingQueryList(this.pageNo, this.defaultPageSize, this.localPagingLoadingTime, (res) => {
-						this.addData(res);
+					this._localPagingQueryList(this.pageNo, this.defaultPageSize, this.localPagingLoadingTime, res => {
+						this.completeByTotal(res, this.totalLocalPagingList.length);
 					})
 				} else {
 					this._emitQuery(this.pageNo, this.defaultPageSize, Enum.QueryFrom.LoadingMore);
@@ -295,10 +295,11 @@ export default {
 		},
 		//是否要展示上拉加载更多view
 		_showLoadingMore(type) {
-			if (!this.showLoadingMoreWhenReload && (!(this.loadingStatus === Enum.More.Default ? this.nShowBottom : true) || !this.totalData.length)) return false;
+			if (!this.showLoadingMoreWhenReload && (!(this.loadingStatus === Enum.More.Default ? this.nShowBottom : true) || !this.realTotalData.length)) return false;
 			if (((!this.showLoadingMoreWhenReload || this.isUserPullDown || this.loadingStatus !== Enum.More.Loading) && !this.showLoadingMore) || 
-			(!this.loadingMoreEnabled && (!this.showLoadingMoreWhenReload || this.isUserPullDown || this.loadingStatus !== Enum.More.Loading)) || 
-			this.refresherOnly) return false;
+			(!this.loadingMoreEnabled && (!this.showLoadingMoreWhenReload || this.isUserPullDown || this.loadingStatus !== Enum.More.Loading)) || this.refresherOnly) {
+				return false;
+			}
 			if (this.useChatRecordMode && type !== 'Loading') return false;
 			if (!this.$slots) return false;
 			if (type === 'Custom') {

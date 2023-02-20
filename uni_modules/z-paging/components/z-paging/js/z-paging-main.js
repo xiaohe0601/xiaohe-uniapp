@@ -277,7 +277,7 @@ export default {
 			return pagingStyle;
 		},
 		finalLowerThreshold() {
-			return u.convertTextToPx(this.lowerThreshold);
+			return u.convertToPx(this.lowerThreshold);
 		},
 		finalPagingContentStyle() {
 			if (this.contentZIndex != 1) {
@@ -340,17 +340,29 @@ export default {
 			// #endif
 			return false;
 		},
-		isIosAndH5(){
+		isIosAndH5() {
 			// #ifndef H5
 			return false;
 			// #endif
 			return this.isIos;
+		},
+		zSlots() {
+			// #ifdef VUE2
+			
+			// #ifdef MP-ALIPAY
+			return this.$slots;
+			// #endif
+			
+			return this.$scopedSlots ? this.$scopedSlots : this.$slots;
+			// #endif
+			
+			return this.$slots;
 		}
 	},
 	methods: {
 		//当前版本号
 		getVersion() {
-			return `z-paging v${zConstant.version}`;
+			return `z-paging v${c.version}`;
 		},
 		//设置nvue List的specialEffects
 		setSpecialEffects(args) {
@@ -384,42 +396,6 @@ export default {
 			uni.vibrateShort();
 			// #endif
 		},
-		//检测scrollView是否要铺满屏幕
-		_doCheckScrollViewShouldFullHeight(totalData) {
-			if (this.autoFullHeight && this.usePageScroll && this.isTotalChangeFromAddData) {
-				// #ifndef APP-NVUE
-				this.$nextTick(() => {
-					this._checkScrollViewShouldFullHeight((scrollViewNode, pagingContainerNode) => {
-						this._preCheckShowNoMoreInside(totalData, scrollViewNode, pagingContainerNode)
-					});
-				})
-				// #endif
-				// #ifdef APP-NVUE
-				this._preCheckShowNoMoreInside(totalData)
-				// #endif
-			} else {
-				this._preCheckShowNoMoreInside(totalData)
-			} 
-		},
-		//检测z-paging是否要全屏覆盖(当使用页面滚动并且不满全屏时，默认z-paging需要铺满全屏，避免数据过少时内部的empty-view无法正确展示)
-		async _checkScrollViewShouldFullHeight(callback) {
-			try {
-				const scrollViewNode = await this._getNodeClientRect('.zp-scroll-view');
-				const pagingContainerNode = await this._getNodeClientRect('.zp-paging-container-content');
-				if (!scrollViewNode || !pagingContainerNode) return;
-				const scrollViewHeight = pagingContainerNode[0].height;
-				const scrollViewTop = scrollViewNode[0].top;
-				if (this.isAddedData && scrollViewHeight + scrollViewTop <= this.windowHeight) {
-					this._setAutoHeight(true, scrollViewNode);
-					callback(scrollViewNode, pagingContainerNode);
-				} else {
-					this._setAutoHeight(false);
-					callback(null, null);
-				}
-			} catch (e) {
-				callback(null, null);
-			}
-		},
 		//设置z-paging高度
 		async _setAutoHeight(shouldFullHeight = true, scrollViewNode = null) {
 			let heightKey = 'min-height';
@@ -436,7 +412,7 @@ export default {
 						if(finalScrollBottomNode){
 							scrollViewHeight -= finalScrollBottomNode[0].height;
 						}
-						const additionHeight = u.convertTextToPx(this.autoHeightAddition);
+						const additionHeight = u.convertToPx(this.autoHeightAddition);
 						const finalHeight = scrollViewHeight + additionHeight - (this.insideMore ? 1 : 0) + 'px !important';
 						this.$set(this.scrollViewStyle, heightKey, finalHeight);
 						this.$set(this.scrollViewInStyle, heightKey, finalHeight);
@@ -467,7 +443,7 @@ export default {
 			}
 		},
 		//获取节点尺寸
-		_getNodeClientRect(select, inThis = true, scrollOffset = false) {
+		_getNodeClientRect(select, inDom = true, scrollOffset = false) {
 			// #ifdef APP-NVUE
 			select = select.replace('.', '').replace('#', '');
 			const ref = this.$refs[select];
@@ -483,9 +459,9 @@ export default {
 			return;
 			// #endif
 			//#ifdef MP-ALIPAY
-			inThis = false;
+			inDom = false;
 			//#endif
-			let res = inThis ? uni.createSelectorQuery().in(this) : uni.createSelectorQuery();
+			let res = !!inDom ? uni.createSelectorQuery().in(inDom === true ? this : inDom) : uni.createSelectorQuery();
 			scrollOffset ? res.select(select).scrollOffset() : res.select(select).boundingClientRect();
 			return new Promise((resolve, reject) => {
 				res.exec(data => {
