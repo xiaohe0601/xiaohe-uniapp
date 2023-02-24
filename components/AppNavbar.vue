@@ -192,7 +192,7 @@
       const pages = getCurrentPages();
       const current = pages[pages.length - 1];
 
-      this.shouldBackToHomeShow = pages.length === 1 && !this.AppConfig.navbar.backToHomeExcludes.includes(current.route);
+      this.shouldBackToHomeShow = pages.length === 1 && !this.AppConfig.route.navbar.backToHomeExcludes.includes(current.route);
     },
     methods: {
       onTitleBarLeftTap() {
@@ -203,7 +203,7 @@
         }
       },
       executeBackToHome() {
-        const { backToHomePage, backToHomeAction } = this.AppConfig.navbar;
+        const { backToHomePage, backToHomeAction } = this.AppConfig.route.navbar;
 
         uni[backToHomeAction]({
           url: backToHomePage
