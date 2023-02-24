@@ -1,7 +1,7 @@
 <template>
   <view class="app-area-picker">
     <view class="app-picker">
-      <u-picker ref="$picker"
+      <u-picker ref="picker"
                 :show="innerShow"
                 :title="title"
                 :columns="columns"
@@ -121,7 +121,7 @@
         async handler(value) {
           await this.$nextTick();
 
-          this.$refs.$picker.setIndexs(value);
+          this.$refs.picker.setIndexs(value);
         },
         immediate: true
       }
