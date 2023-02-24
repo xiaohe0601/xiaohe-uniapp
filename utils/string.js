@@ -1,4 +1,4 @@
-import Config from "@/utils/config";
+import Config from "@/utils/config.js";
 
 /**
  * 是否为空字符串

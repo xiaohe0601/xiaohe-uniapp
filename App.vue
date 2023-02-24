@@ -1,7 +1,7 @@
 <script>
-  import { promisifyAll } from "@/utils/promisify";
+  import { promisifyAll } from "@/utils/promisify.js";
 
-  import Config from "@/utils/config";
+  import Config from "@/utils/config.js";
 
   export default {
     onLaunch() {
@@ -74,12 +74,12 @@
 </script>
 
 <style lang="scss">
-  @import "@/uni_modules/uview-ui/index.scss";
+  @import "~@/uni_modules/uview-ui/index.scss";
 
-  @import "@/styles/reset.scss";
-  @import "@/styles/common.scss";
-  @import "@/styles/theme.scss";
-  @import "@/styles/app.scss";
+  @import "~@/styles/reset.scss";
+  @import "~@/styles/common.scss";
+  @import "~@/styles/theme.scss";
+  @import "~@/styles/app.scss";
 
   @import "/static/iconfont/iconfont.css";
 </style>

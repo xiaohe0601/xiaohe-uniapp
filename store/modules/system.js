@@ -1,6 +1,6 @@
-import Config from "@/utils/config";
+import Config from "@/utils/config.js";
 
-import { px2upx } from "@/utils/device";
+import { px2upx } from "@/utils/device.js";
 
 export default {
   namespaced: true,

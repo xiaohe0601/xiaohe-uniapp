@@ -1,7 +1,21 @@
 {
   "pages": [{
-    "path": "pages/main/index"
+    "path": "pages/home/index"
+  }, {
+    "path": "pages/mine/index"
   }],
+  "tabBar": {
+    "custom": true,
+    // #ifdef APP-PLUS
+    "height": "0.01px",
+    "borderStyle": "#00000000",
+    // #endif
+    "list": [{
+      "pagePath": "pages/home/index"
+    }, {
+      "pagePath": "pages/mine/index"
+    }]
+  },
   "globalStyle": {
     "navigationStyle": "custom",
     "pageOrientation": "portrait",

@@ -1,4 +1,4 @@
-import Config from "@/utils/config";
+import Config from "@/utils/config.js";
 
 /**
  * @typedef {"light" | "dark" | null} AppTheme  App主题

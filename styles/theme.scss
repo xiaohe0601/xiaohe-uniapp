@@ -9,6 +9,8 @@
   --app-main__txt_color: var(--color-txt-primary);
 
   --app-navbar__body_border: 2rpx solid rgba(0, 0, 0, 0.05);
+  --app-navbar__body_zindex: 50;
+  --app-navbar__body_transition: top 0.3s ease-out;
   --app-navbar__title_width: 300rpx;
   --app-navbar__txt_size: 32rpx;
   --app-navbar__txt_color: var(--color-txt-primary);
@@ -20,8 +22,11 @@
   --app-tabbar__body_radius: 0;
   --app-tabbar__body_border: 2rpx solid rgba(0, 0, 0, 0.04);
   --app-tabbar__body_background: var(--color-bg-primary);
+  --app-tabbar__body_zindex: 50;
+  --app-tabbar__body_transition: bottom 0.3s ease-out;
   --app-tabbar__item_width: 120rpx;
   --app-tabbar__icon_size: 56rpx;
+  --app-tabbar__icon_fontsize: 50rpx;
   --app-tabbar__txt_mtop: 6rpx;
   --app-tabbar__txt_size: 24rpx;
   --app-tabbar__txt_weight: 500;

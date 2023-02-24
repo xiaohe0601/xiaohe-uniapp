@@ -1,18 +1,17 @@
 <template>
-  <view class="app-tabbar"
-        :style="{zIndex: zIndex, bottom: show ? 0 : `calc(0rpx - var(--app-tabbar__body_height) - 20rpx - ${safeAreaInsets.bottom}px)`}">
-    <view class="app-tabbar__inner" :class="{'round': round, 'border': border}">
-      <view v-for="(item) in items"
-            :key="item.name"
+  <view class="app-tabbar">
+    <view class="app-tabbar__inner" :class="{'hide': !show, 'round': round, 'border': border}">
+      <view v-for="(item, index) in AppConfig.route.tabbar.list"
+            :key="item.path"
             class="app-tabbar-item"
-            :class="{'selected': innerValue === item.component}"
+            :class="{'selected': current === index}"
             @tap="onTabbarItemTap(item)">
-        <image v-if="item.icon && item.iconSelected"
-               class="app-tabbar-item__icon"
-               :src="innerValue === item.component ? item.iconSelected : item.icon"></image>
-        <view v-else class="app-tabbar-item__icon"></view>
+        <view v-if="item.iconfont || (item.icon && item.iconSelected)" class="app-tabbar-item__icon">
+          <text v-if="item.iconfont" class="app-tabbar-item__icon__iconfont iconfont" :class="[item.iconfont]"></text>
+          <image v-else class="app-tabbar-item__icon__image" :src="current === index ? item.iconSelected : item.icon"></image>
+        </view>
 
-        <text class="app-tabbar-item__text">{{ item.name }}</text>
+        <text class="app-tabbar-item__text">{{ item.text }}</text>
 
         <template v-if="isTabbarItemBadgeShow(item)">
           <view class="app-tabbar-item__badge" :class="[parseTabbarItemBadgeType(item)]">
@@ -22,7 +21,7 @@
       </view>
     </view>
 
-    <view class="app-tabbar__cushion" :style="{height: `${safeAreaInsets.bottom}px`}"></view>
+    <view class="app-tabbar__cushion"></view>
   </view>
 </template>
 
@@ -30,14 +29,13 @@
   /**
    * @typedef AppTabbarItem App底部导航栏item配置
    *
-   * @property {string} name            名称 (展示文字)
-   * @property {string} component       组件名称
+   * @property {string} text            名称 (展示文字)
+   * @property {string} path            页面路径
    * @property {string} icon            图标 (图片绝对路径)
    * @property {string} iconSelected    选中状态图标 (图片绝对路径)
+   * @property {string} iconfont        字体图标 (优先级高于icon)
    * @property {string} badgeKey        badge取值 (需提供Vuex中的getters)
    */
-
-  import { mapGetters } from "vuex";
 
   /**
    * AppTabbar App底部导航栏
@@ -45,27 +43,19 @@
    * @author        小何同学 (MyHdg0601)
    * @description   本组件用于自定义底部导航栏 (即tabbar)。
    *
-   * @property {String}   value     当前选中组件名称 (对应items[].component) <支持v-model>
-   * @property {Array}    items     tabs配置 (AppTabbarItem[])
+   * @property {Number}   current   当前选中的tabbar-item下标
    * @property {Boolean}  show      是否展示tabbar
    * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
    * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
-   * @property {Number}   zIndex    css中的z-index
    *
-   * @event {Function}  input     当前选中组件名称变化 [value: 当前选中组件名称]
-   *
-   * @example <app-tabbar v-model="currentComponent" :items="tabbarItems"></app-tabbar>
+   * @example <app-tabbar :current="0"></app-tabbar>
    */
   export default {
     name: "AppTabbar",
     props: {
-      value: {
-        type: String,
-        required: true
-      },
-      items: {
-        type: Array,
-        required: true
+      current: {
+        type: Number,
+        default: -1
       },
       show: {
         type: Boolean,
@@ -78,29 +68,14 @@
       border: {
         type: Boolean,
         default: true
-      },
-      zIndex: {
-        type: Number,
-        default: 50
-      }
-    },
-    computed: {
-      ...mapGetters({
-        safeAreaInsets: "system/getSafeAreaInsets"
-      }),
-      innerValue: {
-        get() {
-          return this.value;
-        },
-        set(value) {
-          this.$emit("input", value);
-        }
       }
     },
     methods: {
       onTabbarItemTap(item) {
-        if (item.component != null && !item.disabled) {
-          this.innerValue = item.component;
+        if (item.path != null) {
+          uni.switchTab({
+            url: item.path
+          });
         }
       },
       isTabbarItemBadgeShow({ badgeKey }) {
@@ -152,16 +127,22 @@
         return null;
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
   .app-tabbar {
     position: fixed;
     right: 0;
+    bottom: 0;
     left: 0;
     background-color: var(--app-tabbar__body_background);
-    transition: bottom 0.3s ease-out;
+    z-index: var(--app-tabbar__body_zindex);
+    transition: var(--app-tabbar__body_transition);
+
+    &.hide {
+      bottom: calc(0px - var(--app-tabbar__body_height) - var(--app-safearea__body_bottom) - 10px);
+    }
   }
 
   .app-tabbar__inner {
@@ -187,24 +168,35 @@
     align-items: center;
     justify-content: center;
     min-width: var(--app-tabbar__item_width);
+    color: var(--app-tabbar__txt_color);
 
     &.selected {
-      .app-tabbar-item__text {
-        color: var(--app-tabbar__txt_color--selected);
-      }
+      color: var(--app-tabbar__txt_color--selected);
     }
   }
 
   .app-tabbar-item__icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: var(--app-tabbar__icon_size);
     height: var(--app-tabbar__icon_size);
+  }
+
+  .app-tabbar-item__icon__iconfont {
+    font-size: var(--app-tabbar__icon_fontsize);
+  }
+
+  .app-tabbar-item__icon__image {
+    width: 100%;
+    height: 100%;
   }
 
   .app-tabbar-item__text {
     margin-top: var(--app-tabbar__txt_mtop);
     font-size: var(--app-tabbar__txt_size);
     font-weight: var(--app-tabbar__txt_weight);
-    color: var(--app-tabbar__txt_color);
     text-align: center;
   }
 
@@ -230,5 +222,9 @@
       background-color: var(--app-tabbar__badge_background);
       border-radius: var(--app-tabbar__badge_radius--text);
     }
+  }
+
+  .app-tabbar__cushion {
+    height: var(--app-safearea__body_bottom);
   }
 </style>

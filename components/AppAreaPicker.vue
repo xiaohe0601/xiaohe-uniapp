@@ -84,7 +84,7 @@
         areas: null,
         // 各列索引值
         indexs: []
-      }
+      };
     },
     computed: {
       innerShow: {
@@ -185,7 +185,7 @@
         this.indexs = theIndexs;
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

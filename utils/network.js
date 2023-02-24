@@ -53,11 +53,11 @@
  * @property {string} errMsg
  */
 
-import Config from "@/utils/config";
+import Config from "@/utils/config.js";
 
-import store from "@/store";
+import store from "@/store/index.js";
 
-import { convertRelativePath } from "@/utils/string";
+import { convertRelativePath } from "@/utils/string.js";
 
 export const requestsQueue = [];
 

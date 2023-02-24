@@ -2,9 +2,7 @@ import Vue from "vue";
 
 import dayjs from "dayjs";
 
-import { px2upx } from "@/utils/device";
-
-import { simulateSwitchTab } from "@/utils/route";
+import { px2upx } from "@/utils/device.js";
 
 import {
   isEmptyString,
@@ -13,7 +11,7 @@ import {
   toHumpString,
   toUnderlineString,
   convertRelativePath
-} from "@/utils/string";
+} from "@/utils/string.js";
 
 Vue.prototype.$date = dayjs;
 
@@ -34,5 +32,3 @@ Vue.prototype.$string = {
   toUnderline: toUnderlineString,
   convertRelativePath
 };
-
-uni.simulateSwitchTab = simulateSwitchTab;

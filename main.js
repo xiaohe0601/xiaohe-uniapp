@@ -4,7 +4,7 @@ import App from "@/App.vue";
 
 import uView from "@/uni_modules/uview-ui";
 
-import store from "@/store";
+import store from "@/store/index.js";
 
 import "@/extensions";
 import "@/filters";

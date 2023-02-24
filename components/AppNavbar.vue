@@ -1,11 +1,11 @@
 <template>
   <view class="app-navbar">
     <view class="app-navbar__inner"
-          :class="[{'fixed': fixed, 'border': border}]"
-          :style="{top: show ? 0 : `${-navigationBarHeight}px`, background: backgroundColor, zIndex: zIndex}">
-      <view class="app-navbar__status-bar" :style="{height: `${statusBarHeight}px`}"></view>
+          :class="[{'hide': !show, 'fixed': fixed, 'border': border}]"
+          :style="{background: backgroundColor}">
+      <view class="app-navbar__status-bar"></view>
 
-      <view class="app-navbar__title-bar" :style="{height: `${titleBarHeight}px`, color: textColor}">
+      <view class="app-navbar__title-bar" :style="{color: textColor}">
         <slot v-if="useCustomSlot" name="custom"></slot>
 
         <template v-else>
@@ -54,24 +54,18 @@
       </view>
     </view>
 
-    <view v-if="fixed && placeholder"
-          class="app-navbar__placeholder"
-          :style="{height: `${navigationBarHeight}px`}"></view>
+    <view v-if="fixed && placeholder" class="app-navbar__placeholder"></view>
   </view>
 </template>
 
 <script>
-  import { mapGetters } from "vuex";
-
-  import Config from "@/utils/config";
-
   /**
    * AppNavbar App导航栏
    *
    * @author        小何同学 (MyHdg0601)
    * @description   本组件用于自定义导航栏 (即navbar)。
    *
-   * @property {Boolean}  show              是否展示导航栏
+   * @property {Boolean}  show              是否展示导航栏 (仅fixed时有效)
    * @property {Boolean}  fixed             是否固定在屏幕顶部展示
    * @property {Boolean}  placeholder       固定在屏幕顶部展示时是否在文档流中填充等高view
    * @property {Boolean}  border            是否展示下边框
@@ -91,7 +85,6 @@
    * @property {String}   backgroundColor   背景颜色
    * @property {String}   iconSize          左右图标大小
    * @property {String}   iconColor         左右图标颜色
-   * @property {Number}   zIndex            css中的z-index
    * @property {Boolean}  autoBack          点击navbar左侧是否触发navigateBack
    *
    * @event {Function}  left-tap    点击navbar左侧
@@ -182,10 +175,6 @@
         type: String,
         default: "inherit"
       },
-      zIndex: {
-        type: Number,
-        default: 50
-      },
       autoBack: {
         type: Boolean,
         default: true
@@ -194,21 +183,8 @@
     data() {
       return {
         // 是否展示返回至主页按钮
-        shouldBackToHomeShow: false,
-        // 返回至主页目标页面地址
-        backToHomePage: "TheHome",
-        // 返回至重定向方式
-        backToHomeAction: "simulateSwitchTab",
-        // 返回至主页按钮排除页面
-        backToHomeExcludes: [Config.route.simulateTabbarPage.slice(1)]
-      }
-    },
-    computed: {
-      ...mapGetters({
-        statusBarHeight: "system/getStatusBarHeight",
-        titleBarHeight: "system/getTitleBarHeight",
-        navigationBarHeight: "system/getNavigationBarHeight"
-      })
+        shouldBackToHomeShow: false
+      };
     },
     async mounted() {
       await this.$nextTick();
@@ -216,7 +192,7 @@
       const pages = getCurrentPages();
       const current = pages[pages.length - 1];
 
-      this.shouldBackToHomeShow = pages.length === 1 && !this.backToHomeExcludes.includes(current.route);
+      this.shouldBackToHomeShow = pages.length === 1 && !this.AppConfig.navbar.backToHomeExcludes.includes(current.route);
     },
     methods: {
       onTitleBarLeftTap() {
@@ -227,14 +203,14 @@
         }
       },
       executeBackToHome() {
-        const { backToHomePage, backToHomeAction } = this;
+        const { backToHomePage, backToHomeAction } = this.AppConfig.navbar;
 
         uni[backToHomeAction]({
           url: backToHomePage
         });
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -245,12 +221,18 @@
   .app-navbar__inner {
     display: flex;
     flex-direction: column;
-    transition: top 0.3s ease-out, background 0.3s ease-out;
+    z-index: var(--app-navbar__body_zindex);
+    transition: var(--app-navbar__body_transition);
 
     &.fixed {
       position: fixed;
+      top: 0;
       right: 0;
       left: 0;
+
+      &.hide {
+        top: calc(0px - var(--app-navbar__body_height) - 10px);
+      }
     }
 
     &.border {
@@ -258,10 +240,15 @@
     }
   }
 
+  .app-navbar__status-bar {
+    height: var(--app-navbar__status_height);
+  }
+
   .app-navbar__title-bar {
     display: flex;
     flex-direction: row;
     align-items: center;
+    height: var(--app-navbar__title_height);
   }
 
   .app-navbar__title-bar__center {
@@ -307,5 +294,9 @@
     height: 64rpx;
     background-color: var(--app-navbar__home_background);
     border-radius: 50%;
+  }
+
+  .app-navbar__placeholder {
+    height: var(--app-navbar__body_height);
   }
 </style>

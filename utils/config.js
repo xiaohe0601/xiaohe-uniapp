@@ -17,8 +17,29 @@ export default {
     titleBarHeight: 40
   },
   route: {
-    // 模拟tabbar页面地址
-    simulateTabbarPage: "/pages/main/index"
+    // 导航栏配置
+    navbar: {
+      // 首页按钮目标页面地址
+      backToHomePage: "/pages/home/index",
+      // 首页按钮重定向方式
+      backToHomeAction: "switchTab",
+      // 首页按钮排除页面 (即哪些页面永远不展示首页按钮，路径应该与pages.json中的path一致，无需以`/`开头)
+      backToHomeExcludes: ["pages/home/index", "pages/mine/index"]
+    },
+    // tabbar配置
+    tabbar: {
+      list: [{
+        text: "首页",
+        path: "/pages/home/index",
+        icon: "/static/icons/tabbar_home.png",
+        iconSelected: "/static/icons/tabbar_home_selected.png"
+      }, {
+        text: "我的",
+        path: "/pages/mine/index",
+        icon: "/static/icons/tabbar_mine.png",
+        iconSelected: "/static/icons/tabbar_mine_selected.png"
+      }]
+    }
   },
   http: {
     // 请求基地址
@@ -67,7 +88,7 @@ export default {
     stateRequestAbort: -4,
     // 😀 登录失效重定向页面地址
     redirectAuthPage: "",
-    // 😀 登录失效页重定向方式 [null, "reLaunch", "switchTab", "navigateTo", "simulateSwitchTab"]
+    // 😀 登录失效页重定向方式 [null, "reLaunch", "switchTab", "navigateTo"]
     redirectAuthAction: null
   },
   storage: {

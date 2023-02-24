@@ -397,7 +397,7 @@
       }
       // #endif
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>

@@ -8,7 +8,6 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
 ![GitHub watchers](https://img.shields.io/github/watchers/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/MyHdg0601/uniapp-vue2-hbx-starter?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/MyHdg0601/uniapp-vue2-hbx-starter?style=flat-square)
 
 [![star](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/badge/star.svg?theme=dark)](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/stargazers)
@@ -127,7 +126,6 @@ uniapp-vue2-hbx-starter
 |   └-index.js                  // =-= $date：dayjs
 |                               // =-= $device：设备相关工具方法
 |                               // =-= $string：字符串相关工具方法
-|                               // =-= uni.simulateSwitchTab：模拟uni.switchTab，详细请查看下方(#自定义tabbar)部分
 |
 ├─filters                       // 【Vue filter】（简单用法：{{ someValue | defaults }}，更多用法请查阅Vue 2官方文档 [https://v2.cn.vuejs.org/v2/guide/filters.html]）
 |   └-index.js                  // =-= defaults：默认值
@@ -209,7 +207,7 @@ uniapp-vue2-hbx-starter
 </template>
 
 <script>
-  import lifecycleMixin from "@/mixins/lifecycle";
+  import lifecycleMixin from "@/mixins/lifecycle.js";
 
   export default {
     mixins: [lifecycleMixin],
@@ -296,7 +294,7 @@ uniapp-vue2-hbx-starter
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|show|是否展示导航栏|Boolean|-|`true`|
+|show|是否展示导航栏（仅fixed时有效）|Boolean|-|`true`|
 |fixed|是否固定在屏幕顶部展示|Boolean|-|`true`|
 |placeholder|固定在屏幕顶部展示时是否在文档流中填充等高view|Boolean|-|`true`|
 |border|是否展示下边框|Boolean|-|`true`|
@@ -316,7 +314,6 @@ uniapp-vue2-hbx-starter
 |background-color|背景颜色|String|-|var(--color-bg-primary)|
 |icon-size|左右图标大小|String|-|var(--app-navbar__icon_size)|
 |icon-color|左右图标颜色|String|-|inherit|
-|z-index|css中的z-index|Number|-|`50`|
 |auto-back|点击navbar左侧是否触发navigateBack|Boolean|-|`true`|
 
 ##### Events
@@ -340,6 +337,8 @@ uniapp-vue2-hbx-starter
 |名称|说明|默认值|
 |---|---|---|
 |--app-navbar__body_border|下边框样式|2rpx solid rgba(0, 0, 0, 0.05)|
+|--app-navbar__body_zindex|导航栏的z-index|50|
+|--app-navbar__body_transition|导航栏的transition|top 0.3s ease-out|
 |--app-navbar__title_width|标题宽度|300rpx|
 |--app-navbar__txt_size|字体大小|32rpx|
 |--app-navbar__txt_color|文字颜色|var(--color-txt-primary)|
@@ -349,6 +348,23 @@ uniapp-vue2-hbx-starter
 ##### 自定义导航栏
 
 - 项目中 `globalStyle.navigationStyle` 已设置为 `custom`，页面中若需导航栏可以使用 `AppNavbar` 组件或其他自定义方式实现
+
+- `AppNavbar` 组件使用前需要先在 `/utils/config.js` 中配置 `route.navbar` 选项，如下所示
+
+	```javascript
+	{
+	  route: {
+	    navbar: {
+	      // 首页按钮目标页面地址
+	      backToHomePage: "/pages/home/index",
+	      // 首页按钮重定向方式
+	      backToHomeAction: "switchTab",
+	      // 首页按钮排除页面 (即哪些页面永远不展示首页按钮，路径应该与pages.json中的path一致，无需以`/`开头)
+	      backToHomeExcludes: ["pages/home/index", "pages/mine/index"]
+	    }
+	  }
+	}
+	```
 
 - 自定义导航栏后页面级的下拉刷新时，自定义导航栏也会被一并下拉，若不满足需求可以使用 `z-paging` 或 `scroll-view` 等其他方式实现自定义下拉刷新，详细请查看下方[z-paging](#z-paging)部分
 
@@ -361,7 +377,7 @@ uniapp-vue2-hbx-starter
 			```vue
 			<template>
 			  <app-container :percept="thePercept">
-			    <app-navbar title="页面标题"></app-navbar>	
+			    <app-navbar title="页面标题"></app-navbar>
 
 			    <view :style="{height: `calc(100% - ${navigationBarHeight}px)`}">
 
@@ -370,7 +386,7 @@ uniapp-vue2-hbx-starter
 			</template>
 
 			<script>
-			  import { mapGetters } from "vuex";	
+			  import { mapGetters } from "vuex";
 
 			  export default {
 			    // ...
@@ -474,21 +490,20 @@ uniapp-vue2-hbx-starter
 
 |参数|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|* value / v-model|当前选中组件名称（对应 `items[].component`）|String|-|-|
-|* items|tabs配置（类型：`AppTabbarItem[]`，具体见下方说明）|Array|-|-|
+|current|当前选中的tabbar-item下标|Number|-|`0`|
 |show|是否展示tabbar|Boolean|-|`true`|
 |round|是否展示圆角（圆角大小：`--app-tabbar__body_radius`）|Boolean|-|`false`|
 |border|是否展示上边框（边框样式：`--app-tabbar__body_border`）|Boolean|-|`true`|
-|z-index|css中的z-index|Number|-|`50`|
 
 ##### AppTabbarItem
 
 |属性|说明|类型|可选值|默认值|
 |---|---|---|---|---|
-|name|名称（展示文字）|string|-|-|
-|component|组件名称|string|-|-|
+|text|名称（展示文字）|string|-|-|
+|path|页面路径|string|-|-|
 |icon|图标（图片绝对路径）|string|-|-|
 |iconSelected|选中状态图标（图片绝对路径）|string|-|-|
+|iconfont|字体图标（优先级高于icon）|string|-|-|
 |badgeKey|badge取值（需提供Vuex中的getters）|string|-|-|
 
 ##### Events
@@ -505,8 +520,11 @@ uniapp-vue2-hbx-starter
 |--app-tabbar__body_radius|上圆角大小|0|
 |--app-tabbar__body_border|上边框样式|2rpx solid rgba(0, 0, 0, 0.04)|
 |--app-tabbar__body_background|背景颜色|var(--color-bg-primary)|
+|--app-tabbar__body_zindex|tabbar的z-index|50|
+|--app-tabbar__body_transition|tabbar的transition|bottom 0.3s ease-out|
 |--app-tabbar__item_width|tab item宽度|120rpx|
 |--app-tabbar__icon_size|图标大小|56rpx|
+|--app-tabbar__icon_fontsize|图标的font-size（使用iconfont字段时有效）|50rpx|
 |--app-tabbar__txt_mtop|文字的 `margin-top`|6rpx|
 |--app-tabbar__txt_size|文字大小|24rpx|
 |--app-tabbar__txt_weight|文字字重|500|
@@ -520,148 +538,69 @@ uniapp-vue2-hbx-starter
 
 ##### 自定义tabbar
 
-```vue
-<template>
-  <app-container :percept="thePercept">
-    <!-- 小程序端不支持动态组件 -->
-    <!-- <template v-for="(tab) in tabbarItems"> -->
-    <!--   <template v-if="tab.component != null && activeComponents[tab.component]"> -->
-    <!--     <component v-show="currentComponent === tab.component" -->
-    <!--                :is="tab.component" -->
-    <!--                :key="tab.name" -->
-    <!--                :percept="thePercept && currentComponent === tab.component"></component> -->
-    <!--   </template> -->
-    <!-- </template> -->
+1. 首先需要在 `pages.json` 中的 `tabBar.list` 中填写 `tabbar` 页面的路径（其中仅需填写 `pagePath` 字段），示例如下
 
-    <the-home v-if="activeComponents['TheHome']"
-              v-show="currentComponent === 'TheHome'"
-              :percept="thePercept && currentComponent === 'TheHome'"></the-home>
-    <the-mine v-if="activeComponents['TheMine']"
-              v-show="currentComponent === 'TheMine'"
-              :percept="thePercept && currentComponent === 'TheMine'"></the-mine>
-
-    <app-tabbar v-model="currentComponent" :items="tabbarItems"></app-tabbar>
-  </app-container>
-</template>
-
-<script>
-  import AppTabbar from "@/components/AppTabbar";
-  import TheHome from "./components/TheHome.vue";
-  import TheMine from "./components/TheMine.vue";
-
-  import lifecycleMixin from "@/mixins/lifecycle";
-
-  const tabbarItems = [{
-    name: "首页",
-    component: "TheHome",
-    icon: "/static/icons/tabbar_home.png",
-    iconSelected: "/static/icons/tabbar_home_selected.png"
-  }, {
-    name: "我的",
-    component: "TheMine",
-    icon: "/static/icons/tabbar_mine.png",
-    iconSelected: "/static/icons/tabbar_mine_selected.png"
-  }];
-
-  export default {
-    components: { AppTabbar, TheHome, TheMine },
-    mixins: [lifecycleMixin],
-    data() {
-      return {
-        tabbarItems: tabbarItems,
-        currentComponent: tabbarItems[0].component,
-        activeComponents: {}
-      }
-    },
-    watch: {
-      currentComponent: {
-        handler(value) {
-          if (value != null) {
-            this.activeComponents[value] = true;
-          }
-        },
-        immediate: true
-      }
-    },
-    onLoad({ component }) {
-      if (component != null) {
-        this.currentComponent = component;
-      }
-    }
-  }
-</script>
-```
-
-> 上方示例是一个tabbar容器页面的基本框架 `/pages/main/index.vue`
-
-```vue
-<template>
-  <app-container :percept="percept">
-    <app-navbar title="首页" :show-left="false"></app-navbar>
-
-    <app-safearea :cushion-height="140"></app-safearea>
-  </app-container>
-</template>
-
-<script>
-  export default {
-    name: "TheHome",
-    props: {
-      percept: {
-        type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {}
-    },
-    watch: {
-      percept(value){
-        if (value) {
-          // 这里相当于页面的onShow生命周期
-        }
-      }
-    },
-    // 注意这里使用的生命周期钩子是组件的created而不是页面的onLoad
-    created() {
-
-    },
-    // 可以看作onReady
-    mounted() {
-
-    }
-  }
-</script>
-```
-
-> 上方示例是一个tab页面的基本框架 `/pages/main/components/TheHome.vue`
-
-- 为了实现tabbar的灵活控制（包括样式、层级、显示/隐藏等），并且能够多端统一，项目中采用了以组件模拟页面的方案，并使用 `v-if` 和 `v-show` 模拟tab页面的功能（即 第一次展示tab页面的时候，页面才开始挂载，离开页面后不销毁页面实例），同时实现了 `uni.simulateSwitchTab` 方法用于模拟 `uni.switchTab`  便于tab页面的跳转（由于是单页实现方案，若tab页面功能复杂则会影响应用性能，若对性能要求严苛可自行改造其他方案）
-
-- tabbar容器页面作为tab页面的入口，也就承担了为各个tab页面分发数据的职责，例如 `lifecycleMixin` 中的数据以及其他额外的需要传递给某个tab页面的参数，通过父子组件传参的形式实现; tab页面若需要传参给tabbar容器页面，可通过 `$emit` 或者 `VueX` 等方式实现
-
-- 若需要启动tabbar容器页面时指定展示某个tab页面，可通过路由跳转的 `query.component` 指定，也可以调用 `uni.simulateSwitchTab({ url: "某个tab页面的组件名称" })` 来实现跳转，示例如下
-
-	```javascript
-	// tabbar容器页面启动时指定
-	uni.reLaunch({
-	  url: "/pages/main/index?component=TheMine"
-	});
-
-	// 任何时候跳转
-	// 注意：使用该方法需要在 /utils/config.js 中配置 route.simulateTabbarPage 为tabbar容器页	面路径（即：/pages/main/index）
-	uni.simulateSwitchTab({
-	  url: "TheMine"
-	});
-
-	// 扫码进入启动时同理，可根据需要自行修改tabbar容器页面的onLoad方法
+	```json
+	{
+	  "tabBar": {
+	    "custom": true,
+	    // #ifdef APP-PLUS
+	    "height": "0.01px",
+	    "borderStyle": "#00000000",
+	    // #endif
+	    "list": [{
+	      "pagePath": "pages/home/index"
+	    }, {
+	      "pagePath": "pages/mine/index"
+	    }]
+	  }
+	}
 	```
 
-- 由于采用组件模拟tab页面，所以也就失去了页面所拥有的生命周期钩子，若需要使用生命周期钩子，则使用组件的生命周期代替，其中 `onShow` 则通过 `watch` 组件的 `percept` 属性实现
+	- 由于 `APP-PLUS` 端未提供 `tabBar.custom` 选项，所以这里将 `height` 设置为 `0.01px`，并将 `borderStyle` 设置为 `#00000000`，以实现隐藏 `tabbar` 的效果
 
-- 不采用微信小程序 `custom-tab-bar` 的方案是因为该方案仅微信小程序端支持
+1. 在 `/utils/config.js` 中配置 `route.tabbar.list` 选项，可配置的字段参考上方 `AppTabbarItem` 表格中的说明，示例如下
 
-- 另外某些通过使用 `reLaunch` 实现的多页方案并不能达到tab页面的功能要求，因为每次切换tab页面均会重新生成页面实例，而隐藏的页面则会被销毁
+	```javascript
+	{
+	  route: {
+	    tabbar: {
+	      list: [{
+	        text: "首页",
+	        path: "/pages/home/index",
+	        icon: "/static/icons/tabbar_home.png",
+	        iconSelected: "/static/icons/tabbar_home_selected.png"
+	      }, {
+	        text: "我的",
+	        path: "/pages/mine/index",
+	        icon: "/static/icons/tabbar_mine.png",
+	        iconSelected: "/static/icons/tabbar_mine_selected.png"
+	      }]
+	    }
+	  }
+	}
+	```
+
+	- 注意 `path` 字段和 `pages.json` 中 `pagePath` 字段的差异，这里需要填写以 `/` 开始的页面绝对路径
+
+1. 接下来即可使用 `AppTabbar` 组件，示例如下
+
+	```vue
+	<template>
+	  <app-container :percept="thePercept">
+	    <app-navbar title="首页" :show-left="false"></app-navbar>
+
+
+	    <app-tabbar :current="0"></app-tabbar>
+
+	    <app-safearea :cushion-height="140"></app-safearea>
+	  </app-container>
+	</template>
+	```
+
+	- 其中 `app-tabbar` 上的 `current` 属性应填写当前页面在 `route.tabbar.list` 中的下标，比如上方的示例是“首页”，他在 `route.tabbar.list` 中的下标是 `0`，所以 `current` 应该传值 `0`
+
+	- 另外需要注意 `AppTabbar` 是 `fixed` 在页面上的，所以会挡住页面底部的内容，需要在可滚动部分的最后一项添加一个垫高（注意考虑安全区域），可以如上方所示使用 `AppSafearea` 组件
 
 #### AppSafearea
 
@@ -935,7 +874,7 @@ uniapp-vue2-hbx-starter
 	```vue
 	<template>
 	  <app-container>
-	    <app-area-picker :show.sync="show" 
+	    <app-area-picker :show.sync="show"
 	                     :code="code"
 	                     @confirm="confirm"></app-area-picker>
 	  </app-container>
@@ -1028,7 +967,7 @@ uniapp-vue2-hbx-starter
 	```
 
 	```javascript
-	import { apiSignInByWxCode } from "@/service";
+	import { apiSignInByWxCode } from "@/service/index.js";
 
 	const { code } = await uni.pro.login();
 
@@ -1055,7 +994,7 @@ uniapp-vue2-hbx-starter
 
 - 我们通常认为的请求异常即为接口响应的code字段值与定义的成功值不同，一般的业务异常直接弹出错误提示并且逻辑停止执行即可，token异常则退出登录，这些情况项目中已自动处理，若有其他的业务需要可手动catch请求方法，在请求异常的情况下做自己的业务，示例如下
 ```javascript
-import { apiSignInByWxCode } from "@/service";
+import { apiSignInByWxCode } from "@/service/index.js";
 
 const { code } = await uni.pro.login();
 
@@ -1157,7 +1096,7 @@ apiSignInByWxCode({
 |stateUnknownError|state - 未知异常|number|-|`-3`|
 |stateRequestAbort|state - 请求取消|number|-|`-4`|
 |redirectAuthPage|😀 登录失效重定向页面地址|string|-|-|
-|redirectAuthAction|😀 登录失效页重定向方式|string / null|`null` / reLaunch / switchTab / navigateTo / simulateSwitchTab|`null`|
+|redirectAuthAction|😀 登录失效页重定向方式|string / null|`null` / reLaunch / switchTab / navigateTo|`null`|
 
 - **自定义配置**
 
@@ -1181,7 +1120,7 @@ apiSignInByWxCode({
 |third|是否为第三方请求（若为 `true`，则直接返回响应内容，不会进行进一步处理）|boolean|-|`false`|
 |authNotRedirect|是否禁用登录失效重定向|boolean|-|`false`|
 |authRedirectPage|登录失效重定向页面地址|string|-|`Config.http.redirectAuthPage`|
-|authRedirectAction|登录失效重定向方式|string|`null` / reLaunch / switchTab / navigateTo / simulateSwitchTab|`Config.http.redirectAuthAction`|
+|authRedirectAction|登录失效重定向方式|string|`null` / reLaunch / switchTab / navigateTo|`Config.http.redirectAuthAction`|
 |key|(仅 `_upload`) FormData上传时文件的key|string|-|file|
 |extra|(仅 `_upload`) FormData上传时的附加信息（会在上传时携带在FormData中）|Record<string, any>|-|-|
 
@@ -1292,12 +1231,6 @@ apiSignInByWxCode({
 |---|---|---|---|---|
 |appTheme|App主题（可自行扩展，详细请查看下方[主题](#主题)部分）|string|light / dark|-|
 |brightness|主题亮度（一般用于控制状态栏颜色等）|string|light / dark|-|
-
-> 路由 `Config.route`
-
-|参数|说明|类型|可选值|默认值|
-|---|---|---|---|---|
-|simulateTabbarPage|tabbar容器页面地址（详细请查看上方[自定义tabbar](#自定义tabbar)部分）|string|-|/pages/main/index|
 
 > 持久化存储 `Config.storage`
 
@@ -1613,7 +1546,7 @@ import { dynamicRequire } from "@/utils/script.js";
 </template>
 
 <script>
-  import echartsMixin from "@/mixins/echarts";
+  import echartsMixin from "@/mixins/echarts.js";
 
   import chartsOption from "这里是自己的echarts配置数据路径";
 
@@ -1825,10 +1758,6 @@ import { dynamicRequire } from "@/utils/script.js";
 - [lodash](https://www.lodashjs.com) Lodash 是一个一致性、模块化、高性能的 JavaScript 实用工具库
 
 	- 若不需要可自行移除，并改造项目中依赖该库的相关方法，涉及的方法如下
-
-		- /utils/route.js
-
-			- simulateSwitchTab：`_.findLastIndex`
 
 		- /components/AppAreaPicker.vue
 

@@ -78,4 +78,4 @@ module.exports = {
       "extra_liners": []
     }
   }
-}
+};
