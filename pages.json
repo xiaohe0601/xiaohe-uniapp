@@ -5,8 +5,13 @@
     "path": "pages/mine/index"
   }],
   "tabBar": {
+    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO
     "custom": true,
-    // #ifdef APP-PLUS
+    // #endif
+    // #ifdef MP-ALIPAY
+    "customize": true,
+    // #endif
+    // #ifdef APP-PLUS || H5
     "height": "0.01px",
     "borderStyle": "#00000000",
     // #endif

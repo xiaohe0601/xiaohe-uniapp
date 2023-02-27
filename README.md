@@ -543,8 +543,13 @@ uniapp-vue2-hbx-starter
 	```json
 	{
 	  "tabBar": {
+	    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO
 	    "custom": true,
-	    // #ifdef APP-PLUS
+	    // #endif
+	    // #ifdef MP-ALIPAY
+	    "customize": true,
+	    // #endif
+	    // #ifdef APP-PLUS || H5
 	    "height": "0.01px",
 	    "borderStyle": "#00000000",
 	    // #endif
@@ -557,7 +562,11 @@ uniapp-vue2-hbx-starter
 	}
 	```
 
-	- 由于 `APP-PLUS` 端未提供 `tabBar.custom` 选项，所以这里将 `height` 设置为 `0.01px`，并将 `borderStyle` 设置为 `#00000000`，以实现隐藏 `tabbar` 的效果
+	- 使用条件编译开启对应平台的 `自定义tabBar` 配置项，由于 `APP-PLUS || H5` 端未提供 `tabBar.custom` 选项，所以这里将 `height` 设置为 `0.01px`，并将 `borderStyle` 设置为 `#00000000`，以实现隐藏 `tabbar` 的效果
+
+	- 若目标平台未提供 `自定义tabBar` 配置项，则在 `App.vue` 中的 `onLaunch` 调用 `uni.hideTabBar()` 以隐藏 `原生tabBar`
+
+	- 若目标平台未提供 `原生tabBar`，则需要自行通过其他方式实现
 
 1. 在 `/utils/config.js` 中配置 `route.tabbar.list` 选项，可配置的字段参考上方 `AppTabbarItem` 表格中的说明，示例如下
 

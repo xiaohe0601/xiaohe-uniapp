@@ -7,6 +7,10 @@
     onLaunch() {
       promisifyAll();
 
+      // #ifndef MP-WEIXIN || MP-QQ || MP-ALIPAY
+      uni.hideTabBar();
+      // #endif
+
       setTimeout(async () => {
         this.$store.dispatch("system/updateSystemInfo");
 
