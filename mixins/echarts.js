@@ -30,6 +30,9 @@ export default {
 
         ref.init(echarts, (instance) => {
           this[instanceKey] = instance;
+
+          this.triggerEchartsInited && this.triggerEchartsInited(instanceKey, instance);
+
           resolve(instance);
         });
       });

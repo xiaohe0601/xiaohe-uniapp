@@ -86,6 +86,8 @@
            @enterpictureinpicture="$emit('enterpictureinpicture')"
            @leavepictureinpicture="$emit('leavepictureinpicture')"></video>
     <!-- #endif -->
+
+    <slot></slot>
   </view>
 </template>
 
@@ -401,6 +403,10 @@
 </script>
 
 <style lang="scss" scoped>
+  .app-video {
+    position: relative;
+  }
+
   .app-video__inner {
     width: 100%;
     height: 100%;
