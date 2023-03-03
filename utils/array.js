@@ -8,11 +8,11 @@ class ArrayUtils {
   /**
    * 扁平数组转树形结构
    *
-   * @param {any[]} array                 扁平数组
-   * @param {Flat2TreeOptions} options    配置项
+   * @param {any[]} array                   扁平数组
+   * @param {Flat2TreeOptions} [options]    配置项
    * @return {any[]}  树形结构
    */
-  static flat2tree(array, options) {
+  static flat2tree(array, options = {}) {
     const { key, parentKey } = Object.assign({}, {
       key: "id",
       parentKey: "pid"
@@ -47,11 +47,11 @@ class ArrayUtils {
   /**
    * 树形结构转扁平数组
    *
-   * @param {any[]} array                 树形结构
-   * @param {Tree2FlatOptions} options    配置项
+   * @param {any[]} array                   树形结构
+   * @param {Tree2FlatOptions} [options]    配置项
    * @return {any[]}  扁平数组
    */
-  static tree2flat(array, options) {
+  static tree2flat(array, options = {}) {
     const { childrenKey } = Object.assign({}, {
       childrenKey: "children"
     }, options);
