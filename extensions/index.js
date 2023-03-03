@@ -13,6 +13,8 @@ import {
   convertRelativePath
 } from "@/utils/string.js";
 
+import ArrayUtils from "@/utils/array";
+
 Vue.prototype.$date = dayjs;
 
 Vue.prototype.$device = {
@@ -32,3 +34,5 @@ Vue.prototype.$string = {
   toUnderline: toUnderlineString,
   convertRelativePath
 };
+
+Vue.prototype.$array = ArrayUtils;
