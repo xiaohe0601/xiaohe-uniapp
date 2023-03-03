@@ -4,6 +4,7 @@ class ArrayUtils {
    *
    * @property {string} [key="id"]          节点唯一标识属性名
    * @property {string} [parentKey="pid"]   父节点唯一标识属性名
+   * @property {(any) => any} [processor]   节点数据处理器
    */
   /**
    * 扁平数组转树形结构
@@ -13,9 +14,10 @@ class ArrayUtils {
    * @return {any[]}  树形结构
    */
   static flat2tree(array, options = {}) {
-    const { key, parentKey } = Object.assign({}, {
+    const { key, parentKey, processor } = Object.assign({}, {
       key: "id",
-      parentKey: "pid"
+      parentKey: "pid",
+      processor: (item) => (item)
     }, options);
 
     const map = array.reduce((previous, item) => {
@@ -24,15 +26,19 @@ class ArrayUtils {
     }, {});
 
     return array.reduce((previous, item) => {
-      const parent = map[item[parentKey]];
+      if (item[parentKey] != null) {
+        const parent = map[item[parentKey]];
 
-      if (parent != null) {
-        if (parent.children == null) {
-          parent.children = [];
+        if (parent != null) {
+          if (parent.children == null) {
+            parent.children = [];
+          }
+          parent.children.push(processor(item));
+        } else {
+          previous.push(processor(item));
         }
-        parent.children.push(item);
       } else {
-        previous.push(item);
+        previous.push(processor(item));
       }
 
       return previous;
@@ -43,6 +49,7 @@ class ArrayUtils {
    * @typedef Tree2FlatOptions  树形结构转扁平数组-配置项
    *
    * @property {string} [childrenKey="children"]    子节点集合属性名
+   * @property {(any) => any} [processor]           节点数据处理器
    */
   /**
    * 树形结构转扁平数组
@@ -52,8 +59,9 @@ class ArrayUtils {
    * @return {any[]}  扁平数组
    */
   static tree2flat(array, options = {}) {
-    const { childrenKey } = Object.assign({}, {
-      childrenKey: "children"
+    const { childrenKey, processor } = Object.assign({}, {
+      childrenKey: "children",
+      processor: (item) => (item)
     }, options);
 
     return array.reduce((previous, { [childrenKey]: children, ...others }) => {
@@ -61,7 +69,7 @@ class ArrayUtils {
         previous.push(...ArrayUtils.tree2flat(children, options));
       }
 
-      previous.push(others);
+      previous.push(processor(others));
 
       return previous;
     }, []);
