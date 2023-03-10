@@ -25,7 +25,6 @@
     "navigationStyle": "custom",
     "pageOrientation": "portrait",
     "mp-weixin": {
-      "initialRenderingCache": "static",
       "handleWebviewPreload": "auto",
       "visualEffectInBackground": "none"
     },
