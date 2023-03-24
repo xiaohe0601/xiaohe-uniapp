@@ -129,7 +129,7 @@
 
 .app-popup, .app-modal, .app-picker {
   .u-popup {
-    >.u-transition:first-child {
+    > .u-transition:first-child {
       background-color: var(--app-mask__body_background) !important;
     }
   }

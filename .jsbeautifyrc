@@ -1,0 +1,42 @@
+{
+  "editorconfig": true,
+  "indent_size": 2,
+  "indent_char": " ",
+  "indent_with_tabs": false,
+  "indent_level": 0,
+  "indent_empty_lines": false,
+  "space_in_paren": false,
+  "space_in_empty_paren": false,
+  "space_before_conditional": true,
+  "space_after_anon_function": false,
+  "space_after_named_function": false,
+  "preserve_newlines": true,
+  "max_preserve_newlines": 2,
+  "end_with_newline": false,
+  "jslint_happy": false,
+  "e4x": false,
+  "keep_array_indentation": false,
+  "keep_function_indentation": false,
+  "break_chained_methods": false,
+  "unindent_chained_methods": false,
+  "unescape_strings": true,
+  "comma_first": false,
+  "wrap_line_length": 0,
+  "brace_style": "collapse,preserve-inline",
+  "operator_position": "before-newline",
+  "css": {
+    "newline_between_rules": true,
+    "selector_separator_newline": false,
+    "space_around_combinator": true
+  },
+  "html": {
+    "indent_scripts": "keep",
+    "indent_handlebars": true,
+    "indent_inner_html": true,
+    "wrap_attributes": "preserve-aligned",
+    "extra_liners": [],
+    "unformatted": [
+      "wbr"
+    ]
+  }
+}

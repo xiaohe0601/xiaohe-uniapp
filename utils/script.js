@@ -172,7 +172,7 @@ export const evaluateScriptText = (script, context, options) => {
  * @param context   指定执行context (默认为GlobalContext)
  */
 export const isEvaluatedScriptInContext = (url, context) => {
-  return (context ?? GlobalContext)?. [ContextDynamicEvaluatedScriptUrlsKey]?. [url] ?? false;
+  return (context ?? GlobalContext)?.[ContextDynamicEvaluatedScriptUrlsKey]?.[url] ?? false;
 };
 
 /**

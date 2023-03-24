@@ -31,70 +31,70 @@
 </template>
 
 <script>
-  import AppTabbar from "@/components/AppTabbar.vue";
+import AppTabbar from "@/components/AppTabbar.vue";
 
-  import lifecycleMixin from "@/mixins/lifecycle.js";
+import lifecycleMixin from "@/mixins/lifecycle.js";
 
-  import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
-  export default {
-    components: { AppTabbar },
-    mixins: [lifecycleMixin],
-    data() {
-      return {};
-    },
-    computed: {
-      ...mapGetters({
-        currentIsDarkTheme: "theme/currentIsDarkTheme",
-        themeWithSystem: "theme/isThemeWithSystem"
-      })
-    },
-    methods: {
-      toggleDarkTheme(value) {
-        if (value) {
-          this.$store.commit("theme/setCurrentTheme", {
-            appTheme: "dark",
-            brightness: "dark"
-          });
-        } else {
-          this.$store.commit("theme/setCurrentTheme", {
-            appTheme: "light",
-            brightness: "light"
-          });
-        }
-
-        this.$store.commit("theme/setThemeWithSystem", { themeWithSystem: false });
-      },
-      toggleThemeWithSystem(value) {
-        this.$store.commit("theme/setThemeWithSystem", { themeWithSystem: value });
+export default {
+  components: { AppTabbar },
+  mixins: [lifecycleMixin],
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters({
+      currentIsDarkTheme: "theme/currentIsDarkTheme",
+      themeWithSystem: "theme/isThemeWithSystem"
+    })
+  },
+  methods: {
+    toggleDarkTheme(value) {
+      if (value) {
+        this.$store.commit("theme/setCurrentTheme", {
+          appTheme: "dark",
+          brightness: "dark"
+        });
+      } else {
+        this.$store.commit("theme/setCurrentTheme", {
+          appTheme: "light",
+          brightness: "light"
+        });
       }
+
+      this.$store.commit("theme/setThemeWithSystem", { themeWithSystem: false });
+    },
+    toggleThemeWithSystem(value) {
+      this.$store.commit("theme/setThemeWithSystem", { themeWithSystem: value });
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .theme-demo {
-    padding: 0 var(--app-main__space_horizontal);
-    margin: var(--app-main__space_vertical) 0;
-  }
+.theme-demo {
+  padding: 0 var(--app-main__space_horizontal);
+  margin: var(--app-main__space_vertical) 0;
+}
 
-  .theme-demo-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 20rpx;
-  }
+.theme-demo-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20rpx;
+}
 
-  .theme-demo__tips {
-    font-size: 24rpx;
-    color: var(--color-txt-tertiary);
-  }
+.theme-demo__tips {
+  font-size: 24rpx;
+  color: var(--color-txt-tertiary);
+}
 
-  .theme-demo-item__label {
-    font-size: 30rpx;
-  }
+.theme-demo-item__label {
+  font-size: 30rpx;
+}
 
-  .theme-demo-item__switch {
-    margin-left: 20rpx;
-  }
+.theme-demo-item__switch {
+  margin-left: 20rpx;
+}
 </style>

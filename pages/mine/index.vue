@@ -10,17 +10,17 @@
 </template>
 
 <script>
-  import AppTabbar from "@/components/AppTabbar.vue";
+import AppTabbar from "@/components/AppTabbar.vue";
 
-  import lifecycleMixin from "@/mixins/lifecycle.js";
+import lifecycleMixin from "@/mixins/lifecycle.js";
 
-  export default {
-    components: { AppTabbar },
-    mixins: [lifecycleMixin],
-    data() {
-      return {};
-    }
-  };
+export default {
+  components: { AppTabbar },
+  mixins: [lifecycleMixin],
+  data() {
+    return {};
+  }
+};
 </script>
 
 <style lang="scss" scoped>

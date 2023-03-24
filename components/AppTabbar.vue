@@ -26,205 +26,205 @@
 </template>
 
 <script>
-  /**
-   * @typedef AppTabbarItem App底部导航栏item配置
-   *
-   * @property {string} text            名称 (展示文字)
-   * @property {string} path            页面路径
-   * @property {string} icon            图标 (图片绝对路径)
-   * @property {string} iconSelected    选中状态图标 (图片绝对路径)
-   * @property {string} iconfont        字体图标 (优先级高于icon)
-   * @property {string} badgeKey        badge取值 (需提供Vuex中的getters)
-   */
+/**
+ * @typedef AppTabbarItem App底部导航栏item配置
+ *
+ * @property {string} text            名称 (展示文字)
+ * @property {string} path            页面路径
+ * @property {string} icon            图标 (图片绝对路径)
+ * @property {string} iconSelected    选中状态图标 (图片绝对路径)
+ * @property {string} iconfont        字体图标 (优先级高于icon)
+ * @property {string} badgeKey        badge取值 (需提供Vuex中的getters)
+ */
 
-  /**
-   * AppTabbar App底部导航栏
-   *
-   * @author        小何同学 (MyHdg0601)
-   * @description   本组件用于自定义底部导航栏 (即tabbar)。
-   *
-   * @property {Number}   current   当前选中的tabbar-item下标
-   * @property {Boolean}  show      是否展示tabbar
-   * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
-   * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
-   *
-   * @example <app-tabbar :current="0"></app-tabbar>
-   */
-  export default {
-    name: "AppTabbar",
-    props: {
-      current: {
-        type: Number,
-        default: -1
-      },
-      show: {
-        type: Boolean,
-        default: true
-      },
-      round: {
-        type: Boolean,
-        default: false
-      },
-      border: {
-        type: Boolean,
-        default: true
+/**
+ * AppTabbar App底部导航栏
+ *
+ * @author        小何同学 (MyHdg0601)
+ * @description   本组件用于自定义底部导航栏 (即tabbar)。
+ *
+ * @property {Number}   current   当前选中的tabbar-item下标
+ * @property {Boolean}  show      是否展示tabbar
+ * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
+ * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
+ *
+ * @example <app-tabbar :current="0"></app-tabbar>
+ */
+export default {
+  name: "AppTabbar",
+  props: {
+    current: {
+      type: Number,
+      default: -1
+    },
+    show: {
+      type: Boolean,
+      default: true
+    },
+    round: {
+      type: Boolean,
+      default: false
+    },
+    border: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    onTabbarItemTap(item) {
+      if (item.path != null) {
+        uni.switchTab({
+          url: item.path
+        });
       }
     },
-    methods: {
-      onTabbarItemTap(item) {
-        if (item.path != null) {
-          uni.switchTab({
-            url: item.path
-          });
-        }
-      },
-      isTabbarItemBadgeShow({ badgeKey }) {
-        if (badgeKey == null) {
-          return false;
-        }
-
-        const badge = this.$store.getters[badgeKey];
-
-        if (badge == null) {
-          return false;
-        }
-
-        switch (typeof badge) {
-          case "boolean":
-            return badge;
-          case "number":
-            return badge > 0;
-          case "string":
-            return this.$string.isNotEmpty(badge);
-        }
-
+    isTabbarItemBadgeShow({ badgeKey }) {
+      if (badgeKey == null) {
         return false;
-      },
-      parseTabbarItemBadgeType({ badgeKey }) {
-        const badge = this.$store.getters[badgeKey];
-
-        switch (typeof badge) {
-          case "boolean":
-            return "dot";
-          case "number":
-          case "string":
-            return "text";
-        }
-
-        return null;
-      },
-      parseTabbarItemBadgeText({ badgeKey }) {
-        const badge = this.$store.getters[badgeKey];
-
-        switch (typeof badge) {
-          case "boolean":
-            return null;
-          case "number":
-          case "string":
-            return badge;
-        }
-
-        return null;
       }
+
+      const badge = this.$store.getters[badgeKey];
+
+      if (badge == null) {
+        return false;
+      }
+
+      switch (typeof badge) {
+        case "boolean":
+          return badge;
+        case "number":
+          return badge > 0;
+        case "string":
+          return this.$string.isNotEmpty(badge);
+      }
+
+      return false;
+    },
+    parseTabbarItemBadgeType({ badgeKey }) {
+      const badge = this.$store.getters[badgeKey];
+
+      switch (typeof badge) {
+        case "boolean":
+          return "dot";
+        case "number":
+        case "string":
+          return "text";
+      }
+
+      return null;
+    },
+    parseTabbarItemBadgeText({ badgeKey }) {
+      const badge = this.$store.getters[badgeKey];
+
+      switch (typeof badge) {
+        case "boolean":
+          return null;
+        case "number":
+        case "string":
+          return badge;
+      }
+
+      return null;
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .app-tabbar {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: var(--app-tabbar__body_background);
-    z-index: var(--app-tabbar__body_zindex);
-    transition: var(--app-tabbar__body_transition);
+.app-tabbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--app-tabbar__body_background);
+  z-index: var(--app-tabbar__body_zindex);
+  transition: var(--app-tabbar__body_transition);
 
-    &.hide {
-      bottom: calc(0px - var(--app-tabbar__body_height) - var(--app-safearea__body_bottom) - 10px);
-    }
+  &.hide {
+    bottom: calc(0px - var(--app-tabbar__body_height) - var(--app-safearea__body_bottom) - 10px);
+  }
+}
+
+.app-tabbar__inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: var(--app-tabbar__body_height);
+
+  &.round {
+    border-radius: var(--app-tabbar__body_radius) var(--app-tabbar__body_radius) 0 0;
   }
 
-  .app-tabbar__inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    height: var(--app-tabbar__body_height);
+  &.border {
+    border-top: var(--app-tabbar__body_border);
+  }
+}
 
-    &.round {
-      border-radius: var(--app-tabbar__body_radius) var(--app-tabbar__body_radius) 0 0;
-    }
+.app-tabbar-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--app-tabbar__item_width);
+  color: var(--app-tabbar__txt_color);
 
-    &.border {
-      border-top: var(--app-tabbar__body_border);
-    }
+  &.selected {
+    color: var(--app-tabbar__txt_color--selected);
+  }
+}
+
+.app-tabbar-item__icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--app-tabbar__icon_size);
+  height: var(--app-tabbar__icon_size);
+}
+
+.app-tabbar-item__icon__iconfont {
+  font-size: var(--app-tabbar__icon_fontsize);
+}
+
+.app-tabbar-item__icon__image {
+  width: 100%;
+  height: 100%;
+}
+
+.app-tabbar-item__text {
+  margin-top: var(--app-tabbar__txt_mtop);
+  font-size: var(--app-tabbar__txt_size);
+  font-weight: var(--app-tabbar__txt_weight);
+  text-align: center;
+}
+
+.app-tabbar-item__badge {
+  position: absolute;
+
+  &.dot {
+    top: 0;
+    right: 10rpx;
+    width: var(--app-tabbar__badge_size--dot);
+    height: var(--app-tabbar__badge_size--dot);
+    background-color: var(--app-tabbar__badge_background);
+    border-radius: 50%;
   }
 
-  .app-tabbar-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--app-tabbar__item_width);
-    color: var(--app-tabbar__txt_color);
-
-    &.selected {
-      color: var(--app-tabbar__txt_color--selected);
-    }
-  }
-
-  .app-tabbar-item__icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: var(--app-tabbar__icon_size);
-    height: var(--app-tabbar__icon_size);
-  }
-
-  .app-tabbar-item__icon__iconfont {
-    font-size: var(--app-tabbar__icon_fontsize);
-  }
-
-  .app-tabbar-item__icon__image {
-    width: 100%;
-    height: 100%;
-  }
-
-  .app-tabbar-item__text {
-    margin-top: var(--app-tabbar__txt_mtop);
-    font-size: var(--app-tabbar__txt_size);
-    font-weight: var(--app-tabbar__txt_weight);
+  &.text {
+    top: -10rpx;
+    right: -14rpx;
+    padding: 5rpx 10rpx 0;
+    font-size: var(--app-tabbar__badge_size--text);
+    color: var(--app-tabbar__badge_color);
     text-align: center;
+    background-color: var(--app-tabbar__badge_background);
+    border-radius: var(--app-tabbar__badge_radius--text);
   }
+}
 
-  .app-tabbar-item__badge {
-    position: absolute;
-
-    &.dot {
-      top: 0;
-      right: 10rpx;
-      width: var(--app-tabbar__badge_size--dot);
-      height: var(--app-tabbar__badge_size--dot);
-      background-color: var(--app-tabbar__badge_background);
-      border-radius: 50%;
-    }
-
-    &.text {
-      top: -10rpx;
-      right: -14rpx;
-      padding: 5rpx 10rpx 0;
-      font-size: var(--app-tabbar__badge_size--text);
-      color: var(--app-tabbar__badge_color);
-      text-align: center;
-      background-color: var(--app-tabbar__badge_background);
-      border-radius: var(--app-tabbar__badge_radius--text);
-    }
-  }
-
-  .app-tabbar__cushion {
-    height: var(--app-safearea__body_bottom);
-  }
+.app-tabbar__cushion {
+  height: var(--app-safearea__body_bottom);
+}
 </style>
