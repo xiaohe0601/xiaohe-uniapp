@@ -72,7 +72,10 @@ class ArrayUtils {
       return [];
     }
 
-    return array.reduce((previous, { [childrenKey]: children, ...others }) => {
+    return array.reduce((previous, {
+      [childrenKey]: children,
+      ...others
+    }) => {
       if (children && children.length > 0) {
         previous.push(...ArrayUtils.tree2flat(children, options));
       }

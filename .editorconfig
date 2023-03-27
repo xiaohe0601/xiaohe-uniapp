@@ -6,6 +6,8 @@ root = true
 [*]
 # 字符编码
 charset = utf-8
+# 结尾换行符 (lf, cr, crlf)
+end_of_line = lf
 # 去除行尾空格
 trim_trailing_whitespace = true
 # 在文件结尾插入新行
