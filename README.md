@@ -5,13 +5,14 @@
 
 <br>
 
-![GitHub Repo stars](https://img.shields.io/github/stars/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
 ![GitHub watchers](https://img.shields.io/github/watchers/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
-![GitHub](https://img.shields.io/github/license/MyHdg0601/uniapp-vue2-hbx-starter?style=flat-square)
+![GitHub release](https://img.shields.io/github/v/release/MyHdg0601/uniapp-vue2-hbx-starter?logo=GitHub&style=flat-square)
+![GitHub license](https://img.shields.io/github/license/MyHdg0601/uniapp-vue2-hbx-starter?style=flat-square)
 
-[![star](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/badge/star.svg?theme=dark)](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/stargazers)
-[![fork](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/badge/fork.svg?theme=dark)](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/members)
+[![Gitee stars](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/badge/star.svg?theme=dark)](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/stargazers)
+[![Gitee forks](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/badge/fork.svg?theme=dark)](https://gitee.com/MyHdg/uniapp-vue2-hbx-starter/members)
 
 小何同学 / [github@MyHdg0601](https://github.com/MyHdg0601) / [gitee@MyHdg](https://gitee.com/MyHdg)
 
