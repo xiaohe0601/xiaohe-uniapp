@@ -57,7 +57,7 @@ import Config from "@/utils/config.js";
 
 import store from "@/store/index.js";
 
-import { convertRelativePath } from "@/utils/string.js";
+import { StringUtils } from "xiaohejs";
 
 export const requestsQueue = [];
 
@@ -255,7 +255,7 @@ export const _request = (customConfig) => {
       enableQuic: Config.http.enableQuic,
       enableCache: Config.http.enableCache,
       ...config,
-      url: convertRelativePath(config.url, { baseUrl: Config.http.requestBaseUrl }),
+      url: StringUtils.convertUrl(config.url, { base: Config.http.requestBaseUrl }),
       success(response) {
         console.log("==============>请求响应<==============");
         console.log("请求方式", config.method);
@@ -434,7 +434,7 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
       ...config,
       name: config.key,
       formData: config.extra,
-      url: convertRelativePath(url, { baseUrl: Config.http.requestBaseUrl }),
+      url: StringUtils.convertUrl(url, { base: Config.http.requestBaseUrl }),
       success(response) {
         console.log("==============>上传响应<==============");
         console.log("上传URL", url);
@@ -502,7 +502,7 @@ export const _download = (url, progress = null, customConfig = {}) => {
   return new Promise((resolve, reject) => {
     const task = uni.downloadFile({
       ...config,
-      url: convertRelativePath(url, { baseUrl: Config.http.requestBaseUrl }),
+      url: StringUtils.convertUrl(url, { base: Config.http.requestBaseUrl }),
       success(response) {
         console.log("==============>下载成功<==============");
         console.log("下载URL", url);

@@ -2,37 +2,20 @@ import Vue from "vue";
 
 import dayjs from "dayjs";
 
+import { StringUtils, ArrayUtils } from "xiaohejs";
+
 import { px2upx } from "@/utils/device.js";
 
-import {
-  isEmptyString,
-  isNotEmptyString,
-  splitString,
-  toHumpString,
-  toUnderlineString,
-  convertRelativePath
-} from "@/utils/string.js";
-
-import ArrayUtils from "@/utils/array";
+import Config from "@/utils/config.js";
 
 Vue.prototype.$date = dayjs;
+
+StringUtils.ConvertUrlBase = Config.http.sourceBaseUrl;
+
+Vue.prototype.$string = StringUtils;
+
+Vue.prototype.$array = ArrayUtils;
 
 Vue.prototype.$device = {
   px2upx
 };
-
-Vue.prototype.$string = {
-  isEmptyString,
-  isEmpty: isEmptyString,
-  isNotEmptyString,
-  isNotEmpty: isNotEmptyString,
-  splitString,
-  split: splitString,
-  toHumpString,
-  toHump: toHumpString,
-  toUnderlineString,
-  toUnderline: toUnderlineString,
-  convertRelativePath
-};
-
-Vue.prototype.$array = ArrayUtils;
