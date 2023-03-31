@@ -17,7 +17,7 @@ lodash@^4.17.21:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-xiaohejs@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/xiaohejs/-/xiaohejs-0.0.7.tgz#9d9f05f7f8eac494c87c24010b518a150068dc4f"
-  integrity sha512-847AS0/OyikUqBUHHMwHqL0lgV01l8TNx93FJPg5PEiMKRFpVEgAj6W3Kso2GM8qx+383XxtNOiSLsykioT4vg==
+xiaohejs@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/xiaohejs/-/xiaohejs-0.0.9.tgz#0fcbe2c887cc106834dc5de69103c224564d78a5"
+  integrity sha512-DVy+oUh0rLuVXvGEqMJFgyEE4LRMWussVej+nWFuiyar1W8rOmG1DCNu7iNlU4jrrPbtJhzDJ9GT+S0wqRfr+g==
