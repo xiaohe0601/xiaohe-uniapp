@@ -32,11 +32,17 @@
   --app-tabbar__txt_weight: 500;
   --app-tabbar__txt_color: #bbbdd4;
   --app-tabbar__txt_color--selected: var(--color-accent);
-  --app-tabbar__badge_size--dot: 10rpx;
+  --app-tabbar__badge_top--dot: 0;
+  --app-tabbar__badge_right--dot: 20rpx;
+  --app-tabbar__badge_size--dot: 14rpx;
+  --app-tabbar__badge_radius--dot: 50%;
+  --app-tabbar__badge_top--text: -10rpx;
+  --app-tabbar__badge_right--text: 10rpx;
   --app-tabbar__badge_size--text: 20rpx;
+  --app-tabbar__badge_padding--text: 0 10rpx;
   --app-tabbar__badge_radius--text: 20rpx;
   --app-tabbar__badge_color: #ffffff;
-  --app-tabbar__badge_background: #ff6d2c;
+  --app-tabbar__badge_background: #fc3b3b;
 
   --app-mask__body_background: rgba(16, 16, 16, 0.5);
 

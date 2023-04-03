@@ -118,13 +118,13 @@ export default {
 
       switch (typeof badge) {
         case "boolean":
-          return null;
+          return "";
         case "number":
         case "string":
           return badge;
       }
 
-      return null;
+      return "";
     }
   }
 };
@@ -202,23 +202,26 @@ export default {
 
 .app-tabbar-item__badge {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
   &.dot {
-    top: 0;
-    right: 10rpx;
+    top: var(--app-tabbar__badge_top--dot);
+    right: var(--app-tabbar__badge_right--dot);
     width: var(--app-tabbar__badge_size--dot);
     height: var(--app-tabbar__badge_size--dot);
     background-color: var(--app-tabbar__badge_background);
-    border-radius: 50%;
+    border-radius: var(--app-tabbar__badge_radius--dot);
   }
 
   &.text {
-    top: -10rpx;
-    right: -14rpx;
-    padding: 5rpx 10rpx 0;
+    top: var(--app-tabbar__badge_top--text);
+    right: var(--app-tabbar__badge_right--text);
+    padding: var(--app-tabbar__badge_padding--text);
     font-size: var(--app-tabbar__badge_size--text);
     color: var(--app-tabbar__badge_color);
-    text-align: center;
     background-color: var(--app-tabbar__badge_background);
     border-radius: var(--app-tabbar__badge_radius--text);
   }
