@@ -5,7 +5,7 @@ export default {
       theLifecycle: null,
       /** @type {boolean} 当前页面是否展示 */
       thePercept: false
-    }
+    };
   },
   onInit() {
     this.theLifecycle = "init";
