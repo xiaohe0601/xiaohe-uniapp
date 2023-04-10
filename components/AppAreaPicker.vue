@@ -129,8 +129,6 @@ export default {
   methods: {
     async requestAreasByAdcode(adcode = "") {
       try {
-        this.loading = true;
-
         // 😀 根据实际情况调用接口查询指定区域下的子区域列表
 
         // const { data } = await apiQueryAreasByAdcode({
@@ -152,37 +150,41 @@ export default {
         return [];
       } catch {
         return [];
-      } finally {
-        this.loading = false;
       }
     },
     async updatePickerColumns({ columnIndex, code, indexs }) {
       const { level, areas, codeLevelLength, codePadChar } = this;
 
-      const theColumnIndex = columnIndex ?? -1;
-      const theAreas = areas == null ? await this.requestAreasByAdcode() : _.cloneDeep(areas);
-      const theIndexs = Object.assign(new Array(level).fill(0), indexs?.slice(0, theColumnIndex + 1) ?? []);
+      try {
+        this.loading = true;
 
-      for (let i = theColumnIndex + 1; i < level; i += 1) {
-        const path = theIndexs.slice(0, i).map((it) => `[${it}]`).join(".children");
+        const theColumnIndex = columnIndex ?? -1;
+        const theAreas = areas == null ? await this.requestAreasByAdcode() : _.cloneDeep(areas);
+        const theIndexs = Object.assign(new Array(level).fill(0), indexs?.slice(0, theColumnIndex + 1) ?? []);
 
-        if (i > 0) {
-          if (_.get(theAreas, `${path}.children`) == null) {
-            _.set(theAreas, `${path}.children`, await this.requestAreasByAdcode(_.get(theAreas, path).code));
+        for (let i = theColumnIndex + 1; i < level; i += 1) {
+          const path = theIndexs.slice(0, i).map((it) => `[${it}]`).join(".children");
+
+          if (i > 0) {
+            if (_.get(theAreas, `${path}.children`) == null) {
+              _.set(theAreas, `${path}.children`, await this.requestAreasByAdcode(_.get(theAreas, path).code));
+            }
+          }
+
+          if (code != null) {
+            const currentCode = _.padEnd(code.slice(0, (i + 1) * codeLevelLength), code.length, codePadChar);
+
+            const currentIndex = _.findIndex(_.get(theAreas, `${path}.children`, theAreas), (item) => item.code === currentCode);
+
+            theIndexs[i] = Math.max(0, currentIndex);
           }
         }
 
-        if (code != null) {
-          const currentCode = _.padEnd(code.slice(0, (i + 1) * codeLevelLength), code.length, codePadChar);
-
-          const currentIndex = _.findIndex(_.get(theAreas, `${path}.children`, theAreas), (item) => item.code === currentCode);
-
-          theIndexs[i] = Math.max(0, currentIndex);
-        }
+        this.areas = theAreas;
+        this.indexs = theIndexs;
+      } finally {
+        this.loading = false;
       }
-
-      this.areas = theAreas;
-      this.indexs = theIndexs;
     }
   }
 };
