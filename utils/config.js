@@ -14,7 +14,9 @@ export default {
     // 默认状态栏高度 (单位: px) (初始状态下使用, 程序获取到状态栏高度时将会被更新)
     statusBarHeight: 20,
     // 默认标题栏高度 (单位: px) (在App或H5等不能获取标题栏高度的环境中使用)
-    titleBarHeight: 40
+    titleBarHeight: 40,
+    // view组件的hover-stay-time属性值
+    viewHoverStayTime: 70
   },
   route: {
     // 导航栏配置
