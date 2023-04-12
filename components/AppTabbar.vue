@@ -5,7 +5,7 @@
             :key="item.path"
             class="app-tabbar-item"
             :class="{'selected': current === index}"
-            @tap="onTabbarItemTap(item)">
+            @tap="whenTabbarItemTap(item)">
         <view v-if="item.iconfont || (item.icon && item.iconSelected)" class="app-tabbar-item__icon">
           <text v-if="item.iconfont" class="app-tabbar-item__icon__iconfont iconfont" :class="[item.iconfont]"></text>
           <image v-else class="app-tabbar-item__icon__image" :src="current === index ? item.iconSelected : item.icon"></image>
@@ -71,7 +71,7 @@ export default {
     }
   },
   methods: {
-    onTabbarItemTap(item) {
+    whenTabbarItemTap(item) {
       if (item.path != null) {
         uni.switchTab({
           url: item.path

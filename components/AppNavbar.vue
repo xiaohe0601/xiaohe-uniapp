@@ -9,7 +9,7 @@
         <slot v-if="useCustomSlot" name="custom"></slot>
 
         <template v-else>
-          <view class="app-navbar__title-bar__left" @tap="onTitleBarLeftTap">
+          <view class="app-navbar__title-bar__left" @tap="whenTitleBarLeftTap">
             <template v-if="showLeft">
               <slot v-if="useLeftSlot" name="left"></slot>
 
@@ -195,7 +195,7 @@ export default {
     this.shouldBackToHomeShow = pages.length === 1 && !this.AppConfig.route.navbar.backToHomeExcludes.includes(current.route);
   },
   methods: {
-    onTitleBarLeftTap() {
+    whenTitleBarLeftTap() {
       this.$emit("left-tap");
 
       if (this.autoBack) {
