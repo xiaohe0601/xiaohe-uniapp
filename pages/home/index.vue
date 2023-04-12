@@ -31,15 +31,15 @@
 </template>
 
 <script>
-import AppTabbar from "@/components/AppTabbar.vue";
-
 import lifecycleMixin from "@/mixins/lifecycle.js";
+
+import AppTabbar from "@/components/AppTabbar.vue";
 
 import { mapGetters } from "vuex";
 
 export default {
-  components: { AppTabbar },
   mixins: [lifecycleMixin],
+  components: { AppTabbar },
   data() {
     return {};
   },
