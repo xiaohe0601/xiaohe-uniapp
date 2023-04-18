@@ -13,9 +13,9 @@
 
         <text class="app-tabbar-item__text">{{ item.text }}</text>
 
-        <template v-if="isTabbarItemBadgeShow(item)">
-          <view class="app-tabbar-item__badge" :class="[parseTabbarItemBadgeType(item)]">
-            <text class="app-tabbar-item__badge__text">{{ parseTabbarItemBadgeText(item) }}</text>
+        <template v-if="isTabbarItemBadgeShow(badgeGetters[item.badgeKey])">
+          <view class="app-tabbar-item__badge" :class="[parseTabbarItemBadgeType(badgeGetters[item.badgeKey])]">
+            <text class="app-tabbar-item__badge__text">{{ parseTabbarItemBadgeText(badgeGetters[item.badgeKey]) }}</text>
           </view>
         </template>
       </view>
@@ -70,6 +70,17 @@ export default {
       default: true
     }
   },
+  computed: {
+    badgeGetters() {
+      return this.AppConfig.route.tabbar.list
+        .filter(({ badgeKey }) => badgeKey != null)
+        .reduce((previous, { badgeKey }) => {
+          previous[badgeKey] = this.$store.getters[badgeKey];
+
+          return previous;
+        }, {});
+    }
+  },
   methods: {
     whenTabbarItemTap(item) {
       if (item.path != null) {
@@ -78,13 +89,7 @@ export default {
         });
       }
     },
-    isTabbarItemBadgeShow({ badgeKey }) {
-      if (badgeKey == null) {
-        return false;
-      }
-
-      const badge = this.$store.getters[badgeKey];
-
+    isTabbarItemBadgeShow(badge) {
       if (badge == null) {
         return false;
       }
@@ -100,9 +105,7 @@ export default {
 
       return false;
     },
-    parseTabbarItemBadgeType({ badgeKey }) {
-      const badge = this.$store.getters[badgeKey];
-
+    parseTabbarItemBadgeType(badge) {
       switch (typeof badge) {
         case "boolean":
           return "dot";
@@ -113,9 +116,7 @@ export default {
 
       return null;
     },
-    parseTabbarItemBadgeText({ badgeKey }) {
-      const badge = this.$store.getters[badgeKey];
-
+    parseTabbarItemBadgeText(badge) {
       switch (typeof badge) {
         case "boolean":
           return "";
