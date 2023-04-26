@@ -1,5 +1,5 @@
 <template>
-	<uvInput
+	<uvInput 
 		:value="value"
 		:type="type"
 		:fixed="fixed"
@@ -36,7 +36,7 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		:ignoreCompositionEvent="ignoreCompositionEvent"
-		@focus="e => $emit('focus', e)"
+		@focus="$emit('focus')"
 		@blur="e => $emit('blur', e)"
 		@keyboardheightchange="$emit('keyboardheightchange')"
 		@change="e => $emit('change', e)"
