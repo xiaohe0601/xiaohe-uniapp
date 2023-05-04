@@ -76,6 +76,7 @@ export default {
 		}
 	},
 	watch: {
+		// #ifdef APP-NVUE
 		nIsFirstPageAndNoMore: {
 			handler(newVal) {
 				const cellStyle = !this.useChatRecordMode || newVal ? {} : { transform: 'rotate(180deg)' };
@@ -83,7 +84,8 @@ export default {
 				this.$emit('cellStyleChange', cellStyle);
 			},
 			immediate: true
-		}
+		},
+		// #endif
 	},
 	computed: {
 		// #ifdef APP-NVUE
@@ -174,11 +176,6 @@ export default {
 			   !this.usePageScroll && this.$refs['zp-n-list'].resetLoadmore();
 			   this.nRefresherLoading = false;
 			}
-			this.$nextTick(() => {
-				setTimeout(()=> {
-					this.nShowBottom = true;
-				}, 10);
-			})
 		},
 		//执行主动触发下拉刷新动画
 		_nDoRefresherEndAnimation(height, translateY, animate = true, checkStack = true) {
@@ -186,7 +183,7 @@ export default {
 			this._cleanRefresherEndTimeout();
 			
 			if (!this.finalShowRefresherWhenReload) {
-				this.refresherEndTimeout = setTimeout(() => {
+				this.refresherEndTimeout = u.delay(() => {
 					this.refresherStatus = Enum.Refresher.Default;
 				}, this.refresherCompleteDuration);
 				return;
@@ -195,7 +192,7 @@ export default {
 			if (height === 0 && checkStack) {
 				this.refresherRevealStackCount --;
 				if (stackCount > 1) return;
-				this.refresherEndTimeout = setTimeout(() => {
+				this.refresherEndTimeout = u.delay(() => {
 					this.refresherStatus = Enum.Refresher.Default;
 				}, this.refresherCompleteDuration);
 			}
@@ -219,7 +216,7 @@ export default {
 					delay: 0
 				})
 			}
-			setTimeout(() => {
+			u.delay(() => {
 				if (animate) {
 					this.nShowRefresherReveal = height > 0;
 				}
@@ -237,7 +234,7 @@ export default {
 		},
 		//更新nvue 下拉刷新view容器的宽度
 		_nUpdateRefresherWidth() {
-			setTimeout(() => {
+			u.delay(() => {
 				this.$nextTick(()=>{
 					this._getNodeClientRect('.zp-n-list').then(node => {
 						if (node) {
@@ -245,7 +242,7 @@ export default {
 						}
 					})
 				})
-			}, c.delayTime)	
+			})	
 		}
 		// #endif
 	}
