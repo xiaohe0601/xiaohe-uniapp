@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>uniapp-vue2-hbx-starter</h1>
+  <h1>xiaohe-uniapp</h1>
   <span>🚀 一个开箱即用的uniapp脚手架</span>
 </div>
 
