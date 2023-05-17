@@ -3,7 +3,7 @@
     <app-navbar title="我的" :show-left="false"></app-navbar>
 
 
-    <app-tabbar :current="1"></app-tabbar>
+    <app-tabbar current="mine"></app-tabbar>
 
     <app-safearea :cushion-height="140"></app-safearea>
   </app-container>

@@ -31,11 +31,13 @@ export default {
     // tabbar配置
     tabbar: {
       list: [{
+        key: "home",
         text: "首页",
         path: "/pages/home/index",
         icon: "/static/icons/tabbar_home.png",
         iconSelected: "/static/icons/tabbar_home_selected.png"
       }, {
+        key: "mine",
         text: "我的",
         path: "/pages/mine/index",
         icon: "/static/icons/tabbar_mine.png",

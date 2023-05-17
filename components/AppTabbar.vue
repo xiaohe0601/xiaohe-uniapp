@@ -1,21 +1,23 @@
 <template>
   <view class="app-tabbar">
     <view class="app-tabbar__inner" :class="{'hide': !show, 'round': round, 'border': border}">
-      <view v-for="(item, index) in AppConfig.route.tabbar.list"
-            :key="item.path"
+      <view v-for="(item) in AppConfig.route.tabbar.list"
+            :key="item.key"
             class="app-tabbar-item"
-            :class="{'selected': current === index}"
+            :class="{'selected': current === item.key}"
             @tap="whenTabbarItemTap(item)">
         <view v-if="item.iconfont || (item.icon && item.iconSelected)" class="app-tabbar-item__icon">
           <text v-if="item.iconfont" class="app-tabbar-item__icon__iconfont iconfont" :class="[item.iconfont]"></text>
-          <image v-else class="app-tabbar-item__icon__image" :src="current === index ? item.iconSelected : item.icon"></image>
+          <image v-else class="app-tabbar-item__icon__image" :src="current === item.key ? item.iconSelected : item.icon"></image>
         </view>
 
         <text class="app-tabbar-item__text">{{ item.text }}</text>
 
         <template v-if="isTabbarItemBadgeShow(badgeGetters[item.badgeKey])">
           <view class="app-tabbar-item__badge" :class="[parseTabbarItemBadgeType(badgeGetters[item.badgeKey])]">
-            <text class="app-tabbar-item__badge__text">{{ parseTabbarItemBadgeText(badgeGetters[item.badgeKey]) }}</text>
+            <text class="app-tabbar-item__badge__text">
+              {{ parseTabbarItemBadgeText(badgeGetters[item.badgeKey]) }}
+            </text>
           </view>
         </template>
       </view>
@@ -43,7 +45,7 @@
  * @author        小何同学 (MyHdg0601)
  * @description   本组件用于自定义底部导航栏 (即tabbar)。
  *
- * @property {Number}   current   当前选中的tabbar-item下标
+ * @property {Number}   current   当前选中的tabbar-item唯一标识 (即key)
  * @property {Boolean}  show      是否展示tabbar
  * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
  * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
@@ -54,7 +56,7 @@ export default {
   name: "AppTabbar",
   props: {
     current: {
-      type: Number,
+      type: [Number, String],
       default: -1
     },
     show: {
@@ -230,5 +232,6 @@ export default {
 
 .app-tabbar__cushion {
   height: var(--app-safearea__body_bottom);
+  transition: height 0.1s ease-out;
 }
 </style>

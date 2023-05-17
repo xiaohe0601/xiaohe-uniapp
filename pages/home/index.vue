@@ -24,7 +24,7 @@
       </view>
     </view>
 
-    <app-tabbar :current="0"></app-tabbar>
+    <app-tabbar current="home"></app-tabbar>
 
     <app-safearea :cushion-height="140"></app-safearea>
   </app-container>
