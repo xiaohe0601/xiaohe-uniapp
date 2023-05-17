@@ -88,6 +88,13 @@
       border-color: var(--color-disabled) !important;
       opacity: 1 !important;
     }
+
+    &.danger {
+      .u-button {
+        background-color: var(--color-danger) !important;
+        border-color: var(--color-danger) !important;
+      }
+    }
   }
 
   &.plain {
@@ -96,14 +103,48 @@
       background-color: transparent !important;
       border-color: var(--color-accent) !important;
     }
+
+    &.danger {
+      .u-button {
+        color: var(--color-danger) !important;
+        border-color: var(--color-danger) !important;
+      }
+    }
   }
 
   &.cancel {
     .u-button {
-      color: var(--color-txt-primary) !important;
+      color: var(--color-txt-secondary) !important;
       background-color: transparent !important;
-      border-color: var(--color-divider) !important;
+      border-color: var(--app-button__body_bdcolor--cancel) !important;
     }
+  }
+}
+
+.app-switch {
+  .u-switch {
+    border-color: transparent !important;
+  }
+
+  &.active {
+    .u-switch,
+    .u-switch__bg {
+      background-color: var(--color-accent) !important;
+      box-shadow: inset 0 0 6rpx 0 rgba(6, 89, 61, 0.5);
+    }
+  }
+
+  &.inactive {
+    .u-switch,
+    .u-switch__bg {
+      background-color: #ecf2ef !important;
+      box-shadow: inset 0 0 10rpx 0 rgba(195, 214, 205, 0.5);
+    }
+  }
+
+  .u-switch__node {
+    background-color: var(--color-bg-primary) !important;
+    box-shadow: 0 0 8rpx 0 rgba(100, 116, 108, 0.3), inset 0 0 6rpx 0 rgba(196, 220, 208, 0.15) !important;
   }
 }
 
@@ -128,7 +169,7 @@
   }
 }
 
-.app-popup, .app-modal, .app-picker {
+.app-popup, .app-modal, .app-picker, .app-calendar-picker {
   .u-popup {
     > .u-transition:first-child {
       background-color: var(--app-mask__body_background) !important;
@@ -138,115 +179,13 @@
   .u-popup__content {
     background-color: var(--color-bg-primary) !important;
   }
-}
 
-.app-modal {
-  .u-modal {
-    width: 640rpx !important;
-  }
-
-  .u-modal__title {
-    font-size: 36rpx !important;
-    font-weight: 500 !important;
-    color: var(--color-txt-primary) !important;
-
-    & + .u-modal__content {
-      padding-top: 40rpx !important;
+  .u-popup__content__close {
+    .u-icon__icon {
+      font-size: 44rpx !important;
+      font-weight: normal !important;
+      color: var(--color-txt-tertiary) !important;
     }
-  }
-
-  .u-popup__content, .u-modal {
-    border-radius: 16rpx !important;
-  }
-
-  .u-modal__content {
-    min-height: 190rpx;
-    padding-top: 70rpx !important;
-  }
-
-  .u-modal__content__text {
-    font-size: 32rpx !important;
-    color: var(--color-txt-primary) !important;
-    text-align: center;
-  }
-
-  .u-line {
-    border-color: var(--color-divider) !important;
-  }
-
-  .u-modal__button-group__wrapper {
-    height: 110rpx !important;
-  }
-
-  .u-modal__button-group__wrapper--hover {
-    background-color: var(--color-bg-normal) !important;
-  }
-
-  .u-modal__button-group__wrapper__text {
-    font-size: 34rpx !important;
-  }
-
-  .u-modal__button-group__wrapper--confirm {
-    .u-modal__button-group__wrapper__text {
-      color: var(--color-accent) !important;
-    }
-  }
-
-  .u-modal__button-group__wrapper--cancel {
-    .u-modal__button-group__wrapper__text {
-      color: var(--color-txt-secondary) !important;
-    }
-  }
-}
-
-.app-picker {
-  .u-popup__content {
-    border-radius: 24rpx 24rpx 0 0;
-  }
-
-  .u-toolbar {
-    height: 112rpx !important;
-    border-bottom: 1rpx solid var(--color-divider);
-  }
-
-  .u-toolbar__title {
-    color: var(--color-txt-primary) !important;
-  }
-
-  .u-toolbar__wrapper__confirm, .u-toolbar__wrapper__cancel {
-    padding: 0 40rpx !important;
-    font-size: 34rpx !important;
-  }
-
-  .u-toolbar__wrapper__confirm {
-    color: var(--color-accent) !important;
-  }
-
-  .u-toolbar__wrapper__cancel {
-    color: var(--color-txt-secondary) !important;
-  }
-
-  .uni-picker-view-mask {
-    background-image: var(--app-picker__mask_background) !important;
-  }
-
-  .uni-picker-view-indicator {
-    border: 1rpx solid var(--color-divider);
-    border-left-width: 0;
-    border-right-width: 0;
-
-    &::before, &::after {
-      display: none;
-    }
-  }
-
-  .u-picker__view__column__item {
-    color: var(--color-txt-primary) !important;
-  }
-
-  .u-picker--loading {
-    background-color: var(--app-picker__loading_background) !important;
-    border-radius: 24rpx 24rpx 0 0;
   }
 }
 

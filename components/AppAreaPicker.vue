@@ -1,24 +1,22 @@
 <template>
   <view class="app-area-picker">
-    <view class="app-picker">
-      <u-picker ref="picker"
-                :show="innerShow"
+    <app-picker ref="picker"
+                :show.sync="innerShow"
                 :title="title"
                 :columns="columns"
-                :loading="loading"
+                :single-column="false"
+                unique-key="code"
                 key-name="name"
-                :confirm-text="confirmText"
-                :cancel-text="cancelText"
-                immediate-change
+                :loading="loading"
+                reserve-indexs
                 @change="updatePickerColumns"
-                @confirm="$emit('confirm', $event)"
-                @cancel="innerShow = false"
-                @close="innerShow = false"></u-picker>
-    </view>
+                @confirm="$emit('confirm', $event)"></app-picker>
   </view>
 </template>
 
 <script>
+import AppPicker from "@/components/AppPicker.vue";
+
 import _ from "lodash";
 
 // 😀 根据实际情况import对应的接口定义
@@ -45,6 +43,7 @@ import _ from "lodash";
  */
 export default {
   name: "AppAreaPicker",
+  components: { AppPicker },
   props: {
     code: null,
     show: {
@@ -66,14 +65,6 @@ export default {
     codePadChar: {
       type: String,
       default: "0"
-    },
-    confirmText: {
-      type: String,
-      default: "确定"
-    },
-    cancelText: {
-      type: String,
-      default: "取消"
     }
   },
   data() {

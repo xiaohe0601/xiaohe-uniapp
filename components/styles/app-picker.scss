@@ -1,0 +1,53 @@
+.app-picker {
+  ::v-deep {
+    .u-popup__content {
+      border-radius: 24rpx 24rpx 0 0;
+    }
+
+    .u-toolbar {
+      height: 112rpx !important;
+      border-bottom: var(--app-divider__body_height) solid var(--color-divider);
+    }
+
+    .u-toolbar__title {
+      font-size: 34rpx !important;
+      color: var(--color-txt-primary) !important;
+    }
+
+    .u-toolbar__wrapper__confirm, .u-toolbar__wrapper__cancel {
+      padding: 0 40rpx !important;
+      font-size: 34rpx !important;
+    }
+
+    .u-toolbar__wrapper__confirm {
+      color: var(--color-accent) !important;
+    }
+
+    .u-toolbar__wrapper__cancel {
+      color: var(--color-txt-secondary) !important;
+    }
+
+    .uni-picker-view-mask {
+      background-image: var(--app-picker__mask_background) !important;
+    }
+
+    .uni-picker-view-indicator {
+      border: var(--app-divider__body_height) solid var(--color-divider);
+      border-left-width: 0;
+      border-right-width: 0;
+
+      &::before, &::after {
+        display: none;
+      }
+    }
+
+    .u-picker__view__column__item {
+      color: var(--color-txt-primary) !important;
+    }
+
+    .u-picker--loading {
+      background-color: var(--app-picker__loading_background) !important;
+      border-radius: 24rpx 24rpx 0 0;
+    }
+  }
+}
