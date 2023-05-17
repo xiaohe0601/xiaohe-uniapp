@@ -5,6 +5,7 @@
 		:closeOnClickOverlay="closeOnClickOverlay"
 		:columns="columns"
 		:title="title"
+    :loading="loading"
 		:itemHeight="itemHeight"
 		:showToolbar="showToolbar"
 		:visibleItemCount="visibleItemCount"

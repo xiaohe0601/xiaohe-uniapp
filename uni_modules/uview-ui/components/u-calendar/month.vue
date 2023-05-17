@@ -2,7 +2,7 @@
 	<view class="u-calendar-month-wrapper" ref="u-calendar-month-wrapper">
 		<view v-for="(item, index) in months" :key="index" :class="[`u-calendar-month-${index}`]"
 			:ref="`u-calendar-month-${index}`" :id="`month-${index}`">
-			<text v-if="index !== 0" class="u-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
+			<text v-if="showFirstTitle" class="u-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
 			<view class="u-calendar-month__days">
 				<view v-if="showMark" class="u-calendar-month__days__month-mark-wrapper">
 					<text class="u-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
@@ -120,7 +120,21 @@
 			allowSameDay: {
 				type: Boolean,
 				default: false
-			}
+			},
+      // 月份宽度
+      monthWidth: {
+        type: Number
+      },
+      // 是否展示第一月的标题
+      showFirstTitle: {
+        type: Boolean,
+        default: false
+      },
+      // 是否通过transform实现横屏
+      transformLandscape: {
+        type: Boolean,
+        default: false
+      }
 		},
 		data() {
 			return {
@@ -230,7 +244,7 @@
 						style = {}
 					// 选中的日期，提示文字设置白色
 					if (this.selected.some(item => this.dateSame(item, date))) {
-						style.color = '#ffffff'
+						style.color = '#ffffff !important'
 					}
 					if (this.mode === 'range') {
 						const len = this.selected.length - 1
@@ -297,6 +311,11 @@
 			},
 			// 获取月份数据区域的宽度，因为nvue不支持百分比，所以无法通过css设置每个日期item的宽度
 			getWrapperWidth() {
+        if (this.monthWidth != null) {
+          this.width = this.monthWidth
+          return
+        }
+
 				// #ifdef APP-NVUE
 				dom.getComponentRect(this.$refs['u-calendar-month-wrapper'], res => {
 					this.width = res.size.width
@@ -320,7 +339,7 @@
 						for (let i = 0; i < this.months.length; i++) {
 							// 添加到months数组中，供scroll-view滚动事件中，判断当前滚动到哪个月份
 							topArr[i] = height
-							height += sizes[i].height
+							height += sizes[i][this.transformLandscape ? 'width' : 'height']
 						}
 						// 由于微信下，无法通过this.months[i].top的形式(引用类型)去修改父组件的month的top值，所以使用事件形式对外发出
 						this.$emit('updateMonthTop', topArr)

@@ -41,6 +41,9 @@
 					:rangePrompt="rangePrompt"
 					:showRangePrompt="showRangePrompt"
 					:allowSameDay="allowSameDay"
+          :month-width="monthWidth"
+          :show-first-title="!showSubtitle"
+          :transform-landscape="transformLandscape"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="updateMonthTop"
@@ -173,6 +176,10 @@ export default {
 			}
 		},
 		buttonDisabled() {
+      if (this.disableButton) {
+        return true;
+      }
+
 			// 如果为range类型，且选择的日期个数不足1个时，让底部的按钮出于disabled状态
 			if (this.mode === 'range') {
 				if (this.selected.length <= 1) {

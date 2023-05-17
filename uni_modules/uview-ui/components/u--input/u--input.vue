@@ -36,7 +36,7 @@
 		:customStyle="customStyle"
 		:formatter="formatter"
 		:ignoreCompositionEvent="ignoreCompositionEvent"
-		@focus="$emit('focus')"
+		@focus="e => $emit('focus', e)"
 		@blur="e => $emit('blur', e)"
 		@keyboardheightchange="$emit('keyboardheightchange')"
 		@change="e => $emit('change', e)"
