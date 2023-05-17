@@ -81,7 +81,6 @@ export default {
 @import "~@/uni_modules/uview-ui/index.scss";
 
 @import "~@/styles/reset.scss";
-@import "~@/styles/common.scss";
 @import "~@/styles/theme.scss";
 @import "~@/styles/app.scss";
 
