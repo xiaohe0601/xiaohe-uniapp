@@ -2,6 +2,9 @@
   --color-accent: #{$app-color-accent};
   --color-accent_rgb: #{$app-color-accent_rgb};
 
+  --color-danger: #{$u-error};
+  --color-danger_rgb: #{$u-error_rgb};
+
   --app-main__space_vertical: 20rpx;
   --app-main__space_horizontal: 22rpx;
   --app-main__txt_size: 28rpx;
@@ -20,7 +23,7 @@
 
   --app-tabbar__body_height: 120rpx;
   --app-tabbar__body_radius: 0;
-  --app-tabbar__body_border: 2rpx solid rgba(0, 0, 0, 0.04);
+  --app-tabbar__body_border: var(--app-divider__body_height) solid var(--color-divider);
   --app-tabbar__body_background: var(--color-bg-primary);
   --app-tabbar__body_zindex: 50;
   --app-tabbar__body_transition: bottom 0.3s ease-out;
@@ -42,7 +45,7 @@
   --app-tabbar__badge_padding--text: 0 10rpx;
   --app-tabbar__badge_radius--text: 20rpx;
   --app-tabbar__badge_color: #ffffff;
-  --app-tabbar__badge_background: #fc3b3b;
+  --app-tabbar__badge_background: var(--color-danger);
 
   --app-mask__body_background: rgba(16, 16, 16, 0.5);
 
@@ -50,10 +53,14 @@
   --app-scroller__bktop_right: var(--app-main__space_horizontal);
   --app-scroller__bktop_bottom: 40rpx;
   --app-scroller__bktop_zindex: 10;
+
+  --app-divider__body_height: 0.5px;
 }
 
 .app-container.app-theme-light {
   --color-divider: #{$u-border-color};
+
+  --color-disabled: #{$u-disabled-color};
 
   --color-txt-primary: #{$u-main-color};
   --color-txt-secondary: #{$u-content-color};
@@ -65,13 +72,16 @@
 
   --app-navbar__home_background: rgba(0, 0, 0, 0.12);
 
-  --app-picker__mask_background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)),
-  linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
+  --app-picker__mask_background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)), linear-gradient(0deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
   --app-picker__loading_background: rgba(255, 255, 255, 0.86);
+
+  --app-button__body_bdcolor--cancel: #dcdcdc;
 }
 
 .app-container.app-theme-dark {
-  --color-divider: #323232;
+  --color-divider: #232323;
+
+  --color-disabled: #212121;
 
   --color-txt-primary: #cfcfcf;
   --color-txt-secondary: #a0a0a0;
@@ -83,7 +93,8 @@
 
   --app-navbar__home_background: rgba(255, 255, 255, 0.08);
 
-  --app-picker__mask_background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6)),
-  linear-gradient(0deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6));
+  --app-picker__mask_background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6)), linear-gradient(0deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.6));
   --app-picker__loading_background: rgba(0, 0, 0, 0.8);
+
+  --app-button__body_bdcolor--cancel: #323232;
 }
