@@ -25,7 +25,7 @@ import _ from "lodash";
 /**
  * AppAreaPicker 地区选择器
  *
- * @author        小何同学 (MyHdg0601)
+ * @author        小何同学 (xiaohe0601)
  * @description   本组件用于地区选择, 传入地区编码即可自动定位至目标地区。
  *
  * @property {String}   code                地区编码

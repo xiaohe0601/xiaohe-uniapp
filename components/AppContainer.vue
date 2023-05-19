@@ -10,7 +10,7 @@ import { mapGetters } from "vuex";
 /**
  * AppContainer App页面容器
  *
- * @author        小何同学 (MyHdg0601)
+ * @author        小何同学 (xiaohe0601)
  * @description   本组件用于容纳页面内的所有元素, 并向子元素提供Css变量, 实现主题切换等功能。注意：本组件应为页面的根组件。
  *
  * @property {Boolean}  percept                                       所在页面是否被展示 (传入lifecycleMixin中的thePercept)

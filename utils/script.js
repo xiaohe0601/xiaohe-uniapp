@@ -2,7 +2,7 @@
  * @description 让小程序支持加载及执行远程JavaScript脚本, 突破小程序无法动态执行代码的限制 (仅支持ES5语法)
  *
  * @version   1.0.0
- * @author    小何同学 (MyHdg0601)
+ * @author    小何同学 (xiaohe0601)
  * @email     HeDianGeng0601@outlook.com
  *
  * @requires eval5 该文件的实现依赖于eval5, 若未安装依赖请先安装 (yarn add eval5)

@@ -60,7 +60,7 @@
 /**
  * AppNavbar App导航栏
  *
- * @author        小何同学 (MyHdg0601)
+ * @author        小何同学 (xiaohe0601)
  * @description   本组件用于自定义导航栏 (即navbar)。
  *
  * @property {Boolean}  show              是否展示导航栏 (仅fixed时有效)
