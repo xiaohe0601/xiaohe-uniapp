@@ -137,5 +137,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: var(--app-main__txt_size);
+  font-weight: var(--app-main__txt_weight);
+  font-family: MiSans, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  line-height: var(--app-main__txt_lheight);
+  color: var(--app-main__txt_color);
+  overflow-x: hidden;
+  overflow-y: auto;
 
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+    color: transparent;
+  }
+}
 </style>
