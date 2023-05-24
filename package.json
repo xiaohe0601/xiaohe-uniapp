@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "dayjs": "^1.11.5",
+    "dayjs": "^1.11.7",
     "lodash": "^4.17.21",
-    "xiaohejs": "^0.0.9"
+    "xiaohejs": "^0.0.10"
   },
   "devDependencies": {
     "dotenv": "^16.0.3"
