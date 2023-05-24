@@ -39,7 +39,7 @@ import _ from "lodash";
  * @property {Number}     tolerant                右侧滚动自动定位左侧位置时容错高度 (防止左侧定位选中到上一个位置)
  * @property {Boolean}    enablePassive           开启passive特性 (能优化一定的滚动性能, 注意查看微信官方文档相关问题 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#enablePassiveEvent)
  *
- * @event {Function} update:current 当前左侧选中位置变化 [value: 当前左侧选中位置索引]
+ * @event {Function}  update:current    当前左侧选中位置变化 [value: 当前左侧选中位置索引]
  *
  * @example
  * <app-link-scroller ref="scroller"

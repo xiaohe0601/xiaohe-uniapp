@@ -91,12 +91,12 @@ import AppDatetimePicker from "./AppDatetimePicker.vue";
  * @property {Boolean}                  closeOnClickOverlay                       点击遮罩是否关闭选择器
  * @property {Boolean}                  immediateChange                           是否在手指松开时立即触发change事件
  *
- * @event {Function} update:show      是否展示选择器变化 [value: 是否展示选择器]
- * @event {Function} update:value1    开始选择器绑定值变化 [value: 开始值]
- * @event {Function} update:value2    截止选择器绑定值变化 [value: 截止值]
- * @event {Function} confirm          点击确定 [[value1: 开始值, value2: 截止值]]
- * @event {Function} cancel           点击取消
- * @event {Function} close            选择器关闭
+ * @event {Function}  update:show     是否展示选择器变化 [value: 是否展示选择器]
+ * @event {Function}  update:value1   开始选择器绑定值变化 [value: 开始值]
+ * @event {Function}  update:value2   截止选择器绑定值变化 [value: 截止值]
+ * @event {Function}  confirm         点击确定 [[value1: 开始值, value2: 截止值]]
+ * @event {Function}  cancel          点击取消
+ * @event {Function}  close           选择器关闭
  *
  * @example
  * <app-datetime-range-picker :show.sync="show"

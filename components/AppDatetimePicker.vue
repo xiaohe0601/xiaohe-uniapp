@@ -60,12 +60,12 @@
  * @property {Boolean}                  reserveIndexs                             是否保留上次滚动位置 (若为false则会在每次展示时回到当前绑定值所在位置)
  * @property {Boolean}                  immediateChange                           是否在手指松开时立即触发change事件
  *
- * @event {Function} update:show    是否展示选择器变化 [value: 是否展示选择器]
- * @event {Function} input          点击确定 [value: 当前选择的值]
- * @event {Function} confirm        点击确定 [{value: 当前选择的值, mode: 当前选择器模式}]
- * @event {Function} change         当选择值变化时触发 [{value: 当前选择的值, mode: 当前选择器模式}]
- * @event {Function} cancel         点击取消
- * @event {Function} close          选择器关闭
+ * @event {Function}  update:show   是否展示选择器变化 [value: 是否展示选择器]
+ * @event {Function}  input         点击确定 [value: 当前选择的值]
+ * @event {Function}  confirm       点击确定 [{value: 当前选择的值, mode: 当前选择器模式}]
+ * @event {Function}  change        当选择值变化时触发 [{value: 当前选择的值, mode: 当前选择器模式}]
+ * @event {Function}  cancel        点击取消
+ * @event {Function}  close         选择器关闭
  *
  * @example
  * <app-datetime-picker v-model="value"
