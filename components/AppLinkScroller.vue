@@ -24,6 +24,50 @@
 <script>
 import _ from "lodash";
 
+/**
+ * AppLinkScroller 联动滚动器
+ *
+ * @author        小何同学 (xiaohe0601)
+ * @description   本组件用于联动滚动，左侧点击可控制右侧滚动，右侧滚动可自动定位并高亮左侧位置。
+ *
+ * @property {Number}     current                 当前左侧选中位置索引
+ * @property {String}     categoryItemIdPrefix    左侧元素id前缀
+ * @property {String}     contentItemIdPrefix     右侧元素id前缀
+ * @property {String}     contentItemClass        右侧元素class
+ * @property {Number}     threshold               当前组件距离容器顶部高度 (若组件所在页面采用自定义导航栏则需要额外加上自定义导航栏的高度)
+ * @property {Number}     persist                 右侧滚动自动定位左侧位置时预留高度
+ * @property {Number}     tolerant                右侧滚动自动定位左侧位置时容错高度 (防止左侧定位选中到上一个位置)
+ * @property {Boolean}    enablePassive           开启passive特性 (能优化一定的滚动性能, 注意查看微信官方文档相关问题 https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#enablePassiveEvent)
+ *
+ * @event {Function} update:current 当前左侧选中位置变化 [value: 当前左侧选中位置索引]
+ *
+ * @example
+ * <app-link-scroller ref="scroller"
+ *                    :current.sync="current"
+ *                    category-item-id-prefix="category-"
+ *                    content-item-class="content-item"
+ *                    content-item-id-prefix="content-">
+ *   <view slot="categories">
+ *     <view v-for="(item, index) in contents"
+ *           :key="item.id"
+ *           :id="`category-${index}`"
+ *           class="category-item"
+ *           :class="{'current': current === index}"
+ *           \@tap="$refs.scroller.scrollToContentIndex(index)">
+ *       <!-- 内容 -->
+ *     </view>
+ *   </view>
+ *
+ *   <view slot="contents">
+ *     <view v-for="(item, index) in contents"
+ *           :key="item.id"
+ *           :id="`content-${index}`"
+ *           class="content-item">
+ *       <!-- 内容 -->
+ *     </view>
+ *   </view>
+ * </app-link-scroller>
+ */
 export default {
   name: "AppLinkScroller",
   props: {
@@ -116,7 +160,6 @@ export default {
         .select(`#${categoryItemIdPrefix}${index}`)
         .fields({ rect: true })
         .exec(([target]) => {
-
           this.categoriesScrollTop = Math.max(0, actualValue.categoriesScrollTop + target.top - threshold - persist);
         });
     },
@@ -129,7 +172,6 @@ export default {
         .select(`#${contentItemIdPrefix}${index}`)
         .fields({ rect: true })
         .exec(([target]) => {
-
           this.contentsScrollTop = Math.max(0, actualValue.contentsScrollTop + target.top - threshold + tolerant);
         });
     }
