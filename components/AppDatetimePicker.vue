@@ -37,7 +37,7 @@
  *
  * @property {Boolean}                  show                                      是否展示选择器 <支持.sync>
  * @property {String}                   mode = [date|time|year-month|datetime]    选择器模式
- * @property {String|Number}            value                                     当前绑定值
+ * @property {String|Number}            value                                     当前绑定值 <支持v-model>
  * @property {String|Number|Boolean}    defaultValue                              默认值 (string或number类型为明确指定默认值, 若为true则指定当前时间)
  * @property {Boolean}                  showToolbar                               是否显示顶部的操作栏
  * @property {String}                   title                                     顶部标题

@@ -66,9 +66,9 @@ import AppDatetimePicker from "./AppDatetimePicker.vue";
  *
  * @property {Boolean}                  show                                      是否展示选择器 <支持.sync>
  * @property {String}                   mode = [date|time|year-month|datetime]    选择器模式
- * @property {String|Number}            value1                                    开始选择器当前绑定值
+ * @property {String|Number}            value1                                    开始选择器当前绑定值 <支持.sync>
  * @property {String|Number|Boolean}    defaultValue1                             开始选择器默认值 (string或number类型为明确指定默认值, 若为true则指定当前时间)
- * @property {String|Number}            value2                                    截止选择器当前绑定值
+ * @property {String|Number}            value2                                    截止选择器当前绑定值 <支持.sync>
  * @property {String|Number|Boolean}    defaultValue2                             截止选择器默认值 (string或number类型为明确指定默认值, 若为true则指定当前时间)
  * @property {Boolean}                  showToolbar                               是否显示顶部的操作栏
  * @property {String}                   title1                                    开始选择器顶部标题
