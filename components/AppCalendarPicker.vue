@@ -44,7 +44,7 @@ const DateTemplate = "YYYY-MM-DD";
  * @author        小何同学 (xiaohe0601)
  * @description   本组件用于单/多个日期选择以及日期范围选择。
  *
- * @property {Boolean}          show                              是否展示弹窗 <支持.sync>
+ * @property {Boolean}          show                              是否展示选择器 <支持.sync>
  * @property {String}           mode = [single|multiple|range]    选择器模式
  * @property {String}           title                             标题
  * @property {Number|Array}     defaultDate                       默认选中日期
@@ -68,14 +68,18 @@ const DateTemplate = "YYYY-MM-DD";
  * @property {String}           rangePrompt                       范围选择超过最多可选天数时的提示文案
  * @property {String}           confirmText                       确定按钮文字
  * @property {String}           confirmDisabledText               确定按钮处于禁用状态时的文字
- * @property {Boolean}          closeOnClickOverlay               点击遮罩是否关闭弹窗
- * @property {Boolean}          closeOnConfirm                    点击确定按钮时是否关闭弹窗
+ * @property {Boolean}          closeOnConfirm                    点击确定按钮时是否关闭选择器
+ * @property {Boolean}          closeOnClickOverlay               点击遮罩是否关闭选择器
  * @property {String}           color                             主题色
  * @property {Number}           monthWidth                        手动指定月份宽度
  * @property {Number}           rowHeight                         日期行高
  * @property {Boolean}          transformLandscape                外部是否使用了transform实现横屏
  *
- * @example <app-calendar-picker :show.sync="searchDatePickerShow" @confirm="confirm"></app-calendar-picker>
+ * @event {Function}  update:show   是否展示选择器变化 [value: 是否展示选择器]
+ * @event {Function}  confirm       点击确定 [single -> 单个日期时间戳, multiple -> 多个日期时间戳数组, range -> 开始截止两个日期时间戳数组]
+ * @event {Function}  close         选择器关闭
+ *
+ * @example <app-calendar-picker :show.sync="show" @confirm="confirm"></app-calendar-picker>
  */
 export default {
   name: "AppCalendarPicker",
@@ -89,7 +93,8 @@ export default {
     },
     mode: {
       type: String,
-      default: "single"
+      default: "single",
+      validator: (value) => ["single", "multiple", "range"].indexOf(value) >= 0
     },
     title: {
       type: String,
@@ -179,13 +184,13 @@ export default {
       type: String,
       default: "确定"
     },
-    closeOnClickOverlay: {
-      type: Boolean,
-      default: false
-    },
     closeOnConfirm: {
       type: Boolean,
       default: true
+    },
+    closeOnClickOverlay: {
+      type: Boolean,
+      default: false
     },
     color: {
       type: String,
