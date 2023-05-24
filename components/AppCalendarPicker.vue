@@ -79,7 +79,8 @@ const DateTemplate = "YYYY-MM-DD";
  * @event {Function}  confirm       点击确定 [single -> 单个日期时间戳, multiple -> 多个日期时间戳数组, range -> 开始截止两个日期时间戳数组]
  * @event {Function}  close         选择器关闭
  *
- * @example <app-calendar-picker :show.sync="show" @confirm="confirm"></app-calendar-picker>
+ * @example
+ * <app-calendar-picker :show.sync="show" @confirm="confirm"></app-calendar-picker>
  */
 export default {
   name: "AppCalendarPicker",

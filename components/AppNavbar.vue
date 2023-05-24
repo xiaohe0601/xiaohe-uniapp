@@ -88,7 +88,8 @@
  * @event {Function}  left-tap    点击navbar左侧
  * @event {Function}  right-tap   点击navbar右侧
  *
- * @example <app-navbar title="标题"></app-navbar>
+ * @example
+ * <app-navbar title="标题"></app-navbar>
  */
 export default {
   name: "AppNavbar",

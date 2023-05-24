@@ -171,7 +171,8 @@
  * @event {Function}  suspend                 媒体数据加载已暂停
  * @event {Function}  volumechange            音量发生变化
  *
- * @example <app-video vid="播放器id" src="视频url"></app-video>
+ * @example
+ * <app-video vid="播放器id" src="视频url"></app-video>
  */
 export default {
   name: "AppVideo",

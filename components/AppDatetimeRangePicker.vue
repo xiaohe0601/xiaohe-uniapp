@@ -98,12 +98,13 @@ import AppDatetimePicker from "./AppDatetimePicker.vue";
  * @event {Function} cancel           点击取消
  * @event {Function} close            选择器关闭
  *
- * @example  <app-datetime-range-picker :show.sync="show"
- *                                      :value1.sync="start"
- *                                      :value2.sync="end"
- *                                      mode="date"
- *                                      title1="开始日期"
- *                                      title2="截止日期"></app-datetime-range-picker>
+ * @example
+ * <app-datetime-range-picker :show.sync="show"
+ *                            :value1.sync="start"
+ *                            :value2.sync="end"
+ *                            mode="date"
+ *                            title1="开始日期"
+ *                            title2="截止日期"></app-datetime-range-picker>
  */
 export default {
   name: "AppDatetimeRangePicker",

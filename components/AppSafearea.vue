@@ -15,7 +15,8 @@ import { mapGetters } from "vuex";
  * @property {Boolean}  cushion                                是否垫高
  * @property {Number}   cushionHeight                          垫高高度 (单位: rpx)
  *
- * @example <app-safearea></app-safearea>
+ * @example
+ * <app-safearea></app-safearea>
  */
 export default {
   name: "AppSafearea",

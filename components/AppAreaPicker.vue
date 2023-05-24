@@ -39,7 +39,8 @@ import _ from "lodash";
  *
  * @event {Function}  confirm     点击确定 [{indexs: 各列选中项索引, value: 各列选中项的值, values: 各列列表数据}]
  *
- * @example <app-area-picker :show.sync="show" :code="code"></app-area-picker>
+ * @example
+ * <app-area-picker :show.sync="show" :code="code"></app-area-picker>
  */
 export default {
   name: "AppAreaPicker",

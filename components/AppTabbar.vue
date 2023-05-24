@@ -50,7 +50,8 @@
  * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
  * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
  *
- * @example <app-tabbar current="home"></app-tabbar>
+ * @example
+ * <app-tabbar current="home"></app-tabbar>
  */
 export default {
   name: "AppTabbar",

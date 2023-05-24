@@ -67,10 +67,11 @@
  * @event {Function} cancel         点击取消
  * @event {Function} close          选择器关闭
  *
- * @example <app-datetime-picker v-model="value"
- *                               :show.sync="show"
- *                               mode="date"
- *                               default-value></app-datetime-picker>
+ * @example
+ * <app-datetime-picker v-model="value"
+ *                      :show.sync="show"
+ *                      mode="date"
+ *                      default-value></app-datetime-picker>
  */
 export default {
   name: "AppDatetimePicker",

@@ -19,7 +19,8 @@ import { mapGetters } from "vuex";
  * @property {String}   statusFrontColor = [auto|#ffffff|#000000]     状态栏前景色
  * @property {String}   statusBackgroundColor                         状态栏背景色 ["auto", 16进制颜色值]
  *
- * @example <app-container :percept="thePercept"></app-container>
+ * @example
+ * <app-container :percept="thePercept"></app-container>
  */
 export default {
   name: "AppContainer",
