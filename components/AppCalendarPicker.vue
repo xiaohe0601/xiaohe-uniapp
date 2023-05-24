@@ -38,6 +38,45 @@ import dayjs from "dayjs";
 
 const DateTemplate = "YYYY-MM-DD";
 
+/**
+ * AppCalendarPicker 日历选择器
+ *
+ * @author        小何同学 (xiaohe0601)
+ * @description   本组件用于单/多个日期选择以及日期范围选择。
+ *
+ * @property {Boolean}          show                              是否展示弹窗 <支持.sync>
+ * @property {String}           mode = [single|multiple|range]    选择器模式
+ * @property {String}           title                             标题
+ * @property {Number|Array}     defaultDate                       默认选中日期
+ * @property {String|Number}    minDate                           最小可选日期
+ * @property {String|Number}    maxDate                           最大可选日期
+ * @property {Number}           maxCount                          最多可选多少个日期
+ * @property {Number}           maxRange                          日期区间最多可选天数
+ * @property {Number}           monthNum                          最多展示的月份数量
+ * @property {Boolean}          allowSameDay                      是否允许日期范围的起止日期为同一天
+ * @property {Boolean}          readonly                          是否为只读状态
+ * @property {Boolean}          prompt                            是否为禁止确定状态
+ * @property {Boolean}          disableButton                     是否强制禁用确定按钮
+ * @property {Boolean}          showTitle                         是否显示标题
+ * @property {Boolean}          showSubtitle                      是否显示副标题
+ * @property {Boolean}          showLunar                         是否显示农历
+ * @property {Boolean}          showMark                          是否显示月份背景文字
+ * @property {Boolean}          showConfirm                       是否展示确定按钮
+ * @property {Boolean}          showRangePrompt                   范围选择超过最多可选天数时是否展示提示文案
+ * @property {String}           startText                         范围选择开始日期底部文字
+ * @property {String}           endText                           范围选择截止日期底部文字
+ * @property {String}           rangePrompt                       范围选择超过最多可选天数时的提示文案
+ * @property {String}           confirmText                       确定按钮文字
+ * @property {String}           confirmDisabledText               确定按钮处于禁用状态时的文字
+ * @property {Boolean}          closeOnClickOverlay               点击遮罩是否关闭弹窗
+ * @property {Boolean}          closeOnConfirm                    点击确定按钮时是否关闭弹窗
+ * @property {String}           color                             主题色
+ * @property {Number}           monthWidth                        手动指定月份宽度
+ * @property {Number}           rowHeight                         日期行高
+ * @property {Boolean}          transformLandscape                外部是否使用了transform实现横屏
+ *
+ * @example <app-calendar-picker :show.sync="searchDatePickerShow" @confirm="confirm"></app-calendar-picker>
+ */
 export default {
   name: "AppCalendarPicker",
   options: {
@@ -57,15 +96,15 @@ export default {
       default: "选择日期"
     },
     defaultDate: {
-      type: [Array, Number, null],
+      type: [Number, Array, null],
       default: null
     },
     minDate: {
-      type: Number,
+      type: [String, Number],
       default: 0
     },
     maxDate: {
-      type: Number,
+      type: [String, Number],
       default: 0
     },
     maxCount: {
