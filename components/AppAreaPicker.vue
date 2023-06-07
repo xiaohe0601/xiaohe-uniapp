@@ -22,20 +22,27 @@ import _ from "lodash";
 // 😀 根据实际情况import对应的接口定义
 // import { apiQueryAreasByAdcode } from "@/service/index.js";
 
+const DefaultArea = {
+  code: null,
+  name: "不限",
+  children: null
+};
+
 /**
  * AppAreaPicker 地区选择器
  *
  * @author        小何同学 (xiaohe0601)
  * @description   本组件用于地区选择, 传入地区编码即可自动定位至目标地区。
  *
- * @property {String}   code                地区编码
- * @property {Boolean}  show                是否展示选择器 <支持.sync>
- * @property {String}   title               选择器标题
- * @property {Number}   level               选择地区层级
- * @property {Number}   codeLevelLength     每级地区编码长度
- * @property {String}   codePadChar         地区编码右补字符
- * @property {String}   confirmText         确定按钮文字
- * @property {String}   cancelText          取消按钮文字
+ * @property {String}         code              地区编码
+ * @property {Boolean}        show              是否展示选择器 <支持.sync>
+ * @property {String}         title             选择器标题
+ * @property {Number}         level             选择地区层级
+ * @property {Number}         minLevel          最小可选层级
+ * @property {Number|Array}   codeLevelLength   每级地区编码长度
+ * @property {String}         codePadChar       地区编码右补字符
+ * @property {String}         confirmText       确定按钮文字
+ * @property {String}         cancelText        取消按钮文字
  *
  * @event {Function}  confirm   点击确定 [{indexs: 各列选中项索引, value: 各列选中项的值, values: 各列列表数据}]
  *
@@ -59,8 +66,12 @@ export default {
       type: Number,
       default: 3
     },
-    codeLevelLength: {
+    minLevel: {
       type: Number,
+      default: 3
+    },
+    codeLevelLength: {
+      type: [Number, Array],
       default: 2
     },
     codePadChar: {
@@ -113,13 +124,17 @@ export default {
       async handler(value) {
         await this.$nextTick();
 
-        this.$refs.picker.setIndexs(value);
+        this.$refs.picker.setIndexs(value, true);
       },
       immediate: true
     }
   },
   methods: {
-    async requestAreasByAdcode(adcode = "") {
+    async requestAreasByAdcode(adcode, index) {
+      if (adcode == null) {
+        return [_.cloneDeep(DefaultArea)];
+      }
+
       try {
         // 😀 根据实际情况调用接口查询指定区域下的子区域列表
 
@@ -132,11 +147,17 @@ export default {
         // name: 区域名称
         // children: 子区域列表 (这里的值固定设置为null)
 
-        // return data.map((item) => ({
+        // const areas = (data || []).map((item) => ({
         //   code: item.code,
         //   name: item.name,
         //   children: null
         // }));
+
+        // if (index + 1 > this.minLevel) {
+        //   return [_.cloneDeep(DefaultArea), ...areas];
+        // }
+
+        // return areas;
 
         // 😀 接口调整完成后, 移除下面这一行
         return [];
@@ -144,14 +165,23 @@ export default {
         return [];
       }
     },
+    getCodeLevelLength(index) {
+      const { codeLevelLength } = this;
+
+      if (Array.isArray(codeLevelLength)) {
+        return _.get(codeLevelLength, index, _.last(codeLevelLength) ?? 2);
+      }
+
+      return codeLevelLength;
+    },
     async updatePickerColumns({ columnIndex, code, indexs }) {
-      const { level, areas, codeLevelLength, codePadChar } = this;
+      const { level, areas, codePadChar } = this;
 
       try {
         this.loading = true;
 
         const theColumnIndex = columnIndex ?? -1;
-        const theAreas = areas == null ? await this.requestAreasByAdcode() : _.cloneDeep(areas);
+        const theAreas = areas == null ? await this.requestAreasByAdcode("", 0) : _.cloneDeep(areas);
         const theIndexs = Object.assign(new Array(level).fill(0), indexs?.slice(0, theColumnIndex + 1) ?? []);
 
         for (let i = theColumnIndex + 1; i < level; i += 1) {
@@ -159,16 +189,18 @@ export default {
 
           if (i > 0) {
             if (_.get(theAreas, `${path}.children`) == null) {
-              _.set(theAreas, `${path}.children`, await this.requestAreasByAdcode(_.get(theAreas, path).code));
+              _.set(theAreas, `${path}.children`, await this.requestAreasByAdcode(_.get(theAreas, path).code, i));
             }
           }
 
           if (code != null) {
-            const currentCode = _.padEnd(code.slice(0, (i + 1) * codeLevelLength), code.length, codePadChar);
+            const currentCode = _.padEnd(code.slice(0, (i + 1) * this.getCodeLevelLength(i)), code.length, codePadChar);
 
             const currentIndex = _.findIndex(_.get(theAreas, `${path}.children`, theAreas), (item) => item.code === currentCode);
 
             theIndexs[i] = Math.max(0, currentIndex);
+          } else {
+            theIndexs[i] = 0;
           }
         }
 
