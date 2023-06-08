@@ -1,7 +1,7 @@
 /**
- * @description 网络请求工具 (基于uni.request封装)
+ * @file      网络请求工具 (基于uni.request封装)
  *
- * @version   2.0.0
+ * @version   2.1.0
  * @author    小何同学 (xiaohe0601)
  * @email     HeDianGeng0601@outlook.com
  */
@@ -17,18 +17,19 @@
  * @property {"json" | "其他" | null} dataType                     返回数据格式
  * @property {"text" | "arraybuffer" | null} responseType         响应数据类型
  *
- * @property {boolean | null} toastError              是否提示错误信息
- * @property {boolean | null} showLoading             是否显示加载动画
- * @property {string | null} loadingText              加载文字
- * @property {boolean | null} ignoreLoadingDelay      是否忽略等待弹窗延时 (若为true, 等待弹窗会在请求开始时立即显示)
- * @property {boolean | null} ignoreToken             是否跳过自动添加token
- * @property {any | null} signal                      信号量(若提供则会将网络请求task回传至task属性, 可用于中断请求等)
- * @property {boolean | null} third                   是否为第三方请求(若为true, 则直接返回响应内容, 不会进行进一步处理)
- * @property {boolean | null} authNotRedirect         是否禁用登录失效重定向
- * @property {string | null} authRedirectPage         登录失效重定向页面地址
- * @property {boolean | null} authRedirectAction      登录失效重定向方式
- * @property {string | null} key                      (仅_upload)FormData上传时文件的key
- * @property {Record<string, any> | null} extra       (仅_upload)FormData上传时的附加信息 (会在上传时携带在FormData中)
+ * @property {boolean | null}               toastError            是否提示错误信息
+ * @property {"toast" | "alert" | null}     toastMethod           错误信息提示方式
+ * @property {boolean | null}               showLoading           是否显示加载动画
+ * @property {string | null}                loadingText           加载文字
+ * @property {boolean | null}               ignoreLoadingDelay    是否忽略等待弹窗延时 (若为true, 等待弹窗会在请求开始时立即显示)
+ * @property {boolean | null}               ignoreToken           是否跳过自动添加token
+ * @property {any | null}                   signal                信号量(若提供则会将网络请求task回传至task属性, 可用于中断请求等)
+ * @property {boolean | null}               third                 是否为第三方请求(若为true, 则直接返回响应内容, 不会进行进一步处理)
+ * @property {boolean | null}               authNotRedirect       是否禁用登录失效重定向
+ * @property {string | null}                authRedirectPage      登录失效重定向页面地址
+ * @property {boolean | null}               authRedirectAction    登录失效重定向方式
+ * @property {string | null}                key                   (仅_upload)FormData上传时文件的key
+ * @property {Record<string, any> | null}   extra                 (仅_upload)FormData上传时的附加信息 (会在上传时携带在FormData中)
  */
 
 /**
@@ -59,9 +60,64 @@ import store from "@/store/index.js";
 
 import { StringUtils } from "xiaohejs";
 
-export const requestsQueue = [];
+// 默认公共请求配置
+export const DefaultConfig = {
+  toastError: true,
+  showLoading: true,
+  ignoreToken: false,
+  third: false,
+  authNotRedirect: false,
+  forceDisableEncrypt: false,
+  forceConcatEncryptedUrl: false
+};
 
-const executeRequestTransform = (config) => {
+// 默认普通请求配置
+export const DefaultRequestConfig = Object.assign({}, DefaultConfig, {
+  loadingText: "请稍候",
+  ignoreLoadingDelay: false
+});
+
+// 默认上传请求配置
+export const DefaultUploadConfig = Object.assign({}, DefaultConfig, {
+  key: "file",
+  loadingText: "上传中",
+  extra: {}
+});
+
+// 默认下载请求配置
+export const DefaultDownloadConfig = Object.assign({}, DefaultConfig, {
+  loadingText: "下载中"
+});
+
+// 请求队列
+export const _queue = [];
+
+const toastError = (config, msg) => {
+  if (!config.toastError) {
+    return;
+  }
+
+  const message = msg || "未知异常";
+
+  switch (config.toastMethod ?? "toast") {
+    case "toast": {
+      uni.showToast({
+        title: message,
+        icon: "none"
+      });
+      return;
+    }
+    case "alert": {
+      store.commit("network/setNetworkErrorContent", message);
+      store.commit("network/setNetworkErrorModalShow", true);
+      return;
+    }
+  }
+
+  console.log("报错信息", message);
+};
+
+const transformRequest = (config) => {
   config.header = Object.assign({}, {
     "accept": Config.http.requestAcceptType,
     "content-type": Config.http.requestContentType
@@ -77,7 +133,7 @@ const executeRequestTransform = (config) => {
   }
 };
 
-const executeResponseTransform = (config, response, resolve, reject) => {
+const transformResponse = (config, response, resolve, reject) => {
   console.log("响应数据", response);
 
   if (config.third) {
@@ -87,12 +143,8 @@ const executeResponseTransform = (config, response, resolve, reject) => {
 
   const origin = response.data;
   if (origin == null) {
-    if (config.toastError) {
-      uni.showToast({
-        title: "未知异常",
-        icon: "none"
-      });
-    }
+    toastError(config, null);
+
     reject(Object.assign({}, response, {
       raw: response.data
     }, {
@@ -116,7 +168,7 @@ const executeResponseTransform = (config, response, resolve, reject) => {
     }
     case Config.http.codeAuthError: {
       // 中断所有需要携带token的请求
-      abortRequestsQueue(1);
+      _abort(1);
       // 清除用户信息
       store.commit("user/setProfile", null);
       // 清除token
@@ -139,12 +191,8 @@ const executeResponseTransform = (config, response, resolve, reject) => {
       return;
     }
     default: {
-      if (config.toastError) {
-        uni.showToast({
-          title: data[Config.http.fieldMessage] || "未知异常",
-          icon: "none"
-        });
-      }
+      toastError(config, data[Config.http.fieldMessage]);
+
       reject(Object.assign({}, response, {
         raw: data
       }, {
@@ -156,7 +204,7 @@ const executeResponseTransform = (config, response, resolve, reject) => {
   }
 };
 
-const executeRequestFailProcess = (config, error, reject) => {
+const throwRequestError = (config, error, reject) => {
   console.log("错误信息", error);
 
   const errorMessage = error.errMsg;
@@ -168,21 +216,17 @@ const executeRequestFailProcess = (config, error, reject) => {
     return;
   }
 
-  if (config.toastError) {
-    uni.showToast({
-      title: `请求异常 ${errorMessage ?? ""}`,
-      icon: "none"
-    });
-  }
+  toastError(config, `请求异常 ${errorMessage ?? ""}`);
+
   reject(Object.assign({}, error, {
     state: Config.http.stateRequestError,
     data: null
   }));
 };
 
-const removeRequestFromQueue = (task) => {
-  requestsQueue.splice(
-    requestsQueue.findIndex((request) => request.task === task),
+const _remove = (task) => {
+  _queue.splice(
+    _queue.findIndex((request) => request.task === task),
     1
   );
 };
@@ -192,14 +236,14 @@ const removeRequestFromQueue = (task) => {
  *
  * @param {0 | 1} type 请求类型 (0 所有, 1 携带token的请求)
  */
-export const abortRequestsQueue = (type) => {
-  for (let i = 0; i < requestsQueue.length; i++) {
-    const request = requestsQueue[i];
+export const _abort = (type) => {
+  for (let i = 0; i < _queue.length; i++) {
+    const request = _queue[i];
 
     if (type === 0 || (type === 1 && !request.ignoreToken)) {
       request.task?.abort();
 
-      requestsQueue.splice(i--, 1);
+      _queue.splice(i--, 1);
     }
   }
 };
@@ -210,13 +254,7 @@ export const abortRequestsQueue = (type) => {
  * @param {UniRequestCustomConfig} customConfig    请求配置
  */
 export const _request = (customConfig) => {
-  const config = Object.assign({}, {
-    toastError: true,
-    showLoading: true,
-    loadingText: "请稍候",
-    ignoreLoadingDelay: false,
-    ignoreToken: false
-  }, customConfig);
+  const config = Object.assign({}, DefaultRequestConfig, customConfig);
 
   console.log("========== 发起请求 ==========")
   console.log("请求方式", config.method);
@@ -225,7 +263,7 @@ export const _request = (customConfig) => {
     console.log("请求参数", config.data);
   }
 
-  executeRequestTransform(config);
+  transformRequest(config);
 
   let timer = null;
   let loading = false;
@@ -264,7 +302,7 @@ export const _request = (customConfig) => {
           console.log("请求参数", config.data);
         }
 
-        executeResponseTransform(config, response, resolve, reject);
+        transformResponse(config, response, resolve, reject);
       },
       fail(error) {
         console.log("==============>请求失败<==============");
@@ -274,16 +312,17 @@ export const _request = (customConfig) => {
           console.log("请求参数", config.data);
         }
 
-        executeRequestFailProcess(config, error, reject);
+        throwRequestError(config, error, reject);
       },
       complete() {
-        removeRequestFromQueue(task);
+        _remove(task);
 
         if (timer != null) {
           clearTimeout(timer);
           timer = null;
         }
-        if (loading && requestsQueue.filter((request) => request.showLoading).length <= 0) {
+        // if (loading && _queue.filter((request) => request.showLoading).length <= 0)
+        if (loading) {
           uni.hideLoading({
             noConflict: true
           });
@@ -291,7 +330,7 @@ export const _request = (customConfig) => {
       }
     });
 
-    requestsQueue.push({ ...config, task });
+    _queue.push({ ...config, task });
 
     // 若提供signal则暴露出task
     config.signal && (config.signal.task = task);
@@ -411,20 +450,13 @@ export const _connect = (url, data = {}, config = {}) => _request(Object.assign(
  * @param {UniRequestCustomConfig} customConfig                                           请求配置
  */
 export const _upload = (url, path, progress = null, customConfig = {}) => {
-  const config = Object.assign({}, {
-    key: "file",
-    toastError: true,
-    showLoading: true,
-    loadingText: "上传中",
-    extra: {},
-    ignoreToken: false
-  }, customConfig);
+  const config = Object.assign({}, DefaultUploadConfig, customConfig);
 
   console.log("==============>上传文件<==============");
   console.log("上传URL", url);
   console.log("文件路径", path);
 
-  executeRequestTransform(config);
+  transformRequest(config);
 
   config.header["content-type"] = "multipart/form-data";
 
@@ -440,14 +472,14 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
         console.log("上传URL", url);
         console.log("文件路径", path);
 
-        executeResponseTransform(config, response, resolve, reject);
+        transformResponse(config, response, resolve, reject);
       },
       fail(error) {
         console.log("==============>上传失败<==============");
         console.log("上传URL", url);
         console.log("文件路径", path);
 
-        executeRequestFailProcess(config, error, reject);
+        throwRequestError(config, error, reject);
       },
       complete() {
         if (config.showLoading) {
@@ -459,7 +491,7 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
     });
 
     task.onProgressUpdate((res) => {
-      console.log("上传进度:", res);
+      console.log("上传进度", res);
 
       const percent = res.progress;
       if (progress && (typeof progress === "function")) {
@@ -468,7 +500,7 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
 
       if (config.showLoading) {
         uni.showLoading({
-          title: `${config.loadingText}${(percent != null) ? ` ${percent}%` : ""}`,
+          title: `${config.loadingText}${percent != null ? ` ${percent}%` : ""}`,
           mask: true
         });
       }
@@ -487,17 +519,12 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
  * @param {UniRequestCustomConfig} customConfig                                             请求配置
  */
 export const _download = (url, progress = null, customConfig = {}) => {
-  const config = Object.assign({}, {
-    toastError: true,
-    showLoading: true,
-    loadingText: "下载中",
-    ignoreToken: false
-  }, customConfig);
+  const config = Object.assign({}, DefaultDownloadConfig, customConfig);
 
   console.log("==============>下载文件<==============");
   console.log("下载URL", url);
 
-  executeRequestTransform(config);
+  transformRequest(config);
 
   return new Promise((resolve, reject) => {
     const task = uni.downloadFile({
@@ -515,7 +542,7 @@ export const _download = (url, progress = null, customConfig = {}) => {
         console.log("==============>下载失败<==============");
         console.log("下载URL", url);
 
-        executeRequestFailProcess(config, error, reject);
+        throwRequestError(config, error, reject);
       },
       complete() {
         if (config.showLoading) {
@@ -527,7 +554,7 @@ export const _download = (url, progress = null, customConfig = {}) => {
     });
 
     task.onProgressUpdate((res) => {
-      console.log("下载进度:", res);
+      console.log("下载进度", res);
 
       const percent = res.progress;
       if (progress && (typeof progress === "function")) {
@@ -536,7 +563,7 @@ export const _download = (url, progress = null, customConfig = {}) => {
 
       if (config.showLoading) {
         uni.showLoading({
-          title: `${config.loadingText}${(percent != null) ? ` ${percent}%` : ""}`,
+          title: `${config.loadingText}${percent != null ? ` ${percent}%` : ""}`,
           mask: true
         });
       }
