@@ -192,7 +192,7 @@ export default {
           const indexs = new Array(innerColumns.length).fill(0);
 
           for (let i = 0; i < innerColumns.length; i += 1) {
-            indexs[i] = Math.max(0, (innerColumns[i] ?? []).findIndex((item) => _.get(item, uniqueKey) === innerValue[0]));
+            indexs[i] = Math.max(0, (innerColumns[i] ?? []).findIndex((item) => this.getValue(item, uniqueKey) === innerValue[0]));
           }
 
           this.setIndexs(indexs);
@@ -202,6 +202,13 @@ export default {
     }
   },
   methods: {
+    getValue(object, path, defaultValue) {
+      if (typeof object !== "object") {
+        return object;
+      }
+
+      return _.get(object, path, defaultValue);
+    },
     setIndexs(index, setLastIndex) {
       this.$refs.instance.setIndexs(index, setLastIndex);
     },
@@ -211,7 +218,7 @@ export default {
     confirm(event) {
       const { uniqueKey, singleColumn, closeOnConfirm, asyncClose } = this;
 
-      this.$emit("input", singleColumn ? _.get(event.value[0], uniqueKey) : event.value.map((item) => _.get(item, uniqueKey)));
+      this.$emit("input", singleColumn ? this.getValue(event.value[0], uniqueKey) : event.value.map((item) => this.getValue(item, uniqueKey)));
 
       this.$emit("confirm", event);
 
