@@ -1,5 +1,5 @@
 <template>
-  <app-container :percept="thePercept">
+  <app-container :percept="percept">
     <app-navbar title="首页" :show-left="false"></app-navbar>
 
     <view class="theme-demo">

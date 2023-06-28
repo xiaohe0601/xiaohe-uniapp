@@ -2,29 +2,29 @@ export default {
   data() {
     return {
       /** @type {"init" | "load" | "show" | "ready" | "hide" | "unload" | null} 当前页面所处生命周期 */
-      theLifecycle: null,
+      lifecycle: null,
       /** @type {boolean} 当前页面是否展示 */
-      thePercept: false
+      percept: false
     };
   },
   onInit() {
-    this.theLifecycle = "init";
+    this.lifecycle = "init";
   },
   onLoad() {
-    this.theLifecycle = "load";
+    this.lifecycle = "load";
   },
   onShow() {
-    this.theLifecycle = "show";
-    this.thePercept = true;
+    this.lifecycle = "show";
+    this.percept = true;
   },
   onReady() {
-    this.theLifecycle = "ready";
+    this.lifecycle = "ready";
   },
   onHide() {
-    this.theLifecycle = "hide";
-    this.thePercept = false;
+    this.lifecycle = "hide";
+    this.percept = false;
   },
   onUnload() {
-    this.theLifecycle = "unload";
+    this.lifecycle = "unload";
   }
 };

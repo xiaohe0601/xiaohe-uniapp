@@ -101,11 +101,11 @@ export default {
     columns() {
       const { level, areas, indexs } = this;
 
-      const theIndexs = Object.assign(new Array(level).fill(0), indexs);
+      const indexsTruly = Object.assign(new Array(level).fill(0), indexs);
 
       const columns = [areas ?? []];
       for (let i = 1; i < level; i++) {
-        columns[i] = _.get(areas, theIndexs.slice(0, i).map((it) => `[${it}].children`).join("")) ?? [];
+        columns[i] = _.get(areas, indexsTruly.slice(0, i).map((it) => `[${it}].children`).join("")) ?? [];
       }
 
       return columns;
@@ -180,32 +180,32 @@ export default {
       try {
         this.loading = true;
 
-        const theColumnIndex = columnIndex ?? -1;
-        const theAreas = areas == null ? await this.requestAreasByAdcode("", 0) : _.cloneDeep(areas);
-        const theIndexs = Object.assign(new Array(level).fill(0), indexs?.slice(0, theColumnIndex + 1) ?? []);
+        const columnIndexTruly = columnIndex ?? -1;
+        const areasTruly = areas == null ? await this.requestAreasByAdcode("", 0) : _.cloneDeep(areas);
+        const indexsTruly = Object.assign(new Array(level).fill(0), indexs?.slice(0, columnIndexTruly + 1) ?? []);
 
-        for (let i = theColumnIndex + 1; i < level; i += 1) {
-          const path = theIndexs.slice(0, i).map((it) => `[${it}]`).join(".children");
+        for (let i = columnIndexTruly + 1; i < level; i += 1) {
+          const path = indexsTruly.slice(0, i).map((it) => `[${it}]`).join(".children");
 
           if (i > 0) {
-            if (_.get(theAreas, `${path}.children`) == null) {
-              _.set(theAreas, `${path}.children`, await this.requestAreasByAdcode(_.get(theAreas, path).code, i));
+            if (_.get(areasTruly, `${path}.children`) == null) {
+              _.set(areasTruly, `${path}.children`, await this.requestAreasByAdcode(_.get(areasTruly, path).code, i));
             }
           }
 
           if (code != null) {
             const currentCode = _.padEnd(code.slice(0, (i + 1) * this.getCodeLevelLength(i)), code.length, codePadChar);
 
-            const currentIndex = _.findIndex(_.get(theAreas, `${path}.children`, theAreas), (item) => item.code === currentCode);
+            const currentIndex = _.findIndex(_.get(areasTruly, `${path}.children`, areasTruly), (item) => item.code === currentCode);
 
-            theIndexs[i] = Math.max(0, currentIndex);
+            indexsTruly[i] = Math.max(0, currentIndex);
           } else {
-            theIndexs[i] = 0;
+            indexsTruly[i] = 0;
           }
         }
 
-        this.areas = theAreas;
-        this.indexs = theIndexs;
+        this.areas = areasTruly;
+        this.indexs = indexsTruly;
       } finally {
         this.loading = false;
       }

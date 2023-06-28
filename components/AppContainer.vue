@@ -13,14 +13,14 @@ import { mapGetters } from "vuex";
  * @author        小何同学 (xiaohe0601)
  * @description   本组件用于容纳页面内的所有元素, 并向子元素提供Css变量, 实现主题切换等功能。注意：本组件应为页面的根组件。
  *
- * @property {Boolean}  percept                                       所在页面是否被展示 (传入lifecycleMixin中的thePercept)
- * @property {String}   lifecycle                                     所在页面生命周期 (传入lifecycleMixin中的theLifecycle)
+ * @property {Boolean}  percept                                       所在页面是否被展示 (传入lifecycleMixin中的percept)
+ * @property {String}   lifecycle                                     所在页面生命周期 (传入lifecycleMixin中的lifecycle)
  * @property {String}   backgroundColor                               背景颜色
  * @property {String}   statusFrontColor = [auto|#ffffff|#000000]     状态栏前景色
  * @property {String}   statusBackgroundColor                         状态栏背景色 ["auto", 16进制颜色值]
  *
  * @example
- * <app-container :percept="thePercept"></app-container>
+ * <app-container :percept="percept"></app-container>
  */
 export default {
   name: "AppContainer",
