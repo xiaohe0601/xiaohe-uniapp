@@ -14,7 +14,7 @@
               <slot v-if="useLeftSlot" name="left"></slot>
 
               <template v-else>
-                <view v-if="shouldBackToHomeShow" class="app-navbar__title-bar__left__home" @tap.stop="executeBackToHome">
+                <view v-if="shouldBackToHomeShow" class="app-navbar__title-bar__left__home" @tap.stop="$store.dispatch('user/redirectToHomePage')">
                   <u-icon name="home" :color="textColor" size="var(--app-navbar__home_size)"></u-icon>
                 </view>
 
@@ -200,13 +200,6 @@ export default {
       if (this.autoBack) {
         uni.navigateBack();
       }
-    },
-    executeBackToHome() {
-      const { backToHomePage, backToHomeAction } = this.AppConfig.route.navbar;
-
-      uni[backToHomeAction]({
-        url: backToHomePage
-      });
     }
   }
 };

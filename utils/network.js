@@ -170,18 +170,9 @@ const transformResponse = (config, response, resolve, reject) => {
       // 中断所有需要携带token的请求
       _abort(1);
       // 清除用户信息
-      store.commit("user/setProfile", null);
-      // 清除token
-      uni.removeStorageSync(Config.storage.token);
-      // 重定向至登录页
-      if (!config.authNotRedirect &&
-        (config.authRedirectPage || Config.http.redirectAuthPage) &&
-        (config.authRedirectAction || Config.http.redirectAuthAction)
-      ) {
-        uni[config.authRedirectAction || Config.http.redirectAuthAction]({
-          url: config.authRedirectPage || Config.http.redirectAuthPage
-        });
-      }
+      store.dispatch("user/clearProfile", { call: false });
+      // 重定向至登录页面
+      store.dispatch("user/redirectToAuthorityPage", { intercept: true })
       reject(Object.assign({}, response, {
         raw: data
       }, {
