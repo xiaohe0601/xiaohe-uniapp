@@ -4,7 +4,9 @@ export default {
       /** @type {"init" | "load" | "show" | "ready" | "hide" | "unload" | null} 当前页面所处生命周期 */
       lifecycle: null,
       /** @type {boolean} 当前页面是否展示 */
-      percept: false
+      percept: false,
+      /** @type {boolean} 延迟初始化是否已完成 */
+      deferInited: false
     };
   },
   onInit() {
@@ -19,6 +21,16 @@ export default {
   },
   onReady() {
     this.lifecycle = "ready";
+
+    this.$nextTick(() => {
+      this.deferInited = true;
+
+      this.$nextTick(() => {
+        if (typeof this.whenDeferInited === "function") {
+          this.whenDeferInited();
+        }
+      });
+    });
   },
   onHide() {
     this.lifecycle = "hide";
