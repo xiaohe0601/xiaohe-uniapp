@@ -1,4 +1,4 @@
-import { judgeIosPermission, requestAndroidPermission, gotoAppPermissionSetting } from "@/js_sdk/wa-permission/permission.js";
+import { gotoAppPermissionSetting, judgeIosPermission, requestAndroidPermission } from "@/js_sdk/wa-permission/permission.js";
 
 /**
  * @typedef EnsurePermissionAuthorizedScope
