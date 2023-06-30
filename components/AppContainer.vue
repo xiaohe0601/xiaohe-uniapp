@@ -1,10 +1,19 @@
 <template>
   <view :class="[containerClasses]" :style="[containerStyles]">
     <slot></slot>
+
+    <app-modal v-if="percept"
+               :show.sync="networkErrorModalShow"
+               title="错误"
+               :content="networkErrorContent"
+               :show-cancel-button="false"
+               @close="$store.commit('network/setNetworkErrorContent', '')"></app-modal>
   </view>
 </template>
 
 <script>
+import AppModal from "@/components/AppModal.vue";
+
 import { mapGetters } from "vuex";
 
 /**
@@ -24,6 +33,7 @@ import { mapGetters } from "vuex";
  */
 export default {
   name: "AppContainer",
+  components: { AppModal },
   props: {
     percept: {
       type: Boolean,
@@ -53,7 +63,8 @@ export default {
       statusBarHeight: "system/getStatusBarHeight",
       titleBarHeight: "system/getTitleBarHeight",
       navigationBarHeight: "system/getNavigationBarHeight",
-      safeAreaInsets: "system/getSafeAreaInsets"
+      safeAreaInsets: "system/getSafeAreaInsets",
+      networkErrorContent: "network/getNetworkErrorContent"
     }),
     containerClasses() {
       const { currentTheme } = this;
@@ -102,6 +113,14 @@ export default {
       const { innerStatusFrontColor, innerStatusBackgroundColor } = this;
 
       return { innerStatusFrontColor, innerStatusBackgroundColor };
+    },
+    networkErrorModalShow: {
+      get() {
+        return this.$store.getters["network/getNetworkErrorModalShow"];
+      },
+      set(value) {
+        this.$store.commit("network/setNetworkErrorModalShow", value);
+      }
     }
   },
   watch: {
