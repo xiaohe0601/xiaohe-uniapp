@@ -26,8 +26,6 @@
  * @property {any | null}                   signal                信号量(若提供则会将网络请求task回传至task属性, 可用于中断请求等)
  * @property {boolean | null}               third                 是否为第三方请求(若为true, 则直接返回响应内容, 不会进行进一步处理)
  * @property {boolean | null}               authNotRedirect       是否禁用登录失效重定向
- * @property {string | null}                authRedirectPage      登录失效重定向页面地址
- * @property {boolean | null}               authRedirectAction    登录失效重定向方式
  * @property {string | null}                key                   (仅_upload)FormData上传时文件的key
  * @property {Record<string, any> | null}   extra                 (仅_upload)FormData上传时的附加信息 (会在上传时携带在FormData中)
  */
@@ -171,8 +169,10 @@ const transformResponse = (config, response, resolve, reject) => {
       _abort(1);
       // 清除用户信息
       store.dispatch("user/clearProfile", { call: false });
-      // 重定向至登录页面
-      store.dispatch("user/redirectToAuthorityPage", { intercept: true })
+      if (!config.authNotRedirect) {
+        // 重定向至登录页面
+        store.dispatch("user/redirectToAuthorityPage", { intercept: true });
+      }
       reject(Object.assign({}, response, {
         raw: data
       }, {
