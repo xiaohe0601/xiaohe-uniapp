@@ -84,7 +84,7 @@
   }
 
   .zp-back-to-top-hide {
-    bottom: calc(0px - var(--app-scroller__bktop_bottom) - var(--app-scroller__cushion_height) - var(--app-scroller__bktop_size)) !important;
+    bottom: calc(0px - var(--app-scroller__bktop_size)) !important;
     opacity: 1 !important;
   }
 }

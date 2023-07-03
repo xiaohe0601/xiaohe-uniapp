@@ -145,7 +145,7 @@ export default {
   transition: var(--app-tabbar__body_transition);
 
   &.hide {
-    bottom: calc(0px - var(--app-tabbar__body_height) - var(--app-safearea__body_bottom) - 10px);
+    bottom: calc(0px - var(--app-tabbar__body_height) - var(--app-safearea__body_bottom));
   }
 }
 
