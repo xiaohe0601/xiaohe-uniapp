@@ -1,21 +1,13 @@
 @import "~@/uni_modules/uview-ui/theme.scss";
 
-$app-color-accent: #8ac6d1;
-$app-color-accent_rgb: 138, 198, 209;
-$app-color-accent--dark: #4f9ca9;
-$app-color-accent--disabled: #9dc9d3;
-$app-color-accent--light: #c2cdd0;
-
-$u-primary: $app-color-accent;
-$u-primary-dark: $app-color-accent--dark;
-$u-primary-disabled: $app-color-accent--disabled;
-$u-primary-light: $app-color-accent--light;
-
-$u-error: #fc3b3b;
-$u-error_rgb: 252, 59, 59;
-
+$u-primary: #8ac6d1;
+$u-primary_rgb: 138, 198, 209;
+$u-success: #07c160;
+$u-success_rgb: 7, 193, 96;
 $u-warning: #f78b1e;
 $u-warning_rgb: 247, 139, 30;
+$u-error: #fc3b3b;
+$u-error_rgb: 252, 59, 59;
 
 $u-main-color: #303133;
 $u-content-color: #606266;

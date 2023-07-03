@@ -1,10 +1,10 @@
 .app-container {
-  --color-accent: #{$app-color-accent};
-  --color-accent_rgb: #{$app-color-accent_rgb};
-
+  --color-accent: #{$u-primary};
+  --color-accent_rgb: #{$u-primary_rgb};
+  --color-success: #{$u-success};
+  --color-success_rgb: #{$u-success_rgb};
   --color-danger: #{$u-error};
   --color-danger_rgb: #{$u-error_rgb};
-
   --color-warning: #{$u-warning};
   --color-warning_rgb: #{$u-warning_rgb};
 
