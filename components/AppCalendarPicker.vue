@@ -237,7 +237,7 @@ export default {
             return dayjs(date).format(DateTemplate);
           }
           case "multiple": {
-            return defaultDate.map((item) => dayjs(item).format(DateTemplate))
+            return defaultDate.map((item) => dayjs(item).format(DateTemplate));
           }
           case "range": {
             const start = defaultDate[0];

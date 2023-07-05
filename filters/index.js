@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import { StringUtils } from "xiaohejs";
+import { string as StringUtils } from "xiaohejs/lib/esm";
 
 Vue.filter("defaults", (value, def = "-") => {
   if (value == null || (typeof value == "string" && value.length <= 0)) {

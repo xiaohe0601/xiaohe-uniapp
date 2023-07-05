@@ -56,7 +56,7 @@ import Config from "@/utils/config.js";
 
 import store from "@/store/index.js";
 
-import { StringUtils } from "xiaohejs";
+import { string as StringUtils } from "xiaohejs/lib/esm";
 
 // 默认公共请求配置
 export const DefaultConfig = {
@@ -247,7 +247,7 @@ export const _abort = (type) => {
 export const _request = (customConfig) => {
   const config = Object.assign({}, DefaultRequestConfig, customConfig);
 
-  console.log("========== 发起请求 ==========")
+  console.log("========== 发起请求 ==========");
   console.log("请求方式", config.method);
   console.log("请求URL", config.url);
   if (config.data) {

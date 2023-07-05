@@ -2,7 +2,7 @@ import Vue from "vue";
 
 import dayjs from "dayjs";
 
-import { ArrayUtils, StringUtils } from "xiaohejs";
+import { string as StringUtils } from "xiaohejs/lib/esm";
 
 import { px2upx } from "@/utils/device.js";
 
@@ -10,11 +10,10 @@ import Config from "@/utils/config.js";
 
 Vue.prototype.$date = dayjs;
 
-StringUtils.ConvertUrlBase = Config.http.sourceBaseUrl;
+StringUtils.ConvertUrlConfig.base = Config.http.sourceBaseUrl;
+StringUtils.ConvertUrlConfig.excludes = ["http", "ws", "udp", "tcp", "/static", "/package-"];
 
 Vue.prototype.$string = StringUtils;
-
-Vue.prototype.$array = ArrayUtils;
 
 Vue.prototype.$device = {
   px2upx

@@ -353,7 +353,7 @@ export default {
       const { vid, src, autoplay, loop, muted, controls, poster } = this;
 
       const videoElementTag =
-        `<video id="${vid}" style="width: 100%; height: 100%;" src="${src}" autoplay="${autoplay}" loop="${loop}" muted="${muted}" controls="${controls}" poster="${poster ?? ''}"></video>`;
+        `<video id="${vid}" style="width: 100%; height: 100%;" src="${src}" autoplay="${autoplay}" loop="${loop}" muted="${muted}" controls="${controls}" poster="${poster ?? ""}"></video>`;
 
       return `
         const currentWindow = this.contentWindow;
