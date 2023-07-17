@@ -31,12 +31,13 @@
 /**
  * @typedef AppTabbarItem App底部导航栏item配置
  *
- * @property {string} text            名称 (展示文字)
- * @property {string} path            页面路径
- * @property {string} icon            图标 (图片绝对路径)
- * @property {string} iconSelected    选中状态图标 (图片绝对路径)
- * @property {string} iconfont        字体图标 (优先级高于icon)
- * @property {string} badgeKey        badge取值 (需提供Vuex中的getters)
+ * @property {number|string}    key             唯一标识
+ * @property {string}           text            名称 (展示文字)
+ * @property {string}           path            页面路径
+ * @property {string}           icon            图标 (图片绝对路径)
+ * @property {string}           iconSelected    选中状态图标 (图片绝对路径)
+ * @property {string}           iconfont        字体图标 (优先级高于icon)
+ * @property {string}           badgeKey        badge取值 (需提供Vuex中的getters)
  */
 
 /**
@@ -45,10 +46,10 @@
  * @author        小何同学 (xiaohe0601)
  * @description   本组件用于自定义底部导航栏 (即tabbar)。
  *
- * @property {Number}   current   当前选中的tabbar-item唯一标识 (即key)
- * @property {Boolean}  show      是否展示tabbar
- * @property {Boolean}  round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
- * @property {Boolean}  border    是否展示上边框 (边框样式: --app-tabbar__body_border)
+ * @property {Number|String}    current   当前选中的tabbar-item唯一标识 (即key)
+ * @property {Boolean}          show      是否展示tabbar
+ * @property {Boolean}          round     是否展示圆角 (圆角大小: --app-tabbar__body_radius)
+ * @property {Boolean}          border    是否展示上边框 (边框样式: --app-tabbar__body_border)
  *
  * @example
  * <app-tabbar current="home"></app-tabbar>
