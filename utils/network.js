@@ -56,7 +56,7 @@ import Config from "@/utils/config.js";
 
 import store from "@/store/index.js";
 
-import { string as StringUtils } from "xiaohejs/lib/esm";
+import { string as StringUtils } from "xiaohejs";
 
 // 默认公共请求配置
 export const DefaultConfig = {

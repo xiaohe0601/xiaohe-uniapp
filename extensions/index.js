@@ -2,7 +2,7 @@ import Vue from "vue";
 
 import dayjs from "dayjs";
 
-import { string as StringUtils } from "xiaohejs/lib/esm";
+import { string as StringUtils } from "xiaohejs";
 
 import { px2upx } from "@/utils/device.js";
 
