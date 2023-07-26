@@ -2,7 +2,7 @@
   "dependencies": {
     "dayjs": "^1.11.9",
     "lodash": "^4.17.21",
-    "xiaohejs": "^0.1.6"
+    "xiaohejs": "^0.1.7"
   },
   "devDependencies": {
     "dotenv": "^16.3.1"
