@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-import { string as StringUtils } from "xiaohejs";
+import { convertUrl } from "xiaohejs";
 
 Vue.filter("defaults", (value, def = "-") => {
   if (value == null || (typeof value == "string" && value.length <= 0)) {
@@ -9,4 +9,4 @@ Vue.filter("defaults", (value, def = "-") => {
   return value;
 });
 
-Vue.filter("sources", StringUtils.convertUrl);
+Vue.filter("sources", convertUrl);
