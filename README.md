@@ -42,15 +42,15 @@
 
 ### 🛩️ 在线文档
 
-- [文档首页](https://xiaohe-uniapp.myhdg.top)
+- [文档首页](https://xiaohe-uniapp.xiaohe.ink)
 
 - 文档首页(国内镜像)：暂未开通
 
-- [快速上手](https://xiaohe-uniapp.myhdg.top/guide/getting-started.html)
+- [快速上手](https://xiaohe-uniapp.xiaohe.ink/guide/getting-started.html)
 
-- [配置手册](https://xiaohe-uniapp.myhdg.top/config/global.html)
+- [配置手册](https://xiaohe-uniapp.xiaohe.ink/config/global.html)
 
-- [小何同学](https://xiaohe-uniapp.myhdg.top/about/xiaohe.html)
+- [小何同学](https://xiaohe-uniapp.xiaohe.ink/about/xiaohe.html)
 
 ### 🐶 讨论交流
 
