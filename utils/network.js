@@ -312,12 +312,21 @@ export const _request = (customConfig) => {
           clearTimeout(timer);
           timer = null;
         }
+
+        // #ifndef APP-PLUS
         // if (loading && _queue.filter((request) => request.showLoading).length <= 0)
         if (loading) {
           uni.hideLoading({
             noConflict: true
           });
         }
+        // #endif
+
+        // #ifdef APP-PLUS
+        uni.hideLoading({
+          noConflict: true
+        });
+        // #endif
       }
     });
 
