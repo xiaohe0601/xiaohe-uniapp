@@ -58,7 +58,7 @@ export default {
 
         commit("setAuthorityInterceptPage", {
           url: current.$page.fullPath,
-          tabbar: current.getTabBar() != null
+          tabbar: !!(current.getTabBar?.() ?? current.$page.meta?.isTabBar)
         });
 
         uni.redirectTo({ url: Config.http.redirectAuthUrl });
