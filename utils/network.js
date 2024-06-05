@@ -458,7 +458,7 @@ export const _upload = (url, path, progress = null, customConfig = {}) => {
 
   transformRequest(config);
 
-  config.header["content-type"] = "multipart/form-data";
+  delete config.header["content-type"];
 
   return new Promise((resolve, reject) => {
     const task = uni.uploadFile({
