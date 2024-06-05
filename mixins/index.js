@@ -9,7 +9,6 @@ Vue.mixin({
     }
   },
   methods: {
-    preventDefault() {},
     destroyToastTimer() {
       if (this.toastTimer != null) {
         clearTimeout(this.toastTimer);
