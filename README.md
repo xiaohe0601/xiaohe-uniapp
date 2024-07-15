@@ -1,4 +1,6 @@
-> 注意：Vue3 + TypeScript + Vite 的 [xiaohe-uniapp-next](https://github.com/xiaohe0601/xiaohe-uniapp-next) 已发布，本仓库将不再积极维护！
+🚨 注意：Vue3 + TypeScript + Vite 的 [xiaohe-uniapp-next](https://github.com/xiaohe0601/xiaohe-uniapp-next) 已发布，本仓库将不再积极维护！
+
+<br>
 
 <div align="center">
   <h1>xiaohe-uniapp</h1>
