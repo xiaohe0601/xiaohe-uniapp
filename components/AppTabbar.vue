@@ -43,7 +43,7 @@
 /**
  * AppTabbar App底部导航栏
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于自定义底部导航栏 (即tabbar)。
  *
  * @property {Number|String}    current   当前选中的tabbar-item唯一标识 (即key)

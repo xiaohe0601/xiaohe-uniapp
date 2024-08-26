@@ -2,8 +2,8 @@
  * @file      网络请求工具 (基于uni.request封装)
  *
  * @version   2.1.0
- * @author    小何同学 (xiaohe0601)
- * @email     HeDianGeng0601@outlook.com
+ * @author    小何 (xiaohe0601)
+ * @email     xiaohe0601@outlook.com
  */
 
 /**

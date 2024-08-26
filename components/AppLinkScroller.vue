@@ -27,7 +27,7 @@ import _ from "lodash";
 /**
  * AppLinkScroller 联动滚动器
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于联动滚动，左侧点击可控制右侧滚动，右侧滚动可自动定位并高亮左侧位置。
  *
  * @property {Number}     current                 当前左侧选中位置索引

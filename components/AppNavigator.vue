@@ -26,7 +26,7 @@ import Config from "@/utils/config.js";
 /**
  * AppNavigator 页面链接
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于快速跳转对应页面。
  *
  * @property {String}     url                                                                   跳转链接

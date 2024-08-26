@@ -41,7 +41,7 @@ const DateTemplate = "YYYY-MM-DD";
 /**
  * AppCalendarPicker 日历选择器
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于单/多个日期选择以及日期范围选择。
  *
  * @property {Boolean}          show                              是否展示选择器 <支持.sync>

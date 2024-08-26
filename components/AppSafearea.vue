@@ -8,7 +8,7 @@ import { mapGetters } from "vuex";
 /**
  * AppSafearea App安全区域
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于安全区域占位, 且可提供额外垫高。
  *
  * @property {String}   direction = [top|right|bottom|left]    安全区域方向

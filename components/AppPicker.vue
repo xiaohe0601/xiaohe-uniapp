@@ -27,7 +27,7 @@ import _ from "lodash";
 /**
  * AppPicker 选择器
  *
- * @author        小何同学 (xiaohe0601)
+ * @author        小何 (xiaohe0601)
  * @description   本组件用于单列或多列选项选择。
  *
  * @property {Boolean}          show                  是否展示选择器 <支持.sync>
